@@ -42,7 +42,6 @@ coverage/
 
 # Environment variables
 .env
-.env.*
 
 # NestJS specific
 *.tsbuildinfo
