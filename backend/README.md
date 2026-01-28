@@ -1,183 +1,112 @@
-# Backend NestJS - Projet Plongée
+# MyDives Backend
 
-## Description
+API Backend pour l'application MyDives, construite avec NestJS, TypeORM et PostgreSQL.
 
-Application backend NestJS avec TypeORM et PostgreSQL, incluant un système de migrations de base de données.
+## 🚀 Technologies
 
-## Prérequis
+- **Framework**: [NestJS](https://nestjs.com/)
+- **Base de données**: PostgreSQL
+- **ORM**: TypeORM
+- **Conteneurisation**: Docker & Docker Compose
+- **Documentation**: Swagger (OpenAPI)
 
-- Node.js (v20 ou supérieur)
-- Docker et Docker Compose
+## 🛠️ Installation & Configuration
+
+### Prérequis
+
+- Node.js (v18+)
+- Docker & Docker Compose
 - npm
 
-## Installation
+### 1. Installer les dépendances
 
-1. Installer les dépendances :
 ```bash
 npm install
 ```
 
-2. Copier le fichier d'environnement :
+### 2. Configurer l'environnement
+
+Copiez le fichier d'environnement d'exemple :
+
 ```bash
 cp .env.example .env
 ```
 
-3. Démarrer la base de données PostgreSQL avec Docker :
+Assurez-vous que les variables correspondent à votre configuration (les valeurs par défaut fonctionnent avec le Docker Compose fourni).
+
+### 3. Démarrer la base de données
+
+Lancez le conteneur PostgreSQL :
+
 ```bash
 docker-compose up -d
 ```
 
-## Configuration
+## 🏃 Lancer l'application
 
-Les variables d'environnement sont définies dans le fichier `.env` :
-
-- `DB_HOST` : Hôte de la base de données (localhost par défaut)
-- `DB_PORT` : Port de la base de données (5432 par défaut)
-- `DB_USERNAME` : Nom d'utilisateur PostgreSQL
-- `DB_PASSWORD` : Mot de passe PostgreSQL
-- `DB_NAME` : Nom de la base de données
-- `PORT` : Port de l'application (3000 par défaut)
-
-## Gestion des Migrations
-
-### Créer une nouvelle migration vide
-
-```bash
-npm run migration:create src/migrations/NomDeLaMigration
-```
-
-### Générer une migration à partir des changements d'entités
-
-```bash
-npm run migration:generate src/migrations/NomDeLaMigration
-```
-
-### Exécuter les migrations
-
-```bash
-npm run migration:run
-```
-
-### Annuler la dernière migration
-
-```bash
-npm run migration:revert
-```
-
-## Démarrage de l'application
-
-### Mode développement
+### Développement
 
 ```bash
 npm run start:dev
 ```
 
-### Mode production
+Le serveur démarrera sur `http://localhost:3000` et les migrations seront exécutées automatiquement.
+
+### Production
 
 ```bash
 npm run build
 npm run start:prod
 ```
 
-## Docker
+## 📚 Documentation API
 
-### Démarrer uniquement la base de données
+Contrairement aux applications NestJS standards, ce projet utilise un Filtre d'Exception Global pour une gestion standardisée des erreurs et Swagger pour la documentation.
 
-```bash
-docker-compose up -d
-```
+Accédez à la documentation interactive de l'API sur :
+**[http://localhost:3000/api](http://localhost:3000/api)**
 
-### Arrêter la base de données
+### Fonctionnalités
 
-```bash
-docker-compose down
-```
+- **Filtre d'Exception Global** : Gère automatiquement les erreurs de base de données (comme les violations de contrainte d'unicité) et renvoie des réponses 409 Conflict conviviales.
+- **Validation DTO** : Validation automatique des requêtes entrantes via `class-validator`.
 
-### Arrêter et supprimer les volumes
+## 🗄️ Migrations de Base de Données
 
-```bash
-docker-compose down -v
-```
+Nous utilisons les migrations TypeORM pour gérer les modifications de schéma de base de données.
 
-## Structure du projet
+- **Générer une migration** (après avoir modifié des entités) :
 
-```
-backend/
-├── src/
-│   ├── migrations/          # Migrations de base de données
-│   ├── app.controller.ts    # Contrôleur principal
-│   ├── app.module.ts        # Module principal avec configuration TypeORM
-│   ├── app.service.ts       # Service principal
-│   ├── data-source.ts       # Configuration TypeORM pour les migrations
-│   ├── main.ts              # Point d'entrée de l'application
-│   └── user.entity.ts       # Exemple d'entité User
-├── test/                    # Tests
-├── .env                     # Variables d'environnement
-├── .env.example             # Exemple de variables d'environnement
-├── docker-compose.yml       # Configuration Docker pour PostgreSQL
-├── Dockerfile               # Dockerfile pour l'application
-└── package.json             # Dépendances et scripts
-```
+  ```bash
+  npm run migration:generate src/migrations/NomDuChangement
+  ```
 
-## Exemple d'utilisation
+- **Créer une migration vide** :
 
-### 1. Créer une nouvelle entité
+  ```bash
+  npm run migration:create src/migrations/NomDeLaMigration
+  ```
 
-Créez un fichier `src/votre-entite.entity.ts` :
+- **Exécuter les migrations** :
 
-```typescript
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+  ```bash
+  npm run migration:run
+  ```
 
-@Entity('nom_table')
-export class VotreEntite {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+- **Annuler la dernière migration** :
+  ```bash
+  npm run migration:revert
+  ```
 
-  @Column()
-  nom: string;
-}
-```
-
-### 2. Générer la migration
+## 🧪 Tests
 
 ```bash
-npm run migration:generate src/migrations/CreateVotreEntite
-```
-
-### 3. Exécuter la migration
-
-```bash
-npm run migration:run
-```
-
-## Tests
-
-```bash
-# Tests unitaires
+# tests unitaires
 npm run test
 
-# Tests e2e
+# tests e2e
 npm run test:e2e
 
-# Couverture de code
+# couverture de test
 npm run test:cov
 ```
-
-## Commandes utiles
-
-```bash
-# Formater le code
-npm run format
-
-# Linter
-npm run lint
-
-# Build
-npm run build
-```
-
-## Notes importantes
-
-- `synchronize` est désactivé dans la configuration TypeORM pour forcer l'utilisation des migrations
-- Les migrations doivent être exécutées manuellement avec `npm run migration:run`
-- Toujours créer une migration avant de modifier le schéma de base de données en production
