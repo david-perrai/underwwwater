@@ -101,7 +101,7 @@ export class DivesService {
     const dive = await this.findOne(id);
 
     // Check ownership
-    if (dive.owner.id !== user.id) {
+    if (dive?.owner?.id !== user.id) {
       throw new NotFoundException('You can only update your own dives');
     }
 
@@ -109,7 +109,11 @@ export class DivesService {
     if (updateDiveDto.date) dive.date = updateDiveDto.date;
     if (updateDiveDto.totalTime) dive.totalTime = updateDiveDto.totalTime;
     if (updateDiveDto.maxDepth) dive.maxDepth = updateDiveDto.maxDepth;
-    if (updateDiveDto.gasTanks) dive.gasTanks = updateDiveDto.gasTanks;
+    if (updateDiveDto.gasTanks) {
+      dive.gasTanks = updateDiveDto.gasTanks.map((tankDto) =>
+        this.divesRepository.manager.create('GasTank', tankDto),
+      );
+    }
 
     // Update relations if provided
     if (updateDiveDto.divingTypeIds) {

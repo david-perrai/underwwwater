@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
   ManyToMany,
   JoinTable,
   JoinColumn,
@@ -15,17 +16,7 @@ import { DivingType } from './diving-type.entity';
 import { DivingEnvironment } from './diving-environment.entity';
 import { DivingRole } from './diving-role.entity';
 
-export interface GasMix {
-  oxygen: number;
-  nitrogen: number;
-  helium: number;
-}
-
-export interface GasTank {
-  pressureStart: number;
-  pressureEnd: number;
-  gasMix: GasMix;
-}
+import { GasTank } from './gas-tank.entity';
 
 @Entity('dives')
 export class Dive {
@@ -70,25 +61,20 @@ export class Dive {
   maxDepth: number;
 
   @ApiProperty({
-    example: [
-      {
-        pressureStart: 200,
-        pressureEnd: 50,
-        gasMix: { oxygen: 21, nitrogen: 79, helium: 0 },
-      },
-    ],
     description: 'Array of gas tanks used during the dive',
-    type: 'array',
+    type: () => [GasTank],
   })
-  @Column({ type: 'json', default: '[]' })
-  gasTanks: GasTank[];
+  @OneToMany(() => GasTank, (gasTank: GasTank) => gasTank.dive, {
+    cascade: true,
+  })
+  gasTanks!: GasTank[];
 
   @ApiProperty({
     description: 'Types of diving',
     type: () => [DivingType],
   })
   @ManyToMany(() => DivingType, (divingType: DivingType) => divingType.dives)
-  @JoinTable()
+  @JoinTable({ name: 'diving_types_dives' })
   divingTypes: DivingType[];
 
   @ApiProperty({

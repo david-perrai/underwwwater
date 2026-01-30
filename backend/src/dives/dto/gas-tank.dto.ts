@@ -6,42 +6,31 @@ import {
   Min,
   Max,
   ValidateNested,
+  IsEnum,
+  IsArray,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { GasType } from '../entities/gas.entity';
 
 export class GasMixDto {
   @ApiProperty({
+    example: GasType.OXYGEN,
+    description: 'The type of gas',
+    enum: GasType,
+  })
+  @IsEnum(GasType)
+  type: GasType;
+
+  @ApiProperty({
     example: 21,
-    description: 'Oxygen percentage',
+    description: 'Gas percentage',
     minimum: 0,
     maximum: 100,
   })
-  @IsInt()
+  @IsNumber()
   @Min(0)
   @Max(100)
-  oxygen: number;
-
-  @ApiProperty({
-    example: 79,
-    description: 'Nitrogen percentage',
-    minimum: 0,
-    maximum: 100,
-  })
-  @IsInt()
-  @Min(0)
-  @Max(100)
-  nitrogen: number;
-
-  @ApiProperty({
-    example: 0,
-    description: 'Helium percentage',
-    minimum: 0,
-    maximum: 100,
-  })
-  @IsInt()
-  @Min(0)
-  @Max(100)
-  helium: number;
+  percentage: number;
 }
 
 export class GasTankDto {
@@ -63,9 +52,10 @@ export class GasTankDto {
 
   @ApiProperty({
     description: 'Gas mix composition',
-    type: GasMixDto,
+    type: [GasMixDto],
   })
-  @ValidateNested()
+  @IsArray()
+  @ValidateNested({ each: true })
   @Type(() => GasMixDto)
-  gasMix: GasMixDto;
+  gasMixes: GasMixDto[];
 }

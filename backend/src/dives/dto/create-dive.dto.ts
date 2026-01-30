@@ -44,7 +44,10 @@ export class CreateDiveDto {
       {
         pressureStart: 200,
         pressureEnd: 50,
-        gasMix: { oxygen: 21, nitrogen: 79, helium: 0 },
+        gasMixes: [
+          { type: 'oxygen', percentage: 21 },
+          { type: 'nitrogen', percentage: 79 },
+        ],
       },
     ],
     description: 'Array of gas tanks used during the dive',
