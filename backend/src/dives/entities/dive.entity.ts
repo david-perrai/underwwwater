@@ -18,7 +18,7 @@ import { DivingRole } from './diving-role.entity';
 export interface GasMix {
   oxygen: number;
   nitrogen: number;
-  helium: number;       
+  helium: number;
 }
 
 export interface GasTank {
@@ -95,9 +95,13 @@ export class Dive {
     description: 'Diving environment',
     type: () => DivingEnvironment,
   })
-  @ManyToOne(() => DivingEnvironment, (environment: DivingEnvironment) => environment.dives, {
-    nullable: false,
-  })
+  @ManyToOne(
+    () => DivingEnvironment,
+    (environment: DivingEnvironment) => environment.dives,
+    {
+      nullable: false,
+    },
+  )
   @JoinColumn()
   divingEnvironment: DivingEnvironment;
 
@@ -105,7 +109,9 @@ export class Dive {
     description: 'Diving role',
     type: () => DivingRole,
   })
-  @ManyToOne(() => DivingRole, (role: DivingRole) => role.dives, { nullable: false })
+  @ManyToOne(() => DivingRole, (role: DivingRole) => role.dives, {
+    nullable: false,
+  })
   @JoinColumn()
   divingRole: DivingRole;
 

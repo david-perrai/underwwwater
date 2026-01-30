@@ -47,7 +47,7 @@ export class User {
     description: 'The user avatar URL',
     required: false,
   })
-  @Column({ nullable: true, length: 255 })
+  @Column({ type: 'varchar', nullable: true, length: 255 })
   avatar: string | null;
 
   @ApiProperty({ description: 'The date the user subscribed' })
@@ -62,7 +62,6 @@ export class User {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   activatedAt: Date;
 
-  @OneToMany(() => Dive, (dive) => dive.owner)
-  dives: Dive[];
+  @OneToMany(() => Dive, (dive: Dive) => dive.owner)
+  dives!: Dive[];
 }
-

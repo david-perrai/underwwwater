@@ -1,24 +1,22 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: plongee-postgres
+    container_name: underwwwater-postgres
     restart: always
     environment:
-      POSTGRES_USER: plongee_user
-      POSTGRES_PASSWORD: plongee_password
-      POSTGRES_DB: plongee_db
+      POSTGRES_USER: underwwwater_user
+      POSTGRES_PASSWORD: underwwwater_password
+      POSTGRES_DB: underwwwater_db
     ports:
       - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - plongee-network
+      - underwwwater-network
 
 volumes:
   postgres_data:
 
 networks:
-  plongee-network:
+  underwwwater-network:
     driver: bridge
