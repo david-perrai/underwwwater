@@ -8,6 +8,7 @@ import { useFormFactory } from "@/composables/formFactory";
 // import { useMutation } from "@vue/apollo-composable";
 import { useAlertFactory } from "../../composables/alertFactory";
 import { translations } from "@/i18n/index";
+import { useCreateUser } from "~/composables/api/userApi";
 
 const FormControlText = defineAsyncComponent(
   () => import("@/components/molecules/FormControlText.vue")
@@ -39,21 +40,28 @@ const credentials: FormUserCredentials = reactive(
         password: "",
       }
     : {
-        email: "",
-        password: "",
-        username: "",
+        email: "david.perrai@gmail.com",
+        password: "Azerty123456!",
+        username: "Dude",
       }
 );
 
-const handleChange = (id: string, text: string) => {
-  if (id === "email") {
-    credentials.email = text;
-  } else if (id === "password") {
-    credentials.password = text;
-  } else if (id === "username") {
-    credentials.username = text;
+
+const { user, loading, error, createUser } = useCreateUser();
+
+watch(user, (newUser) => {
+  if (newUser) {
+    useAlertFactory("success", CREATE_USER);
+    navigateTo({ name: "index" });
   }
-};
+});
+
+watch(error, (newError) => {
+  if (newError) {
+    useAlertFactory("error", ERROR_CREATE_USER + newError.toString());
+    navigateTo({ name: "index" });
+  }
+});
 
 // const { mutate, onDone, onError } = useMutation(MUTATION_CREATE_USER, {
 //   variables: {
@@ -71,6 +79,19 @@ const handleChange = (id: string, text: string) => {
 //   navigateTo({ name: "index" });
 // });
 
+
+const handleChange = (id: string, text: string) => {
+  if (id === "email") {
+    credentials.email = text;
+  } else if (id === "password") {
+    credentials.password = text;
+  } else if (id === "username") {
+    credentials.username = text;
+  }
+};
+
+
+
 const onSubmit = async () => {
   if (props.action === FormActions.LOGIN) {
     useAuthLogin(credentials);
@@ -79,7 +100,7 @@ const onSubmit = async () => {
     const { valid } = await formTemplate.value.validate();
 
     if (valid) {
-      // mutate();
+      createUser(credentials);
       dialog.value = false;
     }
   }
@@ -121,7 +142,7 @@ const onSubmit = async () => {
                 :label="component.props!.label + '*'"
                 :type="component.props!.type"
                 :rules="component.props?.rules"
-                :icon="component.props?.icon"
+                :icon="component.props?.icon"                
                 @form-input-change="handleChange"
                 required
               ></component>
