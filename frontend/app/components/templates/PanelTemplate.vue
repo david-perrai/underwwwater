@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Colors } from "@/plugins/utils/colors";
 import type { CalendarHighlightItem } from "@/types/charts/calendar";
-import type { PanelData } from "../../types/charts/panel";
+import type { PanelData } from "@/types/charts/panel";
 import { isMobile } from "@/composables/utils/isMobile";
 
 const props = defineProps<{
