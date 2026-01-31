@@ -1,0 +1,14 @@
+.template_base {
+    background-size: cover;
+    background-position: top;
+
+    &--container {
+        max-width: 1280px;
+    }
+}
+
+.template_panel {
+    &--list {
+        overflow: hidden;
+    }
+}

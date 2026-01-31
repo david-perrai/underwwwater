@@ -1,0 +1,5 @@
+- [] remplacer vue3-calendar-heatmap par cal-heatmap qui est maintenu et agnostique du framework
+- [] intégrer de l'authentification avec soit une connexion externe soit une connexion locale via jwt
+- [] intégrer pinia pour gérer l'état global ou choisir d'utiliser useState()
+- [] transférer les composants de l'ancien projet
+- [] transformer les appels appollo vers fetch de nuxt ou react query

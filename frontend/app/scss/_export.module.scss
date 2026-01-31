@@ -1,0 +1,7 @@
+@import '@/scss/_variables.scss';
+
+:export {
+    @each $key, $value in $colors {
+        #{unquote($key)}: $value;
+    }
+}

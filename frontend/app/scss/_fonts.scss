@@ -1,0 +1,10 @@
+@include generate-font-face("Barlow-Condensed", "Barlow-Condensed-Regular");
+@include generate-font-face("Barlow-Condensed", "Barlow-Condensed-Bold", 700);
+
+.font-barlow {
+  font-family: "Barlow-Condensed", Helvetica, Arial !important;
+}
+
+.glow-effect {
+text-shadow: rgba(119,209,199,1) 0px 0px 20px;
+}

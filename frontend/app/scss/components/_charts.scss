@@ -1,0 +1,16 @@
+.chart_zoomable {
+    cursor: pointer;
+
+    &:hover {
+        background-color: map-get($colors, "primary");
+        transition: 0.1s all;
+    }
+}
+
+.chart_progress {
+    background-size: cover;
+
+    .v-progress-linear__determinate {
+        opacity: 0.7;
+      }
+}

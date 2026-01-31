@@ -1,0 +1,42 @@
+fieldset {
+    border: none;
+}
+
+.form_controls--date {
+  legend {
+    top: -10px;
+    &:active {
+      color: white;
+    }
+  }
+    
+  input {
+    border: 1px solid #757575;
+    border-radius: 5px;
+    padding: 17.5px;
+    width: 100%;
+    transition: 0.5s;
+  
+    &:active,
+    &:hover {
+      border: 1px solid white;
+      transition: 0.5s;
+    }
+  }
+
+  .v-messages__message {
+    transform-origin: center top 0px;
+  }
+}
+
+.form_controls--slider {
+  .v-input__control {
+      padding-right: 8px;
+      justify-content: end;
+      width: 100% !important;
+  }
+
+  .v-input__append {
+      width: 100%;
+  }
+}
