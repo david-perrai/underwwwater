@@ -24,6 +24,9 @@ onMounted(() => {
   if(!import.meta.server) window.addEventListener("scroll", updateScroll);
 });
 
+console.log(isLogged());
+
+
 </script>
 
 <template>

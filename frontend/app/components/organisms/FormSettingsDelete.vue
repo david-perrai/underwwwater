@@ -2,9 +2,6 @@
 import { defineAsyncComponent, ref } from "vue";
 import { type Form, FormActions } from "@/types/models/form";
 import { useFormFactory } from "@/composables/formFactory";
-// import { MUTATION_DELETE_USER } from "@/graphql/mutations/deleteUser";
-// import { useMutation } from "@vue/apollo-composable";
-// import store from "@/store";
 import { useAuthLogout } from "@/composables/auth";
 import { useAlertFactory } from "@/composables/alertFactory";
 import { translations } from "@/i18n/index";
@@ -21,32 +18,17 @@ const { DELETE } = translations.en.FORM_WORDING;
 
 const form: Form = useFormFactory(FormActions.ACCOUNT_DELETE);
 
-// const { mutate, onDone, onError } = useMutation(MUTATION_DELETE_USER, {
-//   variables: {
-//     input: { id: "/api/users/" + store.state.user.data.id },
-//   },
-// });
 
 const load = () => {
   loading.value = true;
   setTimeout(() => (loading.value = false), 5000);
 };
 
-// onError((error) => {
-//   useAlertFactory("error", error.toString());
-// });
-
-// onDone(() => {
-//   useAuthLogout();
-//   useAlertFactory("success", REMOVE_ACCOUNT);
-//   navigateTo({ name: "index" });
-// });
 
 const onSubmit = async () => {
   const { valid } = await formTemplate.value.validate();
 
   if (valid) {
-    // mutate();
     load();
   }
 };

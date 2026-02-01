@@ -84,6 +84,10 @@ export function useAuthLogout(): void {
     iat: null,
     exp: null,
   };
+
+  sessionStorage.removeItem(ACCESS_TOKEN_KEY);
+
+  navigateTo({name: "index"});
 }
 
 /**
@@ -92,6 +96,7 @@ export function useAuthLogout(): void {
  */
 export function isLogged(): boolean {
   const userState = useUserState();
+  
   if(!userState.value.id){
     const accessToken = sessionStorage.getItem(ACCESS_TOKEN_KEY);
     if(accessToken){
@@ -99,6 +104,8 @@ export function isLogged(): boolean {
       userState.value = parsedToken
       return true;
     }
+  }else{
+    return true;
   }
-  return true;
+  return false;
 }
