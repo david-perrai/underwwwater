@@ -15,9 +15,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@src/*": ["src/*"],
-      "@users/*": ["src/users/*"],
-      "@dives/*": ["src/dives/*"]
+      "@*": ["src/*"],
     },
     "incremental": true,
     "skipLibCheck": true,

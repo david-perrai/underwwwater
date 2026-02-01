@@ -11,7 +11,7 @@ import {
 import * as bcrypt from 'bcrypt';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
-import { Dive } from '@dives/entities/dive.entity';
+import { Dive } from '@/dives/entities/dive.entity';
 
 @Entity('users')
 export class User {
@@ -45,6 +45,10 @@ export class User {
   @Column()
   password: string;
 
+  @Exclude()
+  @Column({ nullable: true })
+  refreshToken: string;
+
   @ApiProperty({
     example: 'https://example.com/avatar.jpg',
     description: 'The user avatar URL',
@@ -70,10 +74,15 @@ export class User {
 
   @BeforeInsert()
   @BeforeUpdate()
-  async hashPassword() {
+  async hashPasswordAndRefreshToken() {
     if (this.password && !this.password.startsWith('$2b$')) {
       const salt = await bcrypt.genSalt();
       this.password = await bcrypt.hash(this.password, salt);
+    }
+
+    if (this.refreshToken && !this.refreshToken.startsWith('$2b$')) {
+      const salt = await bcrypt.genSalt();
+      this.refreshToken = await bcrypt.hash(this.refreshToken, salt);
     }
   }
 }

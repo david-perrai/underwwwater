@@ -1,5 +1,25 @@
 # Architecture Decision Records
 
+## 01 Février 2026
+
+### Authentification
+
+L'authentificaion repose sur deux jeton jwt :
+l'access token et le refresh token.
+
+L'access token est utilisé pour authentifier les requêtes.
+Le refresh token est utilisé pour renouveler l'access token.
+
+Le refresh token est stocké dans un cookie httpOnly. sécurisé pour un domaine spécifique.
+
+voici le flux d'échanges :
+
+navigateur -> login -> access token + refresh token stocké dans le navigateur.
+
+navigateur -> un endpoint avec acces token -> backend -> vérification de l'access token :
+si expiré : renouvellement de l'access token et du cookie contenant le refresh token.
+si valide : pas de renouvellement accès directe à la ressource.
+
 ## 31 Janvier 2026
 
 ### Flux d'échanges
