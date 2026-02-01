@@ -8,7 +8,7 @@ import {
   ArcElement,
   CategoryScale,
 } from "chart.js";
-import { DepthData } from "@/types/charts/depth";
+import { type DepthData } from "@/types/charts/depth";
 import { globalOptionsProvider } from "@/composables/charts/globalOptionsProvider";
 
 const props = defineProps<{

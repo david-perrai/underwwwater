@@ -1,23 +1,22 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useGqlQueryManager } from "@/composables/gqlQueryManager";
-import { GraphqlActions } from "@/types/models/graphql";
-import { DivingThemeInterface } from "@/types/global/divingTheme";
+import { type DivingThemeInterface } from "@/types/global/divingTheme";  
 
 const props = defineProps<{
   id: string;
   label: string;
   value: DivingThemeInterface;
-  action: GraphqlActions;
+  action: string;
   rules: ((v: number) => boolean)[];
 }>();
 
 const value = ref(props.value);
 
 const key: string =
-  props.action === GraphqlActions.DIVING_ROLES
+  props.action === "divingRoles"
     ? "divingRoles"
-    : props.action === GraphqlActions.DIVING_ENVIRONMENTS
+    : props.action === "divingEnvironments"
     ? "divingEnvironments"
     : "";
 

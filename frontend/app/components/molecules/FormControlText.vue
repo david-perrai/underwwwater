@@ -13,8 +13,8 @@ const emit = defineEmits(["formInputChange"]);
 const userState = useUserState();
 
 const text = ref(
-  props.id === "username" && userState.value.data.username
-    ? userState.value.data.username
+  props.id === "username" && userState.value.username
+    ? userState.value.username
     : ""
 );
 </script>

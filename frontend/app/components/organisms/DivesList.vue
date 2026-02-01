@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import store from "@/store";
 import { format } from "date-fns";
 import { Colors } from "@/plugins/utils/colors";
 import type { DiveInterface } from "@/types/global/dive";
-import { GraphqlActions } from "@/types/models/graphql";
 import { useGqlQueryManager } from "@/composables/gqlQueryManager";
 import { useDivesCollectionLoader } from "@/composables/utils/divesCollectionLoader";
 import { useGasNameProvider } from "@/composables/gasNameProvider";
@@ -17,8 +15,10 @@ const props = defineProps<{
 
 const isDives = ref(false);
 
+const user = useUserState();
+
 const divesCollection = await useGqlQueryManager(GraphqlActions.DIVES, {
-  owner: "api/users/" + store.state.user.data.id,
+  owner: "api/users/" + user..id,
 }).then((result) => {
   isDives.value = result.dives.edges.length;
   return useDivesCollectionLoader(result) as DiveInterface[];

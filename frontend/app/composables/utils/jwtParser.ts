@@ -1,11 +1,11 @@
-import { type StoreUserDataInterface } from "@/types/models/storeUser";
+import { type UserInterface } from "~/types/models/user";
 
 /**
  * JWT Parsing Utilitary function
  * @param {string} token string
  * @return {StoreUserInterface}
  */
-export function useJWTParser(token: string): StoreUserDataInterface {
+export function useJWTParser(token: string): UserInterface {
   const base64Url = token.split(".")[1];
   const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
   const jsonPayload = decodeURIComponent(

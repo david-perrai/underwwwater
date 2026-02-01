@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useGqlQueryManager } from "@/composables/gqlQueryManager";
-import { GraphqlActions } from "@/types/models/graphql";
 import {
-  DivingThemeEdgeInterface,
-  DivingThemeInterface,
+  type DivingThemeEdgeInterface,
+  type DivingThemeInterface,
 } from "@/types/global/divingTheme";
 
 const props = defineProps<{
@@ -13,7 +12,7 @@ const props = defineProps<{
   value: {
     edges: DivingThemeEdgeInterface[];
   };
-  action: GraphqlActions;
+  action: string;
 }>();
 
 const types = ref(props.value.edges.map((item) => item.node));

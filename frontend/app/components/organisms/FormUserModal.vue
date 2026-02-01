@@ -40,9 +40,9 @@ const credentials: FormUserCredentials = reactive(
         password: "",
       }
     : {
-        email: "david.perrai@gmail.com",
-        password: "Azerty123456!",
-        username: "Dude",
+        email: "",
+        password: "",
+        username: "",
       }
 );
 
@@ -62,22 +62,6 @@ watch(error, (newError) => {
     navigateTo({ name: "index" });
   }
 });
-
-// const { mutate, onDone, onError } = useMutation(MUTATION_CREATE_USER, {
-//   variables: {
-//     input: credentials,
-//   },
-// });
-
-// onError((error) => {
-//   useAlertFactory("error", ERROR_CREATE_USER + error.toString());
-//   navigateTo({ name: "index" });
-// });
-
-// onDone(() => {
-//   useAlertFactory("success", CREATE_USER);
-//   navigateTo({ name: "index" });
-// });
 
 
 const handleChange = (id: string, text: string) => {

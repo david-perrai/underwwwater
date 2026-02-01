@@ -1,26 +1,22 @@
 import type { FormUserCredentials } from "@/types/models/form";
-import type { StoreUserInterface, StoreUserDataInterface } from "@/types/models/storeUser";
+import type {  JWTAuthInterface, UserInterface } from "~/types/models/user";
 import { useAlertFactory } from "./alertFactory";
 import { useJWTParser } from "./utils/jwtParser";
 
 const USER_STATE_KEY = "user-auth";
+const ACCESS_TOKEN_KEY = "underwater_access_token";
 
 /**
  * Global User State composable
  */
-export const useUserState = () => useState<StoreUserInterface>(USER_STATE_KEY, () => ({
-  token: null,
-  refresh_token: null,
-  data: {
-    iat: null,
-    exp: null,
+export const useUserState = () => useState<UserInterface>(USER_STATE_KEY, () => ({
     id: null,
     email: null,
     roles: [],
     username: null,
     avatar: null,
   }
-}));
+));
 
 /**
  * Global Authentication Login function.
@@ -33,26 +29,26 @@ export async function useAuthLogin(
   const userState = useUserState();
 
   try {
-    const response = await $fetch<{ data: { token: string; refresh_token: string } }>("/login", {
+    const { apiBase } = useRuntimeConfig().public;
+    const response = await $fetch<JWTAuthInterface>(`${apiBase}/auth/login`, {
       method: "POST",
       body: credentials,
     });
 
-    if (response.data.token) {
-      const parsedToken: StoreUserDataInterface = useJWTParser(
-        response.data.token
-      );
+    if (response.accessToken) {
 
-      userState.value.token = response.data.token;
-      userState.value.refresh_token = response.data.refresh_token;
-      userState.value.data = parsedToken;
+      const parsedToken = useJWTParser(response.accessToken);
 
+      userState.value = parsedToken
+
+      sessionStorage.setItem(ACCESS_TOKEN_KEY, response.accessToken);
+      
       useAlertFactory(
         "success",
         "You are logged, welcome back " + parsedToken.username + "!"
       );
 
-      return navigateTo({ name: "index" });
+      return navigateTo({name: "index"});
     }
   } catch (error: any) {
     const message =
@@ -66,7 +62,7 @@ export async function useAuthLogin(
 
     useAlertFactory(type, message);
 
-    return navigateTo({ name: "index" });
+    return navigateTo({name: "index"});
   }
 }
 
@@ -76,16 +72,17 @@ export async function useAuthLogin(
  */
 export function useAuthLogout(): void {
   const userState = useUserState();
-  userState.value.token = null;
-  userState.value.refresh_token = null;
-  userState.value.data = {
-    iat: null,
-    exp: null,
+  userState.value = {
     id: null,
     email: null,
     roles: [],
     username: null,
     avatar: null,
+    subscribedAt: null,
+    updatedAt: null,
+    activatedAt: null,
+    iat: null,
+    exp: null,
   };
 }
 
@@ -95,5 +92,13 @@ export function useAuthLogout(): void {
  */
 export function isLogged(): boolean {
   const userState = useUserState();
-  return !!(userState.value.token && userState.value.refresh_token);
+  if(!userState.value.id){
+    const accessToken = sessionStorage.getItem(ACCESS_TOKEN_KEY);
+    if(accessToken){
+      const parsedToken = useJWTParser(accessToken);
+      userState.value = parsedToken
+      return true;
+    }
+  }
+  return true;
 }

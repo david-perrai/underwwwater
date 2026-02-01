@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from "vue";
-import { GasMix } from "@/types/global/gas";
+import { type GasMix } from "@/types/global/gas";
 import { translations } from "@/i18n/index";
 import { useGasMixUpdater } from "@/composables/gasMixUpdater";
 import { useGasNameProvider } from "@/composables/gasNameProvider";

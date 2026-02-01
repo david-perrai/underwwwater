@@ -2,11 +2,9 @@
 import { FormActions } from "@/types/models/form";
 import { isLogged, useAuthLogout } from "@/composables/auth";
 import { isMobile } from "@/composables/utils/isMobile";
-// import { menu } from "@/store/menu";
 import { onMounted, ref } from "vue";
 import { translations } from "@/i18n/index";
 import { useAlertFactory } from "@/composables/alertFactory";
-// import store from "@/store";
 
 
 /**
@@ -16,9 +14,6 @@ import { useAlertFactory } from "@/composables/alertFactory";
 const scrollPosition = ref(0);
 const { LOGOUT } = translations.en.FORM_WORDING;
 const { LOGOUT_ACCOUNT } = translations.en.ALERTS;
-const menu = {
-  toggleAction: () => {}
-}
 const userState = useUserState();
 
 const updateScroll = () => {
@@ -48,7 +43,7 @@ onMounted(() => {
         variant="plain"
         icon="$menu"
         :size="'large'"
-        @click="menu.toggleAction()"
+        @click="toggleMenu()"
       />
     </template>
     <v-app-bar-title>
@@ -58,13 +53,13 @@ onMounted(() => {
       <div :class="['d-flex', 'justify-center', 'align-center']">
         <p
           v-if="isLogged()"
-          v-html="userState.data.username"
+          v-html="userState.username"
           :class="['d-none', 'd-sm-flex', 'mx-2']"
         />
         <v-badge v-if="isLogged()" dot color="success" :class="['mx-2']">
           <v-avatar
-            v-if="userState.data.avatar"
-            :image="'/avatars/avatar' + userState.data.avatar + '.png'"
+            v-if="userState.avatar"
+            :image="'/avatars/avatar' + userState.avatar + '.png'"
             :size="isMobile.value ? 30 : 45"
           />
           <v-avatar v-else color="info" :size="isMobile.value ? 30 : 45">

@@ -8,11 +8,17 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
+import { User } from '@users/entities/user.entity';
 
 export interface Tokens {
   accessToken: string;
   refreshToken: string;
 }
+
+export type UserPayload = Omit<
+  User,
+  'password' | 'refreshToken' | 'hashPasswordAndRefreshToken'
+>;
 
 @Injectable()
 export class AuthService {
@@ -22,7 +28,7 @@ export class AuthService {
     private configService: ConfigService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<any> {
+  async validateUser(email: string, password: string): Promise<UserPayload> {
     const user = await this.usersService.findByEmail(email);
 
     if (!user) {
@@ -32,7 +38,7 @@ export class AuthService {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Email ou mot de passe incorrect');
+      throw new UnauthorizedException('Mot de passe incorrect');
     }
 
     const { password: _, refreshToken: __, ...result } = user;
@@ -40,8 +46,8 @@ export class AuthService {
   }
 
   async login(email: string, password: string): Promise<Tokens> {
-    const user = await this.validateUser(email, password);
-    const tokens = await this.getTokens(user.id, user.email, user.username);
+    const user: UserPayload = await this.validateUser(email, password);
+    const tokens = await this.getTokens(user);
     await this.updateRefreshToken(user.id, tokens.refreshToken);
 
     return tokens;
@@ -58,6 +64,8 @@ export class AuthService {
       throw new ForbiddenException('Accès refusé');
     }
 
+    const { password: _, refreshToken: __, ...userPayload } = user;
+
     const refreshTokenMatches = await bcrypt.compare(
       refreshToken,
       user.refreshToken,
@@ -67,25 +75,15 @@ export class AuthService {
       throw new ForbiddenException('Accès refusé');
     }
 
-    const tokens = await this.getTokens(user.id, user.email, user.username);
+    const tokens = await this.getTokens(userPayload);
     await this.updateRefreshToken(user.id, tokens.refreshToken);
 
     return tokens;
   }
 
-  async getTokens(
-    userId: number,
-    email: string,
-    username: string,
-  ): Promise<Tokens> {
-    const jwtPayload = {
-      sub: userId,
-      email: email,
-      username: username,
-    };
-
+  async getTokens(user: UserPayload): Promise<Tokens> {
     const [accessToken, refreshToken] = await Promise.all([
-      this.jwtService.signAsync(jwtPayload, {
+      this.jwtService.signAsync(user, {
         secret: this.configService.get<string>('JWT_SECRET'),
         expiresIn: this.configService.get<string>(
           'JWT_EXPIRATION',
@@ -93,7 +91,7 @@ export class AuthService {
         ) as any,
       }),
       this.jwtService.signAsync(
-        { sub: userId },
+        { sub: user.id },
         {
           secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
           expiresIn: this.configService.get<string>(

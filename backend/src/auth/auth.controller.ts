@@ -7,7 +7,6 @@ import {
   UseGuards,
   Req,
   Res,
-  Get,
 } from '@nestjs/common';
 import { type Request, type Response } from 'express';
 import { ApiOperation, ApiResponse, ApiTags, ApiBody } from '@nestjs/swagger';
@@ -98,13 +97,5 @@ export class AuthController {
     response.clearCookie('refreshToken');
 
     return { message: 'Déconnexion réussie' };
-  }
-
-  @ApiOperation({ summary: 'Get current user profile' })
-  @ApiResponse({ status: 200, description: 'Returns the current user profile' })
-  @UseGuards(JwtAuthGuard)
-  @Get('me')
-  getProfile(@Req() req: Request) {
-    return req.user;
   }
 }

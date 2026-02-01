@@ -17,13 +17,13 @@ const userState = useUserState();
     <template
       v-if="
         isLogged() &&
-        userState.data.avatar &&
-        userState.data.username
+        userState.avatar &&
+        userState.username
       "
     >
       <v-list-item
-        :prepend-avatar="'/avatars/avatar' + userState.data.avatar + '.png'"
-        :title="userState.data.username"
+        :prepend-avatar="'/avatars/avatar' + userState.avatar + '.png'"
+        :title="userState.username"
       />
       <v-divider />
     </template>

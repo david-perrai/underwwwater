@@ -6,7 +6,6 @@ import {
 } from "@/types/models/form";
 
 import { type DiveInterface } from "@/types/global/dive";
-import { GraphqlActions } from "@/types/models/graphql";
 import { translations } from "@/i18n/index";
 
 const { FORM_DIVING, FORM_WORDING } = translations.en;
@@ -133,14 +132,14 @@ export function useFormFactory(
       return {
         name: "FormControlSelect",
         label: FORM_DIVING.SELECT_DIVING_ENV,
-        query: GraphqlActions.DIVING_ENVIRONMENTS,
+        query: "",
         rules: [(v: Text) => !!v || FORM_WORDING.RULE_IS_REQUIRED],
       };
     } else {
       return {
         name: "FormControlSelect",
         label: FORM_DIVING.SELECT_DIVING_ROLES,
-        query: GraphqlActions.DIVING_ROLES,
+        query: "",
         rules: [(v: Text) => !!v || FORM_WORDING.RULE_IS_REQUIRED],
       };
     }
@@ -150,7 +149,7 @@ export function useFormFactory(
     return {
       name: "FormControlComboBox",
       label: FORM_DIVING.SELECT_DIVING_TYPES,
-      query: GraphqlActions.DIVING_TYPES,
+      query: "",
     };
   }
 

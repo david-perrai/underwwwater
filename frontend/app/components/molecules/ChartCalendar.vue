@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type{ CalendarData } from "@/types/charts/calendar";
+import type { CalendarData } from "@/types/charts/calendar";
 import { CalendarHeatmap } from "vue3-calendar-heatmap";
 import { translations } from "@/i18n/index";
 

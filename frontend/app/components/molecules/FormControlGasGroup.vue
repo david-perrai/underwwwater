@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { translations } from "@/i18n/index";
-import { GasTank, GasMix } from "@/types/global/gas";
+import { type GasTank, type GasMix } from "@/types/global/gas";
 
 const props = defineProps<{
   id: string;
@@ -8,7 +8,7 @@ const props = defineProps<{
   value: GasTank[];
 }>();
 
-const emit = defineEmits<{
+const emit = defineEmits<{  
   (
     e: string,
     id: string,

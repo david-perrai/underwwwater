@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { GasData } from "@/types/charts/gas";
+import { type GasData } from "@/types/charts/gas";
 import { Doughnut } from "vue-chartjs";
 import {
   Chart as ChartJS,

@@ -10,7 +10,7 @@ import {
   LinearScale,
 } from "chart.js";
 import Zoom from "chartjs-plugin-zoom";
-import { GasData } from "@/types/charts/gas";
+import { type GasData } from "@/types/charts/gas";
 import { globalOptionsProvider } from "@/composables/charts/globalOptionsProvider";
 
 const props = defineProps<{

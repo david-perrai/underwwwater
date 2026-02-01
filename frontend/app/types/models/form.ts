@@ -1,4 +1,4 @@
-import { GraphqlActions } from "@/types/models/graphql";
+
 
 export interface Form {
   title: string;
@@ -17,7 +17,7 @@ export interface FormControlProps {
   subtitle?: string;
   icon?: string | null;
   rules?: unknown[];
-  query?: GraphqlActions;
+  query?: string;
 }
 
 export enum FormActions {

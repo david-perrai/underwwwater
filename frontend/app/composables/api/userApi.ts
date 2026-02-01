@@ -1,5 +1,5 @@
 import type { FormUserCredentials } from "@/types/models/form";
-import type { StoreUserDataInterface } from "@/types/models/storeUser";
+import type { UserInterface } from "~/types/models/user";
 
 /**
  * Composable to create a new user.
@@ -9,7 +9,7 @@ import type { StoreUserDataInterface } from "@/types/models/storeUser";
 export const useCreateUser = () => {
   const config = useRuntimeConfig();
   
-  const user = ref<StoreUserDataInterface | null>(null);
+  const user = ref<UserInterface | null>(null);
   const loading = ref(false);
   const error = ref<any>(null);
 
@@ -18,7 +18,7 @@ export const useCreateUser = () => {
     error.value = null;
 
     try {
-      const { data, error: fetchError } = await useFetch<StoreUserDataInterface>(`${config.public.apiBase}/users`, {
+      const { data, error: fetchError } = await useFetch<UserInterface>(`${config.public.apiBase}/users`, {
         method: "POST",
         body: credentials,
         watch: false,
