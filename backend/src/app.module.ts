@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module';
-import { DivesModule } from './dives/dives.module';
+import { UsersModule } from './domain/users/users.module';
+import { DivesModule } from './domain/dives/dives.module';
 import { AuthModule } from '@auth/auth.module';
 
 @Module({

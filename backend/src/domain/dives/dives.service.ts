@@ -4,7 +4,7 @@ import { Repository, In } from 'typeorm';
 import { CreateDiveDto } from './dto/create-dive.dto';
 import { UpdateDiveDto } from './dto/update-dive.dto';
 import { Dive } from './entities/dive.entity';
-import { User } from '@/users/entities/user.entity';
+import { User } from '@domain/users/entities/user.entity';
 import { DivingType } from './entities/diving-type.entity';
 import { DivingEnvironment } from './entities/diving-environment.entity';
 

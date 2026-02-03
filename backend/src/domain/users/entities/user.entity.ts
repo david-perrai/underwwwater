@@ -11,7 +11,7 @@ import {
 import * as bcrypt from 'bcrypt';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
-import { Dive } from '@/dives/entities/dive.entity';
+import { Dive } from '@domain/dives/entities/dive.entity';
 
 @Entity('users')
 export class User {
