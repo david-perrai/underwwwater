@@ -1,10 +1,11 @@
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './domain/users/users.module';
 import { DivesModule } from './domain/dives/dives.module';
 import { AuthModule } from '@auth/auth.module';
+import { JwtAuthGuard } from '@auth/guards/jwt.guard';
 
 @Module({
   imports: [
@@ -37,6 +38,10 @@ import { AuthModule } from '@auth/auth.module';
     {
       provide: APP_INTERCEPTOR,
       useClass: ClassSerializerInterceptor,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
     },
   ],
 })

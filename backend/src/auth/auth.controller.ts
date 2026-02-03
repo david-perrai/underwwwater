@@ -20,6 +20,7 @@ import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt.guard';
 import { JwtRefreshAuthGuard } from './guards/jwt-refresh.guard';
 import { LoginDto } from './dto/login.dto';
+import { Public } from './decorators/public.decorator';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -34,6 +35,7 @@ export class AuthController {
   })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiBody({ type: LoginDto })
+  @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(
@@ -61,6 +63,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Refresh access token using refresh token cookie' })
   @ApiResponse({ status: 200, description: 'Successfully refreshed tokens' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
+  @Public()
   @UseGuards(JwtRefreshAuthGuard)
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
@@ -70,7 +73,7 @@ export class AuthController {
   ) {
     const user = req.user as any;
     const tokens = await this.authService.refreshTokens(
-      user.sub,
+      user.id,
       user.refreshToken,
     );
 

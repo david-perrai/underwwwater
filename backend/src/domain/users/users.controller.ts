@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
+  NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -17,6 +19,8 @@ import {
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
+import { type AuthenticatedRequest } from '@auth/types/auth-request';
+import { Public } from '@auth/decorators/public.decorator';
 
 @ApiTags('users')
 @ApiBearerAuth()
@@ -31,6 +35,7 @@ export class UsersController {
     description: 'The user has been successfully created.',
     type: User,
   })
+  @Public()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
@@ -40,6 +45,18 @@ export class UsersController {
   @ApiResponse({ status: 200, description: 'Return all users.', type: [User] })
   findAll() {
     return this.usersService.findAll();
+  }
+
+  @Get('/me')
+  @ApiOperation({ summary: 'Get current user' })
+  @ApiResponse({ status: 200, description: 'Return current user.', type: User })
+  findMe(@Req() req: AuthenticatedRequest) {
+    const user = req.user;
+    console.log(user);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return this.usersService.findOne(+user.id);
   }
 
   @Get(':id')

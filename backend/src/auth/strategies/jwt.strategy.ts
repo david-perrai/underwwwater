@@ -4,7 +4,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UsersService } from '../../domain/users/users.service';
 
 export type Payload = {
-  sub: number;
+  id: number;
   email: string;
   username: string;
 };
@@ -20,14 +20,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: Payload) {
-    const user = await this.usersService.findOne(payload.sub);
+    const user = await this.usersService.findOne(payload.id);
 
     if (!user) {
       throw new UnauthorizedException();
     }
 
     return {
-      id: payload.sub,
+      id: payload.id,
       email: payload.email,
       username: payload.username,
     };

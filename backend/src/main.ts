@@ -17,6 +17,9 @@ async function bootstrap() {
     .setTitle('Underwwwater API')
     .setDescription('The underwwwater API description')
     .setVersion('1.0')
+    .addTag('auth')
+    .addTag('users')
+    .addTag('dives')
     .addBearerAuth()
     .build();
 
@@ -35,4 +38,7 @@ async function bootstrap() {
   });
 }
 
-bootstrap();
+bootstrap().catch((err) => {
+  Logger.error(err);
+  process.exit(1);
+});

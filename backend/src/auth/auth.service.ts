@@ -91,7 +91,7 @@ export class AuthService {
         ) as any,
       }),
       this.jwtService.signAsync(
-        { sub: user.id },
+        { id: user.id },
         {
           secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
           expiresIn: this.configService.get<string>(
@@ -126,7 +126,7 @@ export class AuthService {
       const payload = this.jwtService.verify(token, {
         secret: this.configService.get<string>('JWT_SECRET'),
       });
-      return await this.usersService.findOne(+payload.sub);
+      return await this.usersService.findOne(+payload.id);
     } catch {
       return null;
     }
