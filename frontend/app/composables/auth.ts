@@ -5,6 +5,7 @@ import { useJWTParser } from "./utils/jwtParser";
 
 const USER_STATE_KEY = "user-auth";
 const ACCESS_TOKEN_KEY = "underwater_access_token";
+const { apiBase } = useRuntimeConfig().public;
 
 /**
  * Global User State composable
@@ -28,8 +29,7 @@ export async function useAuthLogin(
 ): Promise<any> {
   const userState = useUserState();
 
-  try {
-    const { apiBase } = useRuntimeConfig().public;
+  try {  
     const response = await $fetch<JWTAuthInterface>(`${apiBase}/auth/login`, {
       method: "POST",
       body: credentials,
@@ -71,6 +71,7 @@ export async function useAuthLogin(
  * @return {void}
  */
 export function useAuthLogout(): void {
+    
   const userState = useUserState();
   userState.value = {
     id: null,
@@ -88,6 +89,13 @@ export function useAuthLogout(): void {
   sessionStorage.removeItem(ACCESS_TOKEN_KEY);
 
   navigateTo({name: "index"});
+
+  $fetch(`${apiBase}/auth/logout`, {
+    method: "POST",      
+    headers: {
+      "Authorization": "Bearer " + sessionStorage.getItem(ACCESS_TOKEN_KEY)
+    }
+  });
 }
 
 /**
@@ -96,16 +104,17 @@ export function useAuthLogout(): void {
  */
 export function isLogged(): boolean {
   const userState = useUserState();
-  
-  if(!userState.value.id){
-    const accessToken = sessionStorage.getItem(ACCESS_TOKEN_KEY);
-    if(accessToken){
-      const parsedToken = useJWTParser(accessToken);
-      userState.value = parsedToken
-      return true;
-    }
-  }else{
+
+  if(userState.value.id){
     return true;
   }
+
+  const accessToken = sessionStorage.getItem(ACCESS_TOKEN_KEY);
+  if(accessToken){
+    const parsedToken = useJWTParser(accessToken);
+    userState.value = parsedToken
+    return true;
+  }
+   
   return false;
 }

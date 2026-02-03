@@ -7,7 +7,6 @@ import { Dive } from './entities/dive.entity';
 import { User } from '@/users/entities/user.entity';
 import { DivingType } from './entities/diving-type.entity';
 import { DivingEnvironment } from './entities/diving-environment.entity';
-import { DivingRole } from './entities/diving-role.entity';
 
 @Injectable()
 export class DivesService {
@@ -18,8 +17,6 @@ export class DivesService {
     private divingTypesRepository: Repository<DivingType>,
     @InjectRepository(DivingEnvironment)
     private divingEnvironmentsRepository: Repository<DivingEnvironment>,
-    @InjectRepository(DivingRole)
-    private divingRolesRepository: Repository<DivingRole>,
   ) {}
 
   async create(createDiveDto: CreateDiveDto, user: User): Promise<Dive> {
@@ -42,14 +39,6 @@ export class DivesService {
       throw new NotFoundException('Diving environment not found');
     }
 
-    const divingRole = await this.divingRolesRepository.findOneBy({
-      id: createDiveDto.divingRoleId,
-    });
-
-    if (!divingRole) {
-      throw new NotFoundException('Diving role not found');
-    }
-
     // Create the dive entity
     const dive = this.divesRepository.create({
       date: createDiveDto.date,
@@ -58,7 +47,7 @@ export class DivesService {
       gasTanks: createDiveDto.gasTanks,
       divingTypes,
       divingEnvironment,
-      divingRole,
+      diverRole: createDiveDto.diverRole,
       owner: user,
     });
 
@@ -70,7 +59,7 @@ export class DivesService {
       .createQueryBuilder('dive')
       .leftJoinAndSelect('dive.divingTypes', 'divingTypes')
       .leftJoinAndSelect('dive.divingEnvironment', 'divingEnvironment')
-      .leftJoinAndSelect('dive.divingRole', 'divingRole')
+      .leftJoinAndSelect('dive.divingEnvironment', 'divingEnvironment')
       .leftJoinAndSelect('dive.owner', 'owner');
 
     if (userId) {
@@ -83,7 +72,7 @@ export class DivesService {
   async findOne(id: number): Promise<Dive> {
     const dive = await this.divesRepository.findOne({
       where: { id },
-      relations: ['divingTypes', 'divingEnvironment', 'divingRole', 'owner'],
+      relations: ['divingTypes', 'divingEnvironment', 'owner'],
     });
 
     if (!dive) {
@@ -137,14 +126,8 @@ export class DivesService {
       dive.divingEnvironment = divingEnvironment;
     }
 
-    if (updateDiveDto.divingRoleId) {
-      const divingRole = await this.divingRolesRepository.findOneBy({
-        id: updateDiveDto.divingRoleId,
-      });
-      if (!divingRole) {
-        throw new NotFoundException('Diving role not found');
-      }
-      dive.divingRole = divingRole;
+    if (updateDiveDto.diverRole) {
+      dive.diverRole = updateDiveDto.diverRole;
     }
 
     return this.divesRepository.save(dive);

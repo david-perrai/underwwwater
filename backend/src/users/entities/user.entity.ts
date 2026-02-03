@@ -20,14 +20,14 @@ export class User {
   id: number;
 
   @ApiProperty({
-    example: 'user@example.com',
+    example: 'example@email.com',
     description: 'The user email address',
   })
   @Column({ unique: true, length: 180 })
   email: string;
 
   @ApiProperty({
-    example: 'johndoe',
+    example: 'john doe',
     description: 'The user username',
   })
   @Column({ unique: true, length: 255 })

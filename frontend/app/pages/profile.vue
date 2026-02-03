@@ -23,9 +23,9 @@ const { PROFILE } = translations.en.PAGES;
           >
             <PageTitle :label="PROFILE" :tag="'h2'" />
             <v-list-item
-              v-if="userState.data.avatar && userState.data.username"
-              :prepend-avatar="'/avatars/avatar' + userState.data.avatar + '.png'"
-              :title="userState.data.username"
+              v-if="userState.avatar && userState.username"
+              :prepend-avatar="'/avatars/avatar' + userState.avatar + '.png'"
+              :title="userState.username"
             />
           </v-img>
 

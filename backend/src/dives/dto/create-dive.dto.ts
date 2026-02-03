@@ -7,9 +7,11 @@ import {
   IsArray,
   ValidateNested,
   Min,
+  IsEnum,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { GasTankDto } from './gas-tank.dto';
+import { DiverRole } from '../entities/dive.entity';
 
 export class CreateDiveDto {
   @ApiProperty({
@@ -76,10 +78,11 @@ export class CreateDiveDto {
   divingEnvironmentId: number;
 
   @ApiProperty({
-    example: 1,
-    description: 'Diving role ID',
+    example: DiverRole.DIVER,
+    description: 'Diving role',
+    enum: DiverRole,
   })
   @IsNotEmpty()
-  @IsInt()
-  divingRoleId: number;
+  @IsEnum(DiverRole)
+  diverRole: DiverRole;
 }

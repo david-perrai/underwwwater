@@ -15,6 +15,7 @@ import {
   ApiResponse,
   ApiParam,
   ApiQuery,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { DivesService } from './dives.service';
 import { CreateDiveDto } from './dto/create-dive.dto';
@@ -22,6 +23,7 @@ import { UpdateDiveDto } from './dto/update-dive.dto';
 import { Dive } from './entities/dive.entity';
 
 @ApiTags('dives')
+@ApiBearerAuth()
 @Controller('dives')
 export class DivesController {
   constructor(private readonly divesService: DivesService) {}

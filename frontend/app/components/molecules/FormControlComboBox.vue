@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useGqlQueryManager } from "@/composables/gqlQueryManager";
+// import { useGqlQueryManager } from "@/composables/gqlQueryManager";
 import {
   type DivingThemeEdgeInterface,
   type DivingThemeInterface,
@@ -17,11 +17,12 @@ const props = defineProps<{
 
 const types = ref(props.value.edges.map((item) => item.node));
 
-const items = await useGqlQueryManager(props.action).then((result) => {
-  return result["divingTypes" as keyof typeof result].edges.map(
-    (item: { node: DivingThemeInterface }) => item.node
-  );
-});
+// const items = await useGqlQueryManager(props.action).then((result) => {
+//   return result["divingTypes" as keyof typeof result].edges.map(
+//     (item: { node: DivingThemeInterface }) => item.node
+//   );
+// });
+const items = [];
 </script>
 
 <template>

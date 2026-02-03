@@ -1,4 +1,4 @@
-import { DiveInterface } from "@/types/global/dive";
+import type { DiveInterface } from "@/types/global/dive";
 
 /**
  * Initialize dive object with default values

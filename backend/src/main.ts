@@ -14,9 +14,10 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('MyDives API')
-    .setDescription('The MyDives API description')
+    .setTitle('Underwwwater API')
+    .setDescription('The underwwwater API description')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

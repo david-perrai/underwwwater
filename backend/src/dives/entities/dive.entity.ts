@@ -14,9 +14,14 @@ import { ApiProperty } from '@nestjs/swagger';
 import { User } from '@users/entities/user.entity';
 import { DivingType } from './diving-type.entity';
 import { DivingEnvironment } from './diving-environment.entity';
-import { DivingRole } from './diving-role.entity';
 
 import { GasTank } from './gas-tank.entity';
+
+export enum DiverRole {
+  DIVER = 'diver',
+  INSTRUCTOR = 'instructor',
+  MONITOR = 'monitor',
+}
 
 @Entity('dives')
 export class Dive {
@@ -92,14 +97,16 @@ export class Dive {
   divingEnvironment: DivingEnvironment;
 
   @ApiProperty({
-    description: 'Diving role',
-    type: () => DivingRole,
+    example: DiverRole.DIVER,
+    description: 'The role of the diver during the dive',
+    enum: DiverRole,
   })
-  @ManyToOne(() => DivingRole, (role: DivingRole) => role.dives, {
-    nullable: false,
+  @Column({
+    type: 'enum',
+    enum: DiverRole,
+    default: DiverRole.DIVER,
   })
-  @JoinColumn()
-  divingRole: DivingRole;
+  diverRole: DiverRole;
 
   @ApiProperty({
     description: 'Dive owner',

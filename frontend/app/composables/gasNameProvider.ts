@@ -1,4 +1,4 @@
-import { GasMix } from "@/types/global/gas";
+import { type GasMix } from "@/types/global/gas";
 import { translations } from "@/i18n/index";
 
 const {

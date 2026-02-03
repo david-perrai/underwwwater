@@ -1,4 +1,4 @@
-import { GAS_LIST, GasMix } from "@/types/global/gas";
+import { GAS_LIST, type GasMix } from "@/types/global/gas";
 
 const MINIMUM_SUM_GAS = 0;
 const MAXIMUM_SUM_GAS = 100;
