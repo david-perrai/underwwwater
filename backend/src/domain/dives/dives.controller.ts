@@ -21,6 +21,8 @@ import { DivesService } from './dives.service';
 import { CreateDiveDto } from './dto/create-dive.dto';
 import { UpdateDiveDto } from './dto/update-dive.dto';
 import { Dive } from './entities/dive.entity';
+import { AuthenticatedUser } from '@auth/decorators/authenticated-user.decorator';
+import type { IAuthenticatedUser } from '@auth/types/authenticated-user';
 
 @ApiTags('dives')
 @ApiBearerAuth()
@@ -36,11 +38,11 @@ export class DivesController {
     type: Dive,
   })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
-  create(@Body() createDiveDto: CreateDiveDto) {
-    // TODO: Get user from JWT token/session
-    // For now, we'll need to pass a mock user or get it from request
-    // return this.divesService.create(createDiveDto, user);
-    return { message: 'Create dive endpoint - authentication required' };
+  create(
+    @AuthenticatedUser() user: IAuthenticatedUser,
+    @Body() createDiveDto: CreateDiveDto,
+  ) {
+    return this.divesService.create(createDiveDto, +user.id);
   }
 
   @Get()
