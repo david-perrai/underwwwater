@@ -19,7 +19,7 @@ export class DivesService {
     private divingEnvironmentsRepository: Repository<DivingEnvironment>,
   ) {}
 
-  async create(createDiveDto: CreateDiveDto, user: User): Promise<Dive> {
+  async create(createDiveDto: CreateDiveDto, userId: number): Promise<Dive> {
     // Fetch related entities
     const divingTypes = await this.divingTypesRepository.findBy({
       id: In(createDiveDto.divingTypeIds),
@@ -48,25 +48,27 @@ export class DivesService {
       divingTypes,
       divingEnvironment,
       diverRole: createDiveDto.diverRole,
-      owner: user,
+      owner: { id: userId },
     });
 
     return this.divesRepository.save(dive);
   }
 
-  async findAll(userId?: number): Promise<Dive[]> {
+  async findAll(
+    userId: number,
+    limit: number = 10,
+    offset: number = 0,
+  ): Promise<{ dives: Dive[]; count: number }> {
     const queryBuilder = this.divesRepository
       .createQueryBuilder('dive')
       .leftJoinAndSelect('dive.divingTypes', 'divingTypes')
       .leftJoinAndSelect('dive.divingEnvironment', 'divingEnvironment')
-      .leftJoinAndSelect('dive.divingEnvironment', 'divingEnvironment')
-      .leftJoinAndSelect('dive.owner', 'owner');
+      .where('dive.owner.id = :userId', { userId })
+      .take(limit)
+      .skip(offset);
 
-    if (userId) {
-      queryBuilder.where('dive.owner.id = :userId', { userId });
-    }
-
-    return queryBuilder.getMany();
+    const [dives, count] = await queryBuilder.getManyAndCount();
+    return { count, dives };
   }
 
   async findOne(id: number): Promise<Dive> {
