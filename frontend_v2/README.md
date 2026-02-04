@@ -82,3 +82,17 @@ Générer un composant prêt à l'emploi, déjà classifié CSS, avec son fichie
 # yarn
 yarn do:component
 ```
+
+Générer un composable:
+
+```bash
+# yarn
+yarn do:composable
+```
+
+Générer un store:
+
+```bash
+# yarn
+yarn do:store
+```
