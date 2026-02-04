@@ -5,9 +5,5 @@
 </script>
 
 <template>
-  <h1>Index page</h1>
-
-  <br />
-
-  <FormSignup />
+  <h1>tata</h1>
 </template>
