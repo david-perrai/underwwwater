@@ -55,8 +55,8 @@ export class DivesController {
     description: 'Return all dives.',
     type: [Dive],
   })
-  findAll(@Query('userId') userId?: string) {
-    return this.divesService.findAll(userId ? parseInt(userId, 10) : undefined);
+  findAll(@Query('userId') userId: string) {
+    return this.divesService.findAll(+userId);
   }
 
   @Get(':id')

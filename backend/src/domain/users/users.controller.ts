@@ -6,8 +6,7 @@ import {
   Patch,
   Param,
   Delete,
-  Req,
-  NotFoundException,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -17,16 +16,23 @@ import {
   ApiResponse,
   ApiTags,
   ApiBearerAuth,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { type AuthenticatedRequest } from '@auth/types/auth-request';
+import { type AuthenticatedUser } from '@auth/types/authenticated-user';
 import { Public } from '@auth/decorators/public.decorator';
+import { Dive } from '@domain/dives/entities/dive.entity';
+import { DivesService } from '@domain/dives/dives.service';
+import { ConnectedUser } from '@auth/decorators/connected-user.decorator';
 
 @ApiTags('users')
 @ApiBearerAuth()
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly divesService: DivesService,
+  ) {}
 
   @Post()
   @ApiOperation({ summary: 'Create user' })
@@ -50,13 +56,25 @@ export class UsersController {
   @Get('/me')
   @ApiOperation({ summary: 'Get current user' })
   @ApiResponse({ status: 200, description: 'Return current user.', type: User })
-  findMe(@Req() req: AuthenticatedRequest) {
-    const user = req.user;
-    console.log(user);
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
+  findMe(@ConnectedUser() user: AuthenticatedUser) {
     return this.usersService.findOne(+user.id);
+  }
+
+  @Get('/me/dives')
+  @ApiOperation({ summary: 'Get all dive for connected user' })
+  @ApiQuery({ name: 'limit', required: false, type: Number, example: 10 })
+  @ApiQuery({ name: 'offset', required: false, type: Number, example: 0 })
+  @ApiResponse({
+    status: 200,
+    description: 'Return the user dives.',
+    type: [Dive],
+  })
+  @ApiResponse({ status: 404, description: 'User not found.' })
+  findDives(
+    @ConnectedUser() user: AuthenticatedUser,
+    @Query() query: { limit: number; offset: number },
+  ) {
+    return this.divesService.findAll(user.id, query.limit, query.offset);
   }
 
   @Get(':id')
