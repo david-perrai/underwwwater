@@ -73,3 +73,12 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## Scripts
+
+Générer un composant prêt à l'emploi, déjà classifié CSS, avec son fichier asset SCSS:
+
+```bash
+# yarn
+yarn do:component
+```
