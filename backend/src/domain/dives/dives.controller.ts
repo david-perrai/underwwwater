@@ -24,6 +24,9 @@ import { Dive } from './entities/dive.entity';
 import { AuthenticatedUser } from '@auth/decorators/authenticated-user.decorator';
 import type { IAuthenticatedUser } from '@auth/types/authenticated-user';
 
+import { Role } from '@auth/enums/role.enum';
+import { Roles } from '@auth/decorators/roles.decorator';
+
 @ApiTags('dives')
 @ApiBearerAuth()
 @Controller('dives')
@@ -46,6 +49,7 @@ export class DivesController {
   }
 
   @Get()
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Get all dives' })
   @ApiQuery({
     name: 'userId',
@@ -86,10 +90,9 @@ export class DivesController {
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateDiveDto: UpdateDiveDto,
+    @AuthenticatedUser() user: IAuthenticatedUser,
   ) {
-    // TODO: Get user from JWT token/session
-    // return this.divesService.update(id, updateDiveDto, user);
-    return { message: 'Update dive endpoint - authentication required' };
+    return this.divesService.update(id, updateDiveDto, +user.id);
   }
 
   @Delete(':id')
@@ -100,9 +103,10 @@ export class DivesController {
     description: 'The dive has been successfully deleted.',
   })
   @ApiResponse({ status: 404, description: 'Dive not found.' })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    // TODO: Get user from JWT token/session
-    // return this.divesService.remove(id, user);
-    return { message: 'Delete dive endpoint - authentication required' };
+  remove(
+    @Param('id', ParseIntPipe) id: number,
+    @AuthenticatedUser() user: IAuthenticatedUser,
+  ) {
+    return this.divesService.remove(id, +user.id);
   }
 }

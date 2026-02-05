@@ -5,10 +5,10 @@ import {
   HttpCode,
   HttpStatus,
   UseGuards,
-  Req,
   Res,
+  UnauthorizedException,
 } from '@nestjs/common';
-import { type Request, type Response } from 'express';
+import { type Response } from 'express';
 import {
   ApiOperation,
   ApiResponse,
@@ -16,11 +16,14 @@ import {
   ApiBody,
   ApiBearerAuth,
 } from '@nestjs/swagger';
+import { ThrottlerGuard } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt.guard';
 import { JwtRefreshAuthGuard } from './guards/jwt-refresh.guard';
 import { LoginDto } from './dto/login.dto';
 import { Public } from './decorators/public.decorator';
+import type { IAuthenticatedUser } from './types/authenticated-user';
+import { AuthenticatedUser } from './decorators/authenticated-user.decorator';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -36,6 +39,7 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiBody({ type: LoginDto })
   @Public()
+  @UseGuards(ThrottlerGuard)
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(
@@ -68,10 +72,13 @@ export class AuthController {
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
   async refreshTokens(
-    @Req() req: Request,
+    @AuthenticatedUser() user: IAuthenticatedUser,
     @Res({ passthrough: true }) response: Response,
   ) {
-    const user = req.user as any;
+    if (!user.refreshToken) {
+      throw new UnauthorizedException('Refresh token cookie is not defined');
+    }
+
     const tokens = await this.authService.refreshTokens(
       user.id,
       user.refreshToken,
@@ -97,15 +104,13 @@ export class AuthController {
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   async logout(
-    @Req() req: Request,
+    @AuthenticatedUser() user: IAuthenticatedUser,
     @Res({ passthrough: true }) response: Response,
   ) {
-    const user = req.user as any;
     await this.authService.logout(user.id);
 
-    // Supprimer le cookie
     response.clearCookie('refreshToken');
 
-    return { message: 'Déconnexion réussie' };
+    return { message: 'Logged out successfully' };
   }
 }

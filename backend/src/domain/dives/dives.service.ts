@@ -4,7 +4,6 @@ import { Repository, In } from 'typeorm';
 import { CreateDiveDto } from './dto/create-dive.dto';
 import { UpdateDiveDto } from './dto/update-dive.dto';
 import { Dive } from './entities/dive.entity';
-import { User } from '@domain/users/entities/user.entity';
 import { DivingType } from './entities/diving-type.entity';
 import { DivingEnvironment } from './entities/diving-environment.entity';
 
@@ -87,12 +86,12 @@ export class DivesService {
   async update(
     id: number,
     updateDiveDto: UpdateDiveDto,
-    user: User,
+    userId: number,
   ): Promise<Dive> {
     const dive = await this.findOne(id);
 
     // Check ownership
-    if (dive?.owner?.id !== user.id) {
+    if (dive?.owner?.id !== userId) {
       throw new NotFoundException('You can only update your own dives');
     }
 
@@ -135,11 +134,11 @@ export class DivesService {
     return this.divesRepository.save(dive);
   }
 
-  async remove(id: number, user: User): Promise<void> {
+  async remove(id: number, userId: number): Promise<void> {
     const dive = await this.findOne(id);
 
     // Check ownership
-    if (dive.owner.id !== user.id) {
+    if (dive.owner.id !== userId) {
       throw new NotFoundException('You can only delete your own dives');
     }
 

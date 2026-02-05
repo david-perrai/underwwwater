@@ -1,0 +1,2 @@
+- [x] Ajouter une système fin de gestion de owning des ressources pour éviter un appel à des ressources non authorisées (exemple Récupération d'une plongée par un utilisateur qui ne la possède pas)
+- [ ] voir pour un accès spécifique a l'administrateur pour éditer lui même les plongées des autres utilisateurs.

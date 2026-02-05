@@ -7,6 +7,7 @@ export type Payload = {
   id: number;
   email: string;
   username: string;
+  roles: string[];
 };
 
 @Injectable()
@@ -30,6 +31,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       id: payload.id,
       email: payload.email,
       username: payload.username,
+      roles: payload.roles,
     };
   }
 }

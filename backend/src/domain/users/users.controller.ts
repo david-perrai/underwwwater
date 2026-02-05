@@ -25,6 +25,9 @@ import { DivesService } from '@domain/dives/dives.service';
 import { AuthenticatedUser } from '@auth/decorators/authenticated-user.decorator';
 import type { IAuthenticatedUser } from '@auth/types/authenticated-user';
 
+import { Role } from '@auth/enums/role.enum';
+import { Roles } from '@auth/decorators/roles.decorator';
+
 @ApiTags('users')
 @ApiBearerAuth()
 @Controller('users')
@@ -47,6 +50,7 @@ export class UsersController {
   }
 
   @Get()
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'List all users' })
   @ApiResponse({ status: 200, description: 'Return all users.', type: [User] })
   findAll() {

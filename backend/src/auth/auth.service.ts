@@ -32,13 +32,13 @@ export class AuthService {
     const user = await this.usersService.findByEmail(email);
 
     if (!user) {
-      throw new UnauthorizedException('Email ou mot de passe incorrect');
+      throw new UnauthorizedException('Incorrect email or password');
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Mot de passe incorrect');
+      throw new UnauthorizedException('Bad password');
     }
 
     const { password: _, refreshToken: __, ...result } = user;
@@ -53,15 +53,15 @@ export class AuthService {
     return tokens;
   }
 
-  async logout(userId: string): Promise<void> {
-    await this.usersService.update(+userId, { refreshToken: undefined });
+  async logout(userId: number): Promise<void> {
+    await this.usersService.update(userId, { refreshToken: undefined });
   }
 
-  async refreshTokens(userId: string, refreshToken: string): Promise<Tokens> {
-    const user = await this.usersService.findOne(+userId);
+  async refreshTokens(userId: number, refreshToken: string): Promise<Tokens> {
+    const user = await this.usersService.findOne(userId);
 
     if (!user || !user.refreshToken) {
-      throw new ForbiddenException('Accès refusé');
+      throw new ForbiddenException('Unauthorized');
     }
 
     const { password: _, refreshToken: __, ...userPayload } = user;
@@ -72,7 +72,7 @@ export class AuthService {
     );
 
     if (!refreshTokenMatches) {
-      throw new ForbiddenException('Accès refusé');
+      throw new ForbiddenException('Unauthorized');
     }
 
     const tokens = await this.getTokens(userPayload);
@@ -90,16 +90,13 @@ export class AuthService {
           '15m',
         ) as any,
       }),
-      this.jwtService.signAsync(
-        { id: user.id },
-        {
-          secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-          expiresIn: this.configService.get<string>(
-            'JWT_REFRESH_EXPIRATION',
-            '7d',
-          ) as any,
-        },
-      ),
+      this.jwtService.signAsync(user, {
+        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+        expiresIn: this.configService.get<string>(
+          'JWT_REFRESH_EXPIRATION',
+          '7d',
+        ) as any,
+      }),
     ]);
 
     return {
