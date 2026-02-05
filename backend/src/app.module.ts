@@ -8,6 +8,7 @@ import { DivesModule } from './domain/dives/dives.module';
 import { AuthModule } from '@auth/auth.module';
 import { JwtAuthGuard } from '@auth/guards/jwt.guard';
 import { RolesGuard } from '@auth/guards/roles.guard';
+import { StatsModule } from './domain/stats/stats.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { RolesGuard } from '@auth/guards/roles.guard';
     UsersModule,
     DivesModule,
     AuthModule,
+    StatsModule,
   ],
   controllers: [],
   providers: [

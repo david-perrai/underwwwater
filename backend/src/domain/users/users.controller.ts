@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  ForbiddenException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -96,7 +97,14 @@ export class UsersController {
     description: 'The user has been successfully updated.',
     type: User,
   })
-  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
+  update(
+    @AuthenticatedUser() user: IAuthenticatedUser,
+    @Param('id') id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    if (user.id !== +id) {
+      throw new ForbiddenException('You can update only your profile.');
+    }
     return this.usersService.update(id, updateUserDto);
   }
 
@@ -106,7 +114,13 @@ export class UsersController {
     status: 200,
     description: 'The user has been successfully deleted.',
   })
-  remove(@Param('id') id: number) {
+  remove(
+    @AuthenticatedUser() user: IAuthenticatedUser,
+    @Param('id') id: number,
+  ) {
+    if (user.id !== +id) {
+      throw new ForbiddenException('You can delete only your profile.');
+    }
     return this.usersService.remove(id);
   }
 }
