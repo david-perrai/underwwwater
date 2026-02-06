@@ -4,6 +4,6 @@
 // });
 </script>
 
-<template>
+<template>  
   <h1>tata</h1>
 </template>
