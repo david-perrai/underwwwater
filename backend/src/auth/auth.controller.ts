@@ -8,7 +8,7 @@ import {
   Res,
   UnauthorizedException,
 } from '@nestjs/common';
-import { type Response } from 'express';
+import { type FastifyReply } from 'fastify';
 import {
   ApiOperation,
   ApiResponse,
@@ -44,7 +44,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async login(
     @Body() loginDto: LoginDto,
-    @Res({ passthrough: true }) response: Response,
+    @Res({ passthrough: true }) response: FastifyReply,
   ) {
     const tokens = await this.authService.login(
       loginDto.email,
@@ -73,7 +73,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async refreshTokens(
     @AuthenticatedUser() user: IAuthenticatedUser,
-    @Res({ passthrough: true }) response: Response,
+    @Res({ passthrough: true }) response: FastifyReply,
   ) {
     if (!user.refreshToken) {
       throw new UnauthorizedException('Refresh token cookie is not defined');
@@ -105,7 +105,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async logout(
     @AuthenticatedUser() user: IAuthenticatedUser,
-    @Res({ passthrough: true }) response: Response,
+    @Res({ passthrough: true }) response: FastifyReply,
   ) {
     await this.authService.logout(user.id);
 
