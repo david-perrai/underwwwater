@@ -7,6 +7,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import fastifyCookie from '@fastify/cookie';
+import helmet from '@fastify/helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -34,11 +35,14 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.register(fastifyCookie);
+  await app.register(helmet);
   app.enableCors({
     origin: 'http://localhost:3000',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
+
+  //ajoute des headers de sécurité
 
   await app.listen(process.env.PORT ?? 3000, () => {
     Logger.log(`Application is running on port: ${process.env.PORT ?? 3000}`);
