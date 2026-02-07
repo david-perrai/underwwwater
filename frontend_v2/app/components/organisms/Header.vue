@@ -13,5 +13,5 @@
 </script>
 
 <template>
-  <div :class="['header']" :data-id="'header'"></div>
+  <div :class="['header']" :data-id="'header'"></div>  
 </template>

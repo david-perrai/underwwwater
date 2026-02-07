@@ -1,5 +1,18 @@
 # Architecture Decision Records
 
+## 05 Février 2026
+
+### Roles
+
+deux rôles sont définis :
+
+- ADMIN : accès à toutes les fonctionnalités.
+- USER : accès aux fonctionnalités de base.
+
+par défaut un utilisateur créé est un USER.
+
+Tous les endpoints findAll doivent être réservés aux ADMIN.
+
 ## 01 Février 2026
 
 ### Authentification

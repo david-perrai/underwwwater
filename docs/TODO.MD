@@ -1,0 +1,7 @@
+- [x] Ajouter une système fin de gestion de owning des ressources pour éviter un appel à des ressources non authorisées (exemple Récupération d'une plongée par un utilisateur qui ne la possède pas)
+- [ ] Réaliser des tests unitaires (optionnel des tests d'intégration)
+- [ ] voir pour un accès spécifique a l'administrateur pour éditer lui même les plongées des autres utilisateurs.
+- [ ] configurer des entêtes de sécurité
+- [ ] trouver un vps ou un hébergeur pour héberger le site
+- [ ] créer une CI/CD pour automatiser le déploiement et les tests unitaires
+- [ ] (optionnel) Ajouter sonar dans la chaine

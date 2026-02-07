@@ -2,10 +2,13 @@ import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { UsersModule } from './domain/users/users.module';
 import { DivesModule } from './domain/dives/dives.module';
 import { AuthModule } from '@auth/auth.module';
 import { JwtAuthGuard } from '@auth/guards/jwt.guard';
+import { RolesGuard } from '@auth/guards/roles.guard';
+import { StatsModule } from './domain/stats/stats.module';
 
 @Module({
   imports: [
@@ -13,6 +16,12 @@ import { JwtAuthGuard } from '@auth/guards/jwt.guard';
       isGlobal: true,
       envFilePath: '.env',
     }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 10,
+      },
+    ]),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
@@ -23,15 +32,16 @@ import { JwtAuthGuard } from '@auth/guards/jwt.guard';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: false, // Désactivé en production, utiliser les migrations
+        synchronize: false,
         migrations: [__dirname + '/migrations/*{.ts,.js}'],
-        migrationsRun: true, // Les migrations doivent être exécutées manuellement
+        migrationsRun: true,
       }),
       inject: [ConfigService],
     }),
     UsersModule,
     DivesModule,
     AuthModule,
+    StatsModule,
   ],
   controllers: [],
   providers: [
@@ -42,6 +52,10 @@ import { JwtAuthGuard } from '@auth/guards/jwt.guard';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })

@@ -9,6 +9,7 @@ import {
   ManyToMany,
   JoinTable,
   JoinColumn,
+  Index,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '@domain/users/entities/user.entity';
@@ -56,6 +57,7 @@ export class Dive {
     description: 'Total dive time in minutes',
   })
   @Column()
+  @Index()
   totalTime: number;
 
   @ApiProperty({
@@ -63,6 +65,7 @@ export class Dive {
     description: 'Maximum depth reached in meters',
   })
   @Column({ type: 'float' })
+  @Index()
   maxDepth: number;
 
   @ApiProperty({

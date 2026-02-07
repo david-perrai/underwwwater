@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  ForbiddenException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -24,6 +25,9 @@ import { Dive } from '@domain/dives/entities/dive.entity';
 import { DivesService } from '@domain/dives/dives.service';
 import { AuthenticatedUser } from '@auth/decorators/authenticated-user.decorator';
 import type { IAuthenticatedUser } from '@auth/types/authenticated-user';
+
+import { Role } from '@auth/enums/role.enum';
+import { Roles } from '@auth/decorators/roles.decorator';
 
 @ApiTags('users')
 @ApiBearerAuth()
@@ -47,6 +51,7 @@ export class UsersController {
   }
 
   @Get()
+  @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'List all users' })
   @ApiResponse({ status: 200, description: 'Return all users.', type: [User] })
   findAll() {
@@ -92,7 +97,14 @@ export class UsersController {
     description: 'The user has been successfully updated.',
     type: User,
   })
-  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
+  update(
+    @AuthenticatedUser() user: IAuthenticatedUser,
+    @Param('id') id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    if (user.id !== +id) {
+      throw new ForbiddenException('You can update only your profile.');
+    }
     return this.usersService.update(id, updateUserDto);
   }
 
@@ -102,7 +114,13 @@ export class UsersController {
     status: 200,
     description: 'The user has been successfully deleted.',
   })
-  remove(@Param('id') id: number) {
+  remove(
+    @AuthenticatedUser() user: IAuthenticatedUser,
+    @Param('id') id: number,
+  ) {
+    if (user.id !== +id) {
+      throw new ForbiddenException('You can delete only your profile.');
+    }
     return this.usersService.remove(id);
   }
 }
