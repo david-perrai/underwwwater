@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -27,6 +27,10 @@ export class UsersService {
 
   findByEmail(email: string) {
     return this.usersRepository.findOneBy({ email });
+  }
+
+  findOneBy(criteria: FindOptionsWhere<User>) {
+    return this.usersRepository.findOneBy(criteria);
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

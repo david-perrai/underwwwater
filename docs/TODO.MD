@@ -9,11 +9,17 @@
 
 - [x] configurer des entêtes de sécurité
 - [ ] Ajouter un système de réinitialisation de mot de passe
+      - [ ] (optionnel) enregistrer les tentatives de connexion avec les adresses IP et localisation
 
 ## Infrastructure et Qualité
 
-- [ ] ajouter mail catcher en local pour tester les emails
+- [ ] ajouter maildev en local pour tester les emails
 - [ ] Réaliser des tests unitaires (optionnel des tests d'intégration)
 - [ ] trouver un vps ou un hébergeur pour héberger le site
 - [ ] créer une CI/CD pour automatiser le déploiement et les tests unitaires
 - [ ] (optionnel) Ajouter sonar dans la chaine
+
+## Organisation
+
+- [ ] Valider l'usage d'un mono répo
+- [] Tagging pour les versions de releases (SemVer)
