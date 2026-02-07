@@ -14,12 +14,23 @@ const menuItems = ref([
 /** Computeds */
 
 /** Functions */
+/** Emits */
+// const emit = defineEmits<{
+//   click: [event: Event];
+// }>();
 
+/** Functions */
+const handleClick = (event: Event) => {
+  console.log(event);
+  // if (!props.disabled && !props.loading) {
+  //   emit("click", event);
+  // }
+};
 /** Lifecyle Hooks */
 </script>
 s
 <template>
-  <div :class="['header']" :data-id="'header'">
+  <header :class="['header']" :data-id="'header'">
     <PVMenubar :model="menuItems">
       <!-- Logo -->
       <template #start>
@@ -46,13 +57,12 @@ s
             ]"
           ></i>
         </a>
-      </template>
-      <template #end>
-        <div class="flex items-center gap-2">
-          <InputText placeholder="Search" type="text" class="w-32 sm:w-auto" />
-          <Avatar image="/images/avatar/amyelsner.png" shape="circle" />
-        </div>
       </template> -->
+
+      <!-- Auth -->
+      <template #end>
+        <Button @click="handleClick" :label="'login'" />
+      </template>
     </PVMenubar>
-  </div>
+  </header>
 </template>

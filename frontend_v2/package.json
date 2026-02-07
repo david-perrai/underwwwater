@@ -28,6 +28,8 @@
     "@primevue/nuxt-module": "^4.5.4",
     "@types/node": "^25.2.1",
     "sass": "^1.97.3",
-    "tsx": "^4.21.0"
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.2.4"
   }
 }
