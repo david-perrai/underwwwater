@@ -23,6 +23,15 @@ export default defineNuxtConfig({
       apiBase: process.env.API_BASE_URL || "http://localhost:3001",
     },
   },
+  typescript: {
+    strict: true,
+    typeCheck: true,
+  },
+
+  // Auto-import des types
+  imports: {
+    dirs: ["types/**"],
+  },
 
   /*********** i18n ***********/
   i18n: {
