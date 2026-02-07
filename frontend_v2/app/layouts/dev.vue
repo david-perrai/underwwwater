@@ -1,6 +1,6 @@
 <template>
-  <div :class="['layout layout--default']">
-    <Header />
+  <div :class="['layout layout--sandbox']">
+    <PVButton label="Verify" />
 
     <slot />
   </div>
