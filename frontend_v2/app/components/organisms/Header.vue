@@ -2,6 +2,12 @@
 /** Props */
 
 /** Datas */
+const menuItems = ref([
+  {
+    label: "Home",
+    icon: "pi pi-home",
+  },
+]);
 
 /** Stores and Composables */
 
@@ -14,7 +20,8 @@
 s
 <template>
   <div :class="['header']" :data-id="'header'">
-    <PVMenubar :model="items">
+    <PVMenubar :model="menuItems">
+      <!-- Logo -->
       <template #start>
         <Logo />
       </template>

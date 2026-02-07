@@ -78,6 +78,6 @@ export default defineNuxtConfig({
 
   /*********** Nuxt Fonts ***********/
   fonts: {
-    families: [{ name: "Barlow", provider: "google" }],
+    families: [{ name: "Barlow-Condensed", provider: "google" }],
   },
 });
