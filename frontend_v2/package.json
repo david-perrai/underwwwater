@@ -13,6 +13,7 @@
     "do:store": "tsx scripts/generate-store.ts"
   },
   "dependencies": {
+    "@nuxt/fonts": "^0.13.0",
     "@nuxtjs/i18n": "10.2.1",
     "@pinia/nuxt": "0.11.3",
     "@primeuix/themes": "^2.0.3",

@@ -1,0 +1,17 @@
+@use '../variables' as *;
+
+.logo {
+  font-size: 14px;
+  text-decoration: none;
+
+  &__inner {
+    font-family: Barlow, sans-serif;
+    color: $white;
+
+    &-bold {
+      font-weight: bold;
+      text-shadow: rgba(119,209,199,1) 0px 0px 20px;
+      color: $greeny-blue;
+    }
+  }
+}
