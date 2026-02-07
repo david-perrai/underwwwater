@@ -1,3 +1,6 @@
+@use './_variables.scss';
+
 @use './themes/_layouts.scss';
 
 @use './organisms/_header.scss';
+@use './atoms/_logo.scss';
