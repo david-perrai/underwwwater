@@ -3,12 +3,16 @@ import {
   Injectable,
   UnauthorizedException,
   ForbiddenException,
+  NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
+import * as crypto from 'crypto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../domain/users/users.service';
 import { User } from '@domain/users/entities/user.entity';
+import { MailService } from '../mail/mail.service';
 
 export interface Tokens {
   accessToken: string;
@@ -17,7 +21,11 @@ export interface Tokens {
 
 export type UserPayload = Omit<
   User,
-  'password' | 'refreshToken' | 'hashPasswordAndRefreshToken'
+  | 'password'
+  | 'refreshToken'
+  | 'hashPasswordAndRefreshToken'
+  | 'resetPasswordToken'
+  | 'resetPasswordExpires'
 >;
 
 @Injectable()
@@ -26,6 +34,7 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private configService: ConfigService,
+    private mailService: MailService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<UserPayload> {
@@ -127,5 +136,45 @@ export class AuthService {
     } catch {
       return null;
     }
+  }
+
+  async forgotPassword(email: string): Promise<void> {
+    const user = await this.usersService.findByEmail(email);
+
+    if (!user) {
+      // Pour des raisons de sécurité, on ne dit pas si l'utilisateur existe ou non
+      return;
+    }
+
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetTokenExpires = new Date();
+    resetTokenExpires.setMinutes(resetTokenExpires.getMinutes() + 15);
+
+    await this.usersService.update(user.id, {
+      resetPasswordToken: resetToken,
+      resetPasswordExpires: resetTokenExpires,
+    });
+
+    await this.mailService.sendPasswordResetEmail(user.email, resetToken);
+  }
+
+  async resetPassword(token: string, newPassword: string): Promise<void> {
+    const user = await this.usersService.findOneBy({
+      resetPasswordToken: token,
+    });
+
+    if (
+      !user ||
+      !user.resetPasswordExpires ||
+      user.resetPasswordExpires < new Date()
+    ) {
+      throw new BadRequestException('Token is invalid or expired');
+    }
+
+    await this.usersService.update(user.id, {
+      password: newPassword,
+      resetPasswordToken: undefined,
+      resetPasswordExpires: undefined,
+    });
   }
 }

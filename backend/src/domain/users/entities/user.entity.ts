@@ -49,6 +49,14 @@ export class User {
   @Column({ nullable: true })
   refreshToken: string;
 
+  @Exclude()
+  @Column({ nullable: true })
+  resetPasswordToken: string;
+
+  @Exclude()
+  @Column({ type: 'timestamp', nullable: true })
+  resetPasswordExpires: Date;
+
   @ApiProperty({
     example: 'https://example.com/avatar.jpg',
     description: 'The user avatar URL',

@@ -9,6 +9,7 @@ import { AuthModule } from '@auth/auth.module';
 import { JwtAuthGuard } from '@auth/guards/jwt.guard';
 import { RolesGuard } from '@auth/guards/roles.guard';
 import { StatsModule } from './domain/stats/stats.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { StatsModule } from './domain/stats/stats.module';
     DivesModule,
     AuthModule,
     StatsModule,
+    MailModule,
   ],
   controllers: [],
   providers: [
