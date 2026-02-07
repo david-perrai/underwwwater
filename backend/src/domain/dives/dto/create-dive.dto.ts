@@ -85,5 +85,4 @@ export class CreateDiveDto {
   @IsNotEmpty()
   @IsEnum(DiverRole)
   diverRole: DiverRole;
-
 }
