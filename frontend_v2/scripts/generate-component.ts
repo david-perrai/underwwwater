@@ -83,7 +83,7 @@ const addScssImport = (
   }
 
   const content = readFileSync(mainScssPath, "utf-8");
-  const importStatement = `@use './${type}/${fileName.replace(".scss", "").replace("_", "")}';\n`;
+  const importStatement = `@use './${type}/_${fileName}';\n`;
 
   if (content.includes(importStatement.trim())) {
     console.log("⚠️  Import already exists in main.scss");

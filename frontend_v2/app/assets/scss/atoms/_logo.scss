@@ -5,12 +5,12 @@
   text-decoration: none;
 
   &__inner {
-    font-family: Barlow, sans-serif;
+    font-family: $font-barlow;
     color: $white;
 
     &-bold {
       font-weight: bold;
-      text-shadow: rgba(119,209,199,1) 0px 0px 20px;
+      text-shadow: rgba(119, 209, 199, 1) 0px 0px 20px;
       color: $greeny-blue;
     }
   }
