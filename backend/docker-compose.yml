@@ -15,6 +15,16 @@ services:
     networks:
       - underwwwater-network
 
+  maildev:
+    image: maildev/maildev
+    container_name: underwwwater-maildev
+    restart: always
+    ports:
+      - '1080:1080'
+      - '1025:1025'
+    networks:
+      - underwwwater-network
+
 volumes:
   postgres_data:
 

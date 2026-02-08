@@ -115,7 +115,10 @@ export class Dive {
     description: 'Dive owner',
     type: () => User,
   })
-  @ManyToOne(() => User, (user) => user.dives, { nullable: false })
+  @ManyToOne(() => User, (user) => user.dives, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   owner: User;
 }

@@ -34,9 +34,9 @@ cp .env.example .env
 
 Assurez-vous que les variables correspondent à votre configuration (les valeurs par défaut fonctionnent avec le Docker Compose fourni).
 
-### 3. Démarrer la base de données
+### 3. Démarrer la base de données et maildev
 
-Lancez le conteneur PostgreSQL :
+Lancez le conteneur PostgreSQL et maildev :
 
 ```bash
 docker-compose up -d
@@ -110,3 +110,13 @@ npm run test:e2e
 # couverture de test
 npm run test:cov
 ```
+
+## 📬 Maildev
+
+En mode developpement, maildev est lancé avec le docker-compose. et permet de tester les emails.
+l'adresse du serveur smtp maildev est `localhost:1025`.
+
+Accédez aux emails envoyés par maildev :
+**[http://localhost:1080](http://localhost:1080)**
+
+> Attention : la mise en forme ne prévaux pas des tests sur de vrai boite email. Le rendu html étant fait sur navigateur.

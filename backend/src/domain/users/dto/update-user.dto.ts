@@ -3,4 +3,6 @@ import { CreateUserDto } from './create-user.dto';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
   refreshToken?: string;
+  resetPasswordToken?: string;
+  resetPasswordExpires?: Date;
 }
