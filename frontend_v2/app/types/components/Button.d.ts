@@ -4,12 +4,12 @@ export interface Button {
   iconPos?: "left" | "right" | "top" | "bottom";
   badge?: string;
   badgeSeverity?:
-    | "secondary"
-    | "success"
-    | "info"
-    | "warn"
-    | "danger"
-    | "contrast";
+  | "secondary"
+  | "success"
+  | "info"
+  | "warn"
+  | "danger"
+  | "contrast";
   loading?: boolean;
   loadingIcon?: string;
   link?: boolean;
