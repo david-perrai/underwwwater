@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import { useAuthControllerLogin } from '~/api/generated/auth/auth';
+import { statsControllerGetGlobalStats } from '~/api/generated/stats/stats';
+import { usersControllerFindMe } from '~/api/generated/users/users';
+import { useAuthStore } from '~/stores/auth';
+
 /** Props */
 
 /** Datas */
@@ -11,6 +16,8 @@ const menuItems = ref([
 
 /** Stores and Composables */
 
+const authControllerLogin = useAuthControllerLogin();
+
 /** Computeds */
 
 /** Functions */
@@ -20,11 +27,35 @@ const menuItems = ref([
 // }>();
 
 /** Functions */
-const handleClick = (event: Event) => {
+const handleClick = async (event: Event) => {
   console.log(event);
   // if (!props.disabled && !props.loading) {
   //   emit("click", event);
   // }
+
+
+  // exemple de login avec l'api
+  const res = await authControllerLogin.mutateAsync({
+    data: {
+      email: "user@undewwwater.com",
+      password: "password123",
+    },
+  });
+
+
+  const authStore = useAuthStore();
+  if (res.status === 200) {
+    authStore.setAccessToken(res.data.accessToken);
+  }
+
+  //exemple de récupération des données de l'utilisateur via api authentifié
+  const myDives = await usersControllerFindMe();
+  console.log(myDives);
+
+  //exemple de récupération des données statistiques globales via api authentifié
+  const globalStats = await statsControllerGetGlobalStats();
+  console.log(globalStats);
+
 };
 /** Lifecyle Hooks */
 </script>

@@ -72,3 +72,22 @@ export class GlobalStats {
   @ApiProperty()
   totalUsers: TotalUsers;
 }
+
+export class AverageDepthPerMonth {
+  @ApiProperty({ example: '2024-01' })
+  month: string;
+
+  @ApiProperty({ example: 18.5 })
+  averageDepth: number;
+}
+
+export class UserStats {
+  @ApiProperty()
+  numberOfDives: number;
+
+  @ApiProperty()
+  totalImmersedTimeInMinutes: number;
+
+  @ApiProperty({ type: [AverageDepthPerMonth] })
+  averageDepthPerMonth: AverageDepthPerMonth[];
+}
