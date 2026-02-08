@@ -28,7 +28,6 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
 
-  // Auto-import des types
   imports: {
     dirs: ["types/**"],
   },
@@ -87,6 +86,10 @@ export default defineNuxtConfig({
 
   /*********** Nuxt Fonts ***********/
   fonts: {
-    families: [{ name: "Barlow-Condensed", provider: "google" }],
+    families: [
+      { name: "Barlow-Condensed", provider: "google" },
+      { name: "Playfair Display", provider: "google" },
+      { name: "Roboto", provider: "google" },
+    ],
   },
 });
