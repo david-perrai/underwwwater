@@ -16,7 +16,13 @@ const question = (query: string): Promise<string> => {
 const toPascalCase = (str: string): string => {
   return str
     .trim()
+    // Insère un espace avant les majuscules qui suivent des minuscules (camelCase)
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    // Insère un espace avant les majuscules qui suivent des chiffres
+    .replace(/([0-9])([A-Z])/g, '$1 $2')
+    // Divise sur espaces, tirets, underscores
     .split(/[\s-_]+/)
+    .filter(word => word.length > 0)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join('');
 };
@@ -29,7 +35,7 @@ const toCamelCase = (str: string): string => {
 const generateComposableTemplate = (composableName: string): string => {
   const camelName = toCamelCase(composableName);
   const pascalName = toPascalCase(composableName);
-  
+
   return `/**
  * ${pascalName} Composable
  * @description Add your composable description here
@@ -65,7 +71,7 @@ const run = async (): Promise<void> => {
 
   // Ask for composable name
   const nameAnswer = await question('Enter composable name (without "use" prefix): ');
-  
+
   if (!nameAnswer.trim()) {
     console.error('❌ Composable name cannot be empty');
     readline.close();
@@ -86,7 +92,7 @@ const run = async (): Promise<void> => {
 
   // Create composable file
   const composableFilePath = resolve(composablesPath, fileName);
-  
+
   if (existsSync(composableFilePath)) {
     const overwrite = await question(
       `⚠️  ${fileName} already exists. Overwrite? (y/n): `
