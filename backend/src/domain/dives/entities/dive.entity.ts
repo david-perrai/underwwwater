@@ -12,7 +12,7 @@ import {
   Index,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { User } from '@domain/users/entities/user.entity';
+import { User } from '../../../domain/users/entities/user.entity';
 import { DivingType } from './diving-type.entity';
 import { DivingEnvironment } from './diving-environment.entity';
 
