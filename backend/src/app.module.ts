@@ -29,6 +29,7 @@ import { MailModule } from './mail/mail.module';
         type: 'postgres',
         host: configService.get('POSTGRES_HOST'),
         port: +configService.get('DB_PORT'),
+        ssl: configService.get('NODE_ENV') === 'production',
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DATABASE'),
