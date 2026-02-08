@@ -10,9 +10,9 @@ import * as crypto from 'crypto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
-import { UsersService } from '../domain/users/users.service';
-import { User } from '../domain/users/entities/user.entity';
-import { MailService } from '../mail/mail.service';
+import { UsersService } from '@/domain/users/users.service';
+import { User } from '@/domain/users/entities/user.entity';
+import { MailService } from '@mail/mail.service';
 
 export interface Tokens {
   accessToken: string;

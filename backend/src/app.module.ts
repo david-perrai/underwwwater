@@ -5,9 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { UsersModule } from './domain/users/users.module';
 import { DivesModule } from './domain/dives/dives.module';
-import { AuthModule } from '@auth/auth.module';
-import { JwtAuthGuard } from '@auth/guards/jwt.guard';
-import { RolesGuard } from '@auth/guards/roles.guard';
+import { AuthModule } from '@/auth/auth.module';
+import { JwtAuthGuard } from '@/auth/guards/jwt.guard';
+import { RolesGuard } from '@/auth/guards/roles.guard';
 import { StatsModule } from './domain/stats/stats.module';
 import { MailModule } from './mail/mail.module';
 

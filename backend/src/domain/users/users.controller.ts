@@ -20,14 +20,14 @@ import {
   ApiQuery,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { Public } from '../../auth/decorators/public.decorator';
-import { Dive } from '../../domain/dives/entities/dive.entity';
-import { DivesService } from '../../domain/dives/dives.service';
-import { AuthenticatedUser } from '../../auth/decorators/authenticated-user.decorator';
-import type { IAuthenticatedUser } from '../../auth/types/authenticated-user';
+import { Public } from '@/auth/decorators/public.decorator';
+import { Dive } from '@/domain/dives/entities/dive.entity';
+import { DivesService } from '@/domain/dives/dives.service';
+import { AuthenticatedUser } from '@/auth/decorators/authenticated-user.decorator';
+import type { IAuthenticatedUser } from '@/auth/types/authenticated-user';
 
-import { Role } from '@auth/enums/role.enum';
-import { Roles } from '@auth/decorators/roles.decorator';
+import { Role } from '@/auth/enums/role.enum';
+import { Roles } from '@/auth/decorators/roles.decorator';
 
 @ApiTags('users')
 @ApiBearerAuth()

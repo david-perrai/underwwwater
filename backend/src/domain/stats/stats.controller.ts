@@ -7,8 +7,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { GlobalStats, UserStats } from './entities/stats';
-import { AuthenticatedUser } from '@auth/decorators/authenticated-user.decorator';
-import type { IAuthenticatedUser } from '@auth/types/authenticated-user';
+import { AuthenticatedUser } from '@/auth/decorators/authenticated-user.decorator';
+import type { IAuthenticatedUser } from '@/auth/types/authenticated-user';
 
 @ApiTags('stats')
 @Controller('stats')

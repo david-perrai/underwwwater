@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
-import { DivingEnvironment } from '../domain/dives/entities/diving-environment.entity';
-import { DivingType } from '../domain/dives/entities/diving-type.entity';
+import { DivingEnvironment } from '@/domain/dives/entities/diving-environment.entity';
+import { DivingType } from '@/domain/dives/entities/diving-type.entity';
 
 export default class DivingDataSeeder {
   public async run(dataSource: DataSource): Promise<any> {

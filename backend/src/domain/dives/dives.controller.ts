@@ -21,11 +21,11 @@ import { DivesService } from './dives.service';
 import { CreateDiveDto } from './dto/create-dive.dto';
 import { UpdateDiveDto } from './dto/update-dive.dto';
 import { Dive } from './entities/dive.entity';
-import { AuthenticatedUser } from '@auth/decorators/authenticated-user.decorator';
-import type { IAuthenticatedUser } from '@auth/types/authenticated-user';
+import { AuthenticatedUser } from '@/auth/decorators/authenticated-user.decorator';
+import type { IAuthenticatedUser } from '@/auth/types/authenticated-user';
 
-import { Role } from '@auth/enums/role.enum';
-import { Roles } from '@auth/decorators/roles.decorator';
+import { Role } from '@/auth/enums/role.enum';
+import { Roles } from '@/auth/decorators/roles.decorator';
 
 @ApiTags('dives')
 @ApiBearerAuth()
