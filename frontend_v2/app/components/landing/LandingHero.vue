@@ -17,8 +17,9 @@
       </p>
       
       <div class="landing-hero__actions">
-        <BaseButton label="Start Logging" to="/login" variant="primary" icon="pi pi-arrow-right" />
-        <BaseButton label="Learn More" to="#features" variant="secondary" />
+        <Button label="Login" to="/login" size="large" severity="primary" />
+        <Button label="Sign-up" to="/login" size="large" severity="secondary" />
+        <Button label="Learn More" to="#features" size="large" severity="contrast" outlined />
       </div>
     </div>
     
