@@ -24,6 +24,6 @@ useHead({
 .landing-page {
   width: 100%;
   min-height: 100vh;
-  background-color: $deep-navy;
+  background-color: $color-navy;
 }
 </style>

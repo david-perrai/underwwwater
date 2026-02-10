@@ -33,7 +33,7 @@ const currentYear = new Date().getFullYear();
 
 <style lang="scss" scoped>
 .landing-footer {
-  background-color: darken($deep-navy, 2%);
+  background-color: darken($color-navy, 2%);
   padding: 4rem 1rem 2rem;
   color: $stone-gray;
   border-top: 1px solid rgba($white, 0.05);
@@ -68,7 +68,7 @@ const currentYear = new Date().getFullYear();
     .tagline {
       font-family: $font-roboto;
       font-size: 0.9rem;
-      color: $turquoise;
+      color: $color-turquoise;
     }
   }
 
@@ -82,7 +82,7 @@ const currentYear = new Date().getFullYear();
       transition: color 0.2s;
       
       &:hover {
-        color: $turquoise;
+        color: $color-turquoise;
       }
     }
   }
@@ -99,7 +99,7 @@ const currentYear = new Date().getFullYear();
       
       &:hover {
         opacity: 1;
-        color: $turquoise;
+        color: $color-turquoise;
       }
     }
   }

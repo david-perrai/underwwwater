@@ -10,7 +10,7 @@ const features = [
     title: "Advanced Statistics",
     description: "Visualize your progress with comprehensive charts. Track your bottom time, depth trends, and more.",
     icon: "pi pi-chart-line",
-    color: "#00FFEF" // $turquoise
+    color: "#00FFEF" // $color-turquoise
   },
   {
     title: "Community & Sharing",
@@ -49,7 +49,7 @@ const features = [
 <style lang="scss" scoped>
 .landing-features {
   padding: 6rem 1rem;
-  background-color: $deep-navy;
+  background-color: $color-navy;
   color: $white;
 
   .container {

@@ -1,0 +1,38 @@
+@use 'colors' as *;
+
+:root {
+    // Primary
+    --p-primary-color: #{$color-turquoise};
+    --p-primary-500: #{$color-turquoise};
+    --p-primary-600: #{darken($color-turquoise, 10%)};
+    --p-primary-700: #{darken($color-turquoise, 20%)};
+
+    // Success (Green)
+    --p-green-500: #{$color-green};
+    --p-green-600: #{darken($color-green, 10%)};
+    --p-green-700: #{darken($color-green, 20%)};
+
+    // Danger (Red)
+    --p-red-500: #{$color-red};
+    --p-red-600: #{darken($color-red, 10%)};
+    --p-red-700: #{darken($color-red, 20%)};
+
+    // Warning (Yellow)
+    --p-yellow-500: #{$color-yellow};
+    --p-yellow-600: #{darken($color-yellow, 10%)};
+    --p-yellow-700: #{darken($color-yellow, 20%)};
+
+    // Info (Blue)
+    --p-blue-500: #{$color-blue};
+    --p-blue-600: #{darken($color-blue, 10%)};
+    --p-blue-700: #{darken($color-blue, 20%)};
+
+    // Secondary (Gray)
+    // Aura often uses slate/gray palettes differently, but we can try to override semantic tokens if needed.
+    // For now, let's map the base palette colors.
+
+    // General Button Overrides to ensure they pop on dark theme
+    .p-button {
+        font-weight: 600;
+    }
+}

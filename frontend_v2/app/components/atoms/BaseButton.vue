@@ -29,15 +29,15 @@ const props = defineProps<{
   transition: all 0.3s ease;
 
   &.is-primary {
-    background: $turquoise;
-    color: $deep-navy;
-    border: 1px solid $turquoise;
+    background: $color-turquoise;
+    color: $color-navy;
+    border: 1px solid $color-turquoise;
 
     &:hover {
-      background: lighten($turquoise, 10%);
-      border-color: lighten($turquoise, 10%);
+      background: lighten($color-turquoise, 10%);
+      border-color: lighten($color-turquoise, 10%);
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba($turquoise, 0.3);
+      box-shadow: 0 4px 12px rgba($color-turquoise, 0.3);
     }
   }
 

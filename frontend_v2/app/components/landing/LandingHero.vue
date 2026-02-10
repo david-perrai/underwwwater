@@ -50,9 +50,9 @@
     height: 100%;
     background: linear-gradient(
       to bottom,
-      rgba($deep-navy, 0.3) 0%,
-      rgba($deep-navy, 0.6) 50%,
-      $deep-navy 100%
+      rgba($color-navy, 0.3) 0%,
+      rgba($color-navy, 0.6) 50%,
+      $color-navy 100%
     );
     z-index: 1;
   }
@@ -78,7 +78,7 @@
     }
 
     .highlight {
-      color: $turquoise;
+      color: $color-turquoise;
       font-style: italic;
     }
   }
