@@ -33,7 +33,7 @@
 ## components/Atoms
 
 - [ ] Textfield, champs de forms etc...
-- [ ] Button
+- [x] Button
 - [ ] Icon
 - [ ] Alert
 - [ ] Modal
@@ -66,19 +66,19 @@
 
 autre composables:
 - [ ] useCheckForm, qui gère la validation des formulaires à l'aide de regex pour faire un pré-check avant les erreurs backend. Affiche les erreurs en dessous des champs en rouge, bloque le submit si les champs ne sont pas valides. (=> évite de requêter inutilement le backend, même si le backend renverra aussi les erreurs)
-- [ ] useGasNameProvider, on lui passe un objet de type { oxygen: number, nitrogen: number, helium: number} et ça nous printe le nom du gaz (à repasser ensuite dans le i18n pour l'avoir dans la langue que l'on souhaite), qui sera utilisé dans plusieurs composants de l'app
+- [x] useGasNameProvider, on lui passe un objet de type { oxygen: number, nitrogen: number, helium: number} et ça nous printe le nom du gaz (à repasser ensuite dans le i18n pour l'avoir dans la langue que l'on souhaite), qui sera utilisé dans plusieurs composants de l'app
 ## pages
 
 Anon:
-- [ ] home (la landing page, ou on presente le projet, à revoir mais y'a dejà la base)
-- [ ] sandbox (juste une page pour voir tous les composants front, accessible uniquement en admin à terme)
+- [x] home (la landing page, ou on presente le projet, à revoir mais y'a dejà la base)
+- [x] sandbox (juste une page pour voir tous les composants front, accessible uniquement en admin à terme, on peut y ajouter les composants des que ils sont prêts, ou meme en cours)
 - [ ] global stats (une page de classement des plongeurs du site, pour le fun, celui qui a été le plus profond, le plus long, le plus rapide, etc...)
 - [ ] profile (profil du plongeur visible pour les autres plongeurs, sans tous les graphs mais des infos de base quand meme ), profile/uuid . Gestion de profils privé / public en base si on veut pas y apparaitre? (SSR)
-- [ ] dive (une plongée visible pour les autres plongeurs, sans tous les graphs mais des infos de base quand meme ), dive/uuid (SSR)
+- [ ] dive dive/uuid (SSR)(une plongée visible pour les autres plongeurs, on peut faire un composant commun pour cette page, et le click sur une dive dans notre liste de dives),
 
 
 Auth:
-- [ ] dashboard (la page dashboard des graphs geeks, c'est la version un peu plus fournie et perso de /profile pour les anons omg j'ai trop hâte). Cette page est la page principale de l'app une fois qu'on est loggué. En anon, on tombe sur la home (un peu comme fait Github en gros)
+- [ ] dashboard (la page dashboard des graphs geeks, c'est la version un peu plus fournie et perso de la page anon /profile qui permet de voir un profil d'un plongeur). Cette page est la page principale de l'app une fois qu'on est loggué. En anon, on tombe sur la home (un peu comme fait Github en gros)
 - [ ] settings (la page des paramètres, pour modifier le profil, niveau de plongée ? avatar?, nationalité?, le mot de passe, etc...)
 
 ## stores
