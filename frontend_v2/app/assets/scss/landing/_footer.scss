@@ -1,0 +1,83 @@
+@use '../variables' as *;
+@use "sass:color";
+
+.landing-footer {
+    background-color: color.scale($color-marine, $lightness: -2%);
+    padding: 4rem 1rem 2rem;
+    color: $stone-gray;
+    border-top: 1px solid rgba($color-white, 0.05);
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin-bottom: 3rem;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+
+    &__brand {
+        .logo-text {
+            font-family: $font-playfair;
+            font-size: 1.8rem;
+            color: $color-white;
+            margin-bottom: 0.25rem;
+        }
+
+        .tagline {
+            font-family: $font-roboto;
+            font-size: 0.9rem;
+            color: $color-turquoise;
+        }
+    }
+
+    &__links {
+        display: flex;
+        gap: 2rem;
+
+        .footer-link {
+            color: $stone-gray;
+            text-decoration: none;
+            transition: color 0.2s;
+
+            &:hover {
+                color: $color-turquoise;
+            }
+        }
+    }
+
+    &__social {
+        display: flex;
+        gap: 1rem;
+
+        .social-icon {
+            color: $color-white;
+            font-size: 1.25rem;
+            transition: all 0.2s;
+            opacity: 0.7;
+
+            &:hover {
+                opacity: 1;
+                color: $color-turquoise;
+            }
+        }
+    }
+
+    &__bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid rgba($color-white, 0.05);
+        font-size: 0.85rem;
+        opacity: 0.5;
+    }
+}

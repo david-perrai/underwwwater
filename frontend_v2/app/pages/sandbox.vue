@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Button from "~/components/atoms/Button.vue";
 
-const severities = ["primary", "secondary", "success", "info", "warn", "danger", "contrast"];
+const severities: ("primary" | "secondary" | "success" | "info" | "warn" | "danger" | "contrast")[] = ["primary", "secondary", "success", "info", "warn", "danger", "contrast"];
 </script>
 
 <template>

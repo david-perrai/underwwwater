@@ -15,6 +15,8 @@ const props = defineProps<{
 </template>
 
 <style lang="scss" scoped>
+@use "sass:color";
+
 .btn-link {
   text-decoration: none;
 }
@@ -34,8 +36,8 @@ const props = defineProps<{
     border: 1px solid $color-turquoise;
 
     &:hover {
-      background: lighten($color-turquoise, 10%);
-      border-color: lighten($color-turquoise, 10%);
+      background: color.scale($color-turquoise, $lightness: 10%);
+      border-color: color.scale($color-turquoise, $lightness: 10%);
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba($color-turquoise, 0.3);
     }
@@ -43,11 +45,11 @@ const props = defineProps<{
 
   &.is-secondary {
     background: transparent;
-    color: $white;
-    border: 1px solid $white;
+    color: $color-white;
+    border: 1px solid $color-white;
 
     &:hover {
-      background: rgba($white, 0.1);
+      background: rgba($color-white, 0.1);
       transform: translateY(-2px);
     }
   }
