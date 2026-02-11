@@ -28,4 +28,5 @@ useHead({
   min-height: 100vh;
   background-color: $color-navy;
 }
+html { scroll-behavior: smooth; }
 </style>
