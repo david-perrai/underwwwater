@@ -9,6 +9,8 @@ import {
   TotalDives,
   TotalUsers,
   GlobalStats,
+  UserStats,
+  AverageDepthPerMonth,
 } from './entities/stats';
 
 @Injectable()
@@ -53,14 +55,53 @@ export class StatsService {
     return this.dataSource.query('SELECT COUNT(*) FROM users');
   }
 
+  private async countDivesByOwnerId(ownerId: number): Promise<number> {
+    return this.dataSource.query(
+      'SELECT COUNT(*) FROM dives WHERE "ownerId" = $1',
+      [ownerId],
+    );
+  }
+
+  private async totalImmersedTimeInMinutes(ownerId: number): Promise<number> {
+    return this.dataSource.query(
+      'SELECT SUM("totalTime") FROM dives WHERE "ownerId" = $1',
+      [ownerId],
+    );
+  }
+
+  private async getAverageDepthPerMonth(
+    userId: number,
+  ): Promise<AverageDepthPerMonth[]> {
+    return this.dataSource.query(
+      `SELECT 
+        TO_CHAR(date, 'YYYY-MM-01') as month, 
+        AVG("maxDepth") as "averageDepth"
+      FROM dives
+      WHERE "ownerId" = $1
+      GROUP BY month
+      ORDER BY month ASC`,
+      [userId],
+    );
+  }
+
   async getGlobalStats(): Promise<GlobalStats> {
-    const longestDive = await this.getLongestDive();
-    const deepestDive = await this.getDeepestDive();
-    const firstSubscribedUser = await this.getFirstSubscribedUser();
-    const lastSubscribedUser = await this.getLastSubscribedUser();
-    const mostActiveDiver = await this.getMostActiveDiver();
-    const totalDives = await this.getTotalDives();
-    const totalUsers = await this.getTotalUsers();
+    const [
+      longestDive,
+      deepestDive,
+      firstSubscribedUser,
+      lastSubscribedUser,
+      mostActiveDiver,
+      totalDives,
+      totalUsers,
+    ] = await Promise.all([
+      this.getLongestDive(),
+      this.getDeepestDive(),
+      this.getFirstSubscribedUser(),
+      this.getLastSubscribedUser(),
+      this.getMostActiveDiver(),
+      this.getTotalDives(),
+      this.getTotalUsers(),
+    ]);
 
     return {
       longestDive: longestDive[0],
@@ -70,6 +111,21 @@ export class StatsService {
       mostActiveDiver: mostActiveDiver[0],
       totalDives: totalDives[0],
       totalUsers: totalUsers[0],
+    };
+  }
+
+  async getMyStats(userId: number): Promise<UserStats> {
+    const [numberOfDives, totalImmersedTimeInMinutes, averageDepthPerMonth] =
+      await Promise.all([
+        this.countDivesByOwnerId(userId),
+        this.totalImmersedTimeInMinutes(userId),
+        this.getAverageDepthPerMonth(userId),
+      ]);
+
+    return {
+      numberOfDives: numberOfDives?.[0]?.count || 0,
+      totalImmersedTimeInMinutes: totalImmersedTimeInMinutes?.[0]?.sum || 0,
+      averageDepthPerMonth,
     };
   }
 }

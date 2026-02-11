@@ -52,23 +52,42 @@ export class TotalUsers {
 
 export class GlobalStats {
   @ApiProperty()
-  longestDive: LongestDive;
+  longestDive: LongestDive | undefined;
 
   @ApiProperty()
-  deepestDive: DeepestDive;
+  deepestDive: DeepestDive | undefined;
 
   @ApiProperty()
-  firstSubscribedUser: FirstSubscribedUser;
+  firstSubscribedUser: FirstSubscribedUser | undefined;
 
   @ApiProperty()
-  lastSubscribedUser: LastSubscribedUser;
+  lastSubscribedUser: LastSubscribedUser | undefined;
 
   @ApiProperty()
-  mostActiveDiver: MostActiveDiver;
+  mostActiveDiver: MostActiveDiver | undefined;
 
   @ApiProperty()
-  totalDives: TotalDives;
+  totalDives: TotalDives | undefined;
 
   @ApiProperty()
-  totalUsers: TotalUsers;
+  totalUsers: TotalUsers | undefined;
+}
+
+export class AverageDepthPerMonth {
+  @ApiProperty({ example: '2024-01' })
+  month: string;
+
+  @ApiProperty({ example: 18.5 })
+  averageDepth: number;
+}
+
+export class UserStats {
+  @ApiProperty()
+  numberOfDives: number;
+
+  @ApiProperty()
+  totalImmersedTimeInMinutes: number;
+
+  @ApiProperty({ type: [AverageDepthPerMonth] })
+  averageDepthPerMonth: AverageDepthPerMonth[];
 }

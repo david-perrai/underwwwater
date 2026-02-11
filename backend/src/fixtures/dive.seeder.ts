@@ -1,10 +1,9 @@
 import { DataSource } from 'typeorm';
-import { Dive, DiverRole } from '../domain/dives/entities/dive.entity';
-import { User } from '../domain/users/entities/user.entity';
-import { DivingEnvironment } from '../domain/dives/entities/diving-environment.entity';
-import { DivingType } from '../domain/dives/entities/diving-type.entity';
+import { Dive, DiverRole } from '@/domain/dives/entities/dive.entity';
+import { User } from '@/domain/users/entities/user.entity';
+import { DivingEnvironment } from '@/domain/dives/entities/diving-environment.entity';
+import { DivingType } from '@/domain/dives/entities/diving-type.entity';
 import { faker } from '@faker-js/faker';
-
 export default class DiveSeeder {
   public async run(dataSource: DataSource): Promise<any> {
     const diveRepository = dataSource.getRepository(Dive);

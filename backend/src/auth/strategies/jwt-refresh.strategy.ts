@@ -3,7 +3,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { FastifyRequest } from 'fastify';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { IAuthenticatedUser } from '@auth/types/authenticated-user';
+import { IAuthenticatedUser } from '@/auth/types/authenticated-user';
 
 @Injectable()
 export class JwtRefreshStrategy extends PassportStrategy(

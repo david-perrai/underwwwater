@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { User } from '../domain/users/entities/user.entity';
+import { User } from '@/domain/users/entities/user.entity';
 import { faker } from '@faker-js/faker';
 
 export default class UserSeeder {

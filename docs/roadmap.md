@@ -70,24 +70,26 @@ Devenir la plateforme de référence mondiale pour le suivi des activités de pl
 
 ### Différenciation Concurrentielle
 
-| Feature | Underwwwater | Subsurface | Dive+ | DiveMate |
-|---------|--------------|------------|-------|----------|
-| Dashboards Analytics | ✅ Avancés | ⚠️ Basiques | ✅ Oui | ✅ Oui |
-| Partage Social | ✅ Natif | ❌ Non | ⚠️ Limité | ✅ Oui |
-| Données Écologiques | ✅ Heatmaps + API | ❌ Non | ❌ Non | ❌ Non |
-| Gamification | ✅ Cartes TCG | ❌ Non | ⚠️ Badges | ❌ Non |
-| Import Auto Ordinateurs | ✅ Multi-formats | ✅ Oui | ⚠️ Limité | ✅ Oui |
-| B2B Clubs | ✅ Oui (v6) | ❌ Non | ❌ Non | ⚠️ Basique |
+| Feature                 | Underwwwater      | Subsurface  | Dive+     | DiveMate   |
+| ----------------------- | ----------------- | ----------- | --------- | ---------- |
+| Dashboards Analytics    | ✅ Avancés        | ⚠️ Basiques | ✅ Oui    | ✅ Oui     |
+| Partage Social          | ✅ Natif          | ❌ Non      | ⚠️ Limité | ✅ Oui     |
+| Données Écologiques     | ✅ Heatmaps + API | ❌ Non      | ❌ Non    | ❌ Non     |
+| Gamification            | ✅ Cartes TCG     | ❌ Non      | ⚠️ Badges | ❌ Non     |
+| Import Auto Ordinateurs | ✅ Multi-formats  | ✅ Oui      | ⚠️ Limité | ✅ Oui     |
+| B2B Clubs               | ✅ Oui (v6)       | ❌ Non      | ❌ Non    | ⚠️ Basique |
 
 ---
 
 ## 🗺️ Roadmap & Phases de Développement
 
 ### Phase 1 : MVP - Core Dive Logging (v1)
+
 **Durée estimée :** 3 mois  
 **Objectif :** Produit minimum viable utilisable quotidiennement
 
 #### Fonctionnalités
+
 - ✅ Landing page marketing (présentation, CTA signup/login)
 - ✅ Système d'authentification complet (inscription, connexion, déconnexion)
 - ✅ CRUD plongées via formulaire détaillé :
@@ -98,15 +100,16 @@ Devenir la plateforme de référence mondiale pour le suivi des activités de pl
   - Conditions (Visibilité, Courant, Température eau/air)
   - Notes personnelles
 - ✅ Dashboard utilisateur avec graphiques :
-  - Profondeur moyenne par mois
-  - Répartition par type de gaz
-  - Total plongées / heures immergé
-  - Timeline des plongées
+  - [x] Profondeur moyenne par mois
+  - [] Répartition par type de gaz
+  - [x] Total plongées / heures immergé
+  - [x] Timeline des plongées
 - ✅ Profil public/privé personnalisable
 - ✅ Gestion compte (modification mot de passe, suppression compte)
 - ✅ Visualisation détaillée d'une plongée (URL publique ou privée selon préférences)
 
 #### Critères de validation
+
 - [ ] 50+ early adopters actifs
 - [ ] Temps moyen d'ajout plongée < 2 minutes
 - [ ] Dashboard load time < 500ms
@@ -115,10 +118,12 @@ Devenir la plateforme de référence mondiale pour le suivi des activités de pl
 ---
 
 ### Phase 2 : Social Diving (v2)
+
 **Durée estimée :** 1 mois  
 **Objectif :** Créer l'engagement communautaire
 
 #### Fonctionnalités
+
 - 🔄 Partage de plongées entre utilisateurs (relation many-to-many)
 - 🔄 Système auteur/participants :
   - Un auteur unique (créateur de la fiche)
@@ -128,16 +133,19 @@ Devenir la plateforme de référence mondiale pour le suivi des activités de pl
 - 🔄 Commentaires sur plongées publiques
 
 #### Critères de validation
+
 - [ ] 20% des plongées partagées entre au moins 2 utilisateurs
 - [ ] Temps moyen de partage < 30 secondes
 
 ---
 
 ### Phase 3 : Dive Spots & Geolocation (v3)
+
 **Durée estimée :** 3 semaines  
 **Objectif :** Cartographier les plongées
 
 #### Fonctionnalités
+
 - ⏳ Ajout de spots de plongée avec coordonnées GPS
 - ⏳ Autocomplete spots via API OpenStreetMap/Google Places
 - ⏳ Carte interactive mondiale des plongées utilisateur
@@ -147,11 +155,13 @@ Devenir la plateforme de référence mondiale pour le suivi des activités de pl
 - ⏳ Spots personnalisés (ajout manuel si non référencé)
 
 #### Architecture de données
+
 - **Source initiale** : API OpenStreetMap + Google Places API
 - **Stockage local** : PostgreSQL + PostGIS pour performances
 - **Données stockées** : Nom, coordonnées GPS, pays, profondeur moyenne, type (mer/lac/rivière)
 
 #### Critères de validation
+
 - [ ] Autocomplete spots < 200ms
 - [ ] 70% des plongées avec spot assigné
 - [ ] Carte interactive fluide (60fps)
@@ -159,10 +169,12 @@ Devenir la plateforme de référence mondiale pour le suivi des activités de pl
 ---
 
 ### Phase 4 : Ecology & Species Tracking (v4)
+
 **Durée estimée :** 3 mois  
 **Objectif :** Science citoyenne marine
 
 #### Fonctionnalités
+
 - ⏳ Recensement espèces observées par plongée
 - ⏳ Base de données 50 000+ espèces marines
 - ⏳ Fiches détaillées par espèce :
@@ -181,18 +193,21 @@ Devenir la plateforme de référence mondiale pour le suivi des activités de pl
 #### Architecture de données
 
 **Sources :**
+
 - **GBIF** (Global Biodiversity Information Facility) : Base de données primaire
 - **WoRMS** (World Register of Marine Species) : Validation taxonomique
 - **FishBase** : Données complémentaires poissons
 - **IUCN Red List** : Statuts de conservation
 
 **Stratégie d'implémentation :**
+
 1. Import initial via script automatisé (~50k espèces marines 0-150m profondeur)
 2. Stockage local PostgreSQL pour performances (autocomplete < 50ms)
 3. Synchronisation mensuelle pour nouvelles espèces/mises à jour taxonomiques
 4. Enrichissement progressif (images Wikimedia Commons, traductions communautaires)
 
 **Relations BDD :**
+
 ```
 species (id, scientific_name, common_names_json, conservation_status, taxonomy_json, image_url)
   ↓
@@ -202,6 +217,7 @@ dives (id, spot_id, user_id, date, ...)
 ```
 
 #### Critères de validation
+
 - [ ] Base contient 40 000+ espèces après import
 - [ ] Recherche espèce < 50ms (P95)
 - [ ] Heatmap génération < 2s pour 10k observations
@@ -210,10 +226,12 @@ dives (id, spot_id, user_id, date, ...)
 ---
 
 ### Phase 5 : Ecology Cards & Gamification (v5)
+
 **Durée estimée :** 2 mois  
 **Objectif :** Engagement via gamification
 
 #### Fonctionnalités
+
 - ⏳ Système de cartes à collectionner (style TCG/Pokémon)
 - ⏳ Déblocage automatique à chaque nouvelle espèce observée
 - ⏳ Animation d'ouverture de "booster" à la première observation
@@ -223,11 +241,13 @@ dives (id, spot_id, user_id, date, ...)
 - ⏳ Génération visuelle par IA (Stable Diffusion / DALL-E)
 
 #### Design de cartes
+
 - Modèle unifié : Photo espèce + nom + rareté + stats
 - Rareté calculée depuis données plateforme (% observations globales)
 - Niveaux : Commun (>10% obs), Rare (1-10%), Épique (0.1-1%), Légendaire (<0.1%)
 
 #### Critères de validation
+
 - [ ] Temps génération carte < 5s
 - [ ] Taux d'engagement +40% post-implémentation
 - [ ] 60% des utilisateurs consultent leur collection
@@ -235,10 +255,12 @@ dives (id, spot_id, user_id, date, ...)
 ---
 
 ### Phase 6 : Club Management & B2B (v6)
+
 **Durée estimée :** 2 mois  
 **Objectif :** Monétisation B2B
 
 #### Fonctionnalités
+
 - ⏳ Comptes "Club" avec permissions spécifiques
 - ⏳ Dashboard club :
   - Liste plongeurs inscrits
@@ -249,11 +271,13 @@ dives (id, spot_id, user_id, date, ...)
 - ⏳ Export rapports (PDF/Excel) pour assurances/fédérations
 
 #### Tarification B2B
+
 - **Freemium** : Jusqu'à 50 plongeurs
 - **Pro** : 29€/mois (50-200 plongeurs)
 - **Enterprise** : 99€/mois (illimité + API + support prioritaire)
 
 #### Critères de validation
+
 - [ ] 10 clubs pilotes actifs
 - [ ] Conversion freemium → paid > 15%
 - [ ] Churn rate < 5%/mois
@@ -261,10 +285,12 @@ dives (id, spot_id, user_id, date, ...)
 ---
 
 ### Phase 7 : Dive Computer Data Import (v7)
+
 **Durée estimée :** 4 mois  
 **Objectif :** Automatisation maximale
 
 #### Fonctionnalités
+
 - ⏳ Upload fichiers ordinateurs de plongée
 - ⏳ Parsing multi-formats :
   - Suunto (.DM5, .SML)
@@ -282,6 +308,7 @@ dives (id, spot_id, user_id, date, ...)
 - ⏳ Association automatique avec plongées existantes (matching date/heure)
 
 #### Architecture technique
+
 - **Approche progressive** :
   1. Subsurface XML (format documenté, multi-marques)
   2. Formats propriétaires un par un (librairie `libdivecomputer`)
@@ -290,6 +317,7 @@ dives (id, spot_id, user_id, date, ...)
 - **Validation** : Contrôles de cohérence données (profondeur max réaliste, durée, etc.)
 
 #### Critères de validation
+
 - [ ] Support 3+ formats majeurs
 - [ ] Taux de parsing réussi > 95%
 - [ ] Temps processing fichier < 10s
@@ -297,10 +325,12 @@ dives (id, spot_id, user_id, date, ...)
 ---
 
 ### Phase 8 : Mobile Application (v8)
+
 **Durée estimée :** 3 mois  
 **Objectif :** Accessibilité maximale
 
 #### Fonctionnalités
+
 - ⏳ Application native iOS/Android
 - ⏳ Mode offline complet (sync automatique)
 - ⏳ Ajout rapide de plongée post-immersion
@@ -309,12 +339,15 @@ dives (id, spot_id, user_id, date, ...)
 - ⏳ Géolocalisation automatique (spot détection)
 
 #### Stack envisagée
+
 Options à valider (ADR à créer) :
+
 - React Native (synergie avec stack existante)
 - Flutter (performances natives)
 - Capacitor (portage Nuxt existant)
 
 #### Critères de validation
+
 - [ ] MAU mobile > 40% du total
 - [ ] Taux de crash < 1%
 - [ ] Store rating > 4.5/5
@@ -328,16 +361,19 @@ Options à valider (ADR à créer) :
 #### User Stories
 
 **US-001 : En tant que plongeur, je veux créer un compte pour sauvegarder mes plongées**
+
 - Champs requis : Email, Mot de passe, Prénom, Nom
 - Champs optionnels : Niveau de certification, Club de rattachement, Pays
 - Validation email obligatoire
 - Mot de passe : min 8 caractères, 1 majuscule, 1 chiffre
 
 **US-002 : En tant qu'utilisateur, je veux choisir la visibilité de mon profil**
+
 - Options : Public, Privé (par défaut), Amis uniquement (v2)
 - Granularité : Profil entier OU plongées individuelles
 
 **US-003 : En tant qu'utilisateur, je veux exporter mes données**
+
 - Formats : JSON, CSV, PDF
 - Conformité RGPD (droit à la portabilité)
 
@@ -356,12 +392,14 @@ Options à valider (ADR à créer) :
 **US-004 : En tant que plongeur, je veux enregistrer une plongée avec toutes ses caractéristiques**
 
 **Champs obligatoires :**
+
 - Date et heure
 - Durée totale (minutes)
 - Profondeur maximale (mètres)
 - Type de gaz principal
 
 **Champs optionnels :**
+
 - Profondeur moyenne
 - Spot de plongée (v3+)
 - Température eau/air
@@ -376,6 +414,7 @@ Options à valider (ADR à créer) :
 **US-005 : En tant que plongeur, je veux voir l'évolution de mes statistiques**
 
 Graphiques dashboard :
+
 - Courbe profondeur moyenne mensuelle
 - Camembert répartition types de gaz
 - Timeline chronologique
@@ -386,6 +425,7 @@ Graphiques dashboard :
 **US-006 : En tant que plongeur, je veux filtrer/rechercher mes plongées**
 
 Filtres disponibles :
+
 - Période (date range)
 - Spot
 - Type de gaz
@@ -408,6 +448,7 @@ Filtres disponibles :
 #### User Stories
 
 **US-007 : En tant que plongeur, je veux ajouter les espèces observées durant ma plongée**
+
 - Recherche autocomplete (nom scientifique OU commun)
 - Quantité observée (1, 2-5, 6-10, 10+, 50+)
 - Notes optionnelles par espèce
@@ -415,6 +456,7 @@ Filtres disponibles :
 **US-008 : En tant qu'utilisateur, je veux consulter une fiche espèce**
 
 Informations affichées :
+
 - Nom scientifique + noms communs (FR/EN/ES)
 - Taxonomie complète
 - Statut conservation IUCN
@@ -425,6 +467,7 @@ Informations affichées :
 - Espèces similaires
 
 **US-009 : En tant que scientifique/ONG, je veux exporter les données d'observations**
+
 - API publique REST
 - Format CSV/JSON
 - Filtres : espèce, zone géographique, période
@@ -572,3 +615,4 @@ backend/
 │   │   └── jobs/
 │   │
 │   ├── storage/                   # F
+```
