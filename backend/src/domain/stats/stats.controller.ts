@@ -6,7 +6,9 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { GlobalStats } from './entities/stats';
+import { GlobalStats, UserStats } from './entities/stats';
+import { AuthenticatedUser } from '@/auth/decorators/authenticated-user.decorator';
+import type { IAuthenticatedUser } from '@/auth/types/authenticated-user';
 
 @ApiTags('stats')
 @Controller('stats')
@@ -23,5 +25,16 @@ export class StatsController {
   @Get()
   getGlobalStats() {
     return this.statsService.getGlobalStats();
+  }
+
+  @Get('/me')
+  @ApiOperation({ summary: 'Get my stats' })
+  @ApiResponse({
+    status: 200,
+    description: 'My stats',
+    type: UserStats,
+  })
+  getMyStats(@AuthenticatedUser() user: IAuthenticatedUser) {
+    return this.statsService.getMyStats(user.id);
   }
 }

@@ -22,7 +22,10 @@ import { JwtAuthGuard } from './guards/jwt.guard';
 import { JwtRefreshAuthGuard } from './guards/jwt-refresh.guard';
 import { LoginDto } from './dto/login.dto';
 import { Public } from './decorators/public.decorator';
-import type { IAuthenticatedUser } from './types/authenticated-user';
+import {
+  type IAuthenticatedUser,
+  IAuthResponse,
+} from './types/authenticated-user';
 import { AuthenticatedUser } from './decorators/authenticated-user.decorator';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
@@ -37,8 +40,12 @@ export class AuthController {
     status: 200,
     description:
       'Successfully logged in, returns access token and sets refresh token cookie',
+    type: IAuthResponse,
   })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   @ApiBody({ type: LoginDto })
   @Public()
   @UseGuards(ThrottlerGuard)
@@ -67,7 +74,11 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Refresh access token using refresh token cookie' })
-  @ApiResponse({ status: 200, description: 'Successfully refreshed tokens' })
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully refreshed tokens',
+    type: IAuthResponse,
+  })
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @Public()
   @UseGuards(JwtRefreshAuthGuard)
@@ -100,7 +111,10 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'Log out a user' })
-  @ApiResponse({ status: 200, description: 'Successfully logged out' })
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully logged out',
+  })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post('logout')

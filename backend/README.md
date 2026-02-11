@@ -119,4 +119,4 @@ l'adresse du serveur smtp maildev est `localhost:1025`.
 Accédez aux emails envoyés par maildev :
 **[http://localhost:1080](http://localhost:1080)**
 
-> Attention : la mise en forme ne prévaux pas des tests sur de vrai boite email. Le rendu html étant fait sur navigateur.
+> Attention : la mise en forme ne prévaut pas des tests sur de vraies boîtes email. Le rendu html étant fait sur navigateur.

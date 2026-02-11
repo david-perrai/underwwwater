@@ -10,13 +10,15 @@
     "postinstall": "nuxt prepare",
     "do:component": "tsx scripts/generate-component.ts",
     "do:composable": "tsx scripts/generate-composable.ts",
-    "do:store": "tsx scripts/generate-store.ts"
+    "do:store": "tsx scripts/generate-store.ts",
+    "gen:api": "orval"
   },
   "dependencies": {
     "@nuxt/fonts": "^0.13.0",
     "@nuxtjs/i18n": "10.2.1",
     "@pinia/nuxt": "0.11.3",
     "@primeuix/themes": "^2.0.3",
+    "@tanstack/vue-query": "^5.92.9",
     "nuxt": "^4.3.0",
     "pinia": "^3.0.4",
     "primevue": "^4.5.4",
@@ -27,6 +29,7 @@
   "devDependencies": {
     "@primevue/nuxt-module": "^4.5.4",
     "@types/node": "^25.2.1",
+    "orval": "^8.2.0",
     "sass": "^1.97.3",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",

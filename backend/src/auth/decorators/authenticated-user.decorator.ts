@@ -1,4 +1,4 @@
-import { IAuthenticatedUser } from '@auth/types/authenticated-user';
+import { IAuthenticatedUser } from '@/auth/types/authenticated-user';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
 export const AuthenticatedUser = createParamDecorator(
