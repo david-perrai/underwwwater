@@ -10,15 +10,15 @@
       <Logo />
 
       <h1 class="landing-hero__title">
-        Explore the <span class="highlight">Unseen</span>
+        {{ $t('landing.hero.title') }} <span class="highlight">{{ $t('landing.hero.titleHighlight') }}</span>
       </h1>
       <p class="landing-hero__subtitle">
-        Your ultimate companion for underwater adventures. Log dives, track stats, and discover the depths.
+        {{ $t('landing.hero.subtitle') }}
       </p>
       
       <div class="landing-hero__actions">
-        <BaseButton label="Start Logging" to="/login" variant="primary" icon="pi pi-arrow-right" />
-        <BaseButton label="Learn More" to="#features" variant="secondary" />
+        <BaseButton :label="$t('landing.hero.startLogging')" to="/login" variant="primary" icon="pi pi-arrow-right" />
+        <BaseButton :label="$t('landing.hero.learnMore')" to="#features" variant="secondary" />
       </div>
     </div>
     

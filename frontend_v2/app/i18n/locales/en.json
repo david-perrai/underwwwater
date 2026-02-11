@@ -1,0 +1,109 @@
+{
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "subtitle": "Access your dive logbook",
+      "emailOrUsername": "Email or username",
+      "password": "Password",
+      "submit": "Sign In",
+      "forgotPassword": "Forgot password?",
+      "errors": {
+        "identifierRequired": "Email or username is required",
+        "passwordRequired": "Password is required"
+      }
+    },
+    "signup": {
+      "title": "Create Account",
+      "subtitle": "Start logging your dives",
+      "email": "Email",
+      "username": "Username",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "submit": "Sign Up",
+      "errors": {
+        "emailRequired": "Email is required",
+        "emailInvalid": "Invalid email",
+        "usernameRequired": "Username is required",
+        "usernameMinLength": "Username must be at least 3 characters",
+        "passwordRequired": "Password is required",
+        "passwordMinLength": "Password must be at least 10 characters",
+        "passwordUppercase": "Password must contain at least one uppercase letter",
+        "passwordSymbol": "Password must contain at least one symbol",
+        "confirmPasswordRequired": "Please confirm your password",
+        "passwordMismatch": "Passwords do not match"
+      }
+    },
+    "passwordStrength": {
+      "title": "Password Strength",
+      "requirements": "Requirements:",
+      "min": "At least 10 characters",
+      "upper": "At least one uppercase letter",
+      "numeric": "At least one numeric",
+      "symbol": "At least one symbol",
+      "weak": "Weak",
+      "medium": "Medium",
+      "strong": "Strong"
+    },
+    "ariaLabels": {
+      "showPassword": "Show password",
+      "hidePassword": "Hide password"
+    }
+  },
+  "landing": {
+    "hero": {
+      "title": "Explore the",
+      "titleHighlight": "Unseen",
+      "subtitle": "Your ultimate companion for underwater adventures. Log dives, track stats, and discover the depths.",
+      "startLogging": "Start Logging",
+      "learnMore": "Learn More"
+    },
+    "features": {
+      "title": "Why Choose Underwater?",
+      "subtitle": "Everything you need to capture your aquatic experiences.",
+      "detailedLogs": {
+        "title": "Detailed Dive Logs",
+        "description": "Record every detail of your underwater journey. Depth, duration, location, and equipment - keep it all organized."
+      },
+      "statistics": {
+        "title": "Advanced Statistics",
+        "description": "Visualize your progress with comprehensive charts. Track your bottom time, depth trends, and more."
+      },
+      "community": {
+        "title": "Community & Sharing",
+        "description": "Share your best dives with friends or the community. Discover new spots and get inspired."
+      }
+    },
+    "footer": {
+      "tagline": "Explore the deep.",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "contact": "Contact",
+      "copyright": "All rights reserved."
+    }
+  },
+  "pages": {
+    "login": {
+      "title": "Login - Underwater",
+      "description": "Sign in or create an account to start logging your dives.",
+      "divider": "or",
+      "backToHome": "Back to home"
+    },
+    "home": {
+      "title": "Underwater - Dive Log & Statistics",
+      "description": "Track your dives, analyze your stats, and explore the underwater world with Underwater."
+    }
+  },
+  "common": {
+    "menu": {
+      "home": "Home"
+    },
+    "actions": {
+      "login": "Login"
+    },
+    "placeholders": {
+      "email": "your{'@'}email.com",
+      "username": "Your username",
+      "password": "••••••••••"
+    }
+  }
+}

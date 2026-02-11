@@ -1,32 +1,34 @@
 <script setup lang="ts">
-const features = [
+const { t } = useI18n();
+
+const features = computed(() => [
   {
-    title: "Detailed Dive Logs",
-    description: "Record every detail of your underwater journey. Depth, duration, location, and equipment - keep it all organized.",
+    title: t('landing.features.detailedLogs.title'),
+    description: t('landing.features.detailedLogs.description'),
     icon: "pi pi-book", 
     color: "#8DDCD4" // $greeny-blue
   },
   {
-    title: "Advanced Statistics",
-    description: "Visualize your progress with comprehensive charts. Track your bottom time, depth trends, and more.",
+    title: t('landing.features.statistics.title'),
+    description: t('landing.features.statistics.description'),
     icon: "pi pi-chart-line",
     color: "#00FFEF" // $color-turquoise
   },
   {
-    title: "Community & Sharing",
-    description: "Share your best dives with friends or the community. Discover new spots and get inspired.",
+    title: t('landing.features.community.title'),
+    description: t('landing.features.community.description'),
     icon: "pi pi-globe",
     color: "#FF0010" // $red (using variable approximation for illustrative purpose against dark bg)
   }
-];
+]);
 </script>
 
 <template>
   <section id="features" class="landing-features">
     <div class="container">
       <div class="landing-features__header">
-        <h2 class="landing-features__title">Why Choose Underwater?</h2>
-        <p class="landing-features__subtitle">Everything you need to capture your aquatic experiences.</p>
+        <h2 class="landing-features__title">{{ $t('landing.features.title') }}</h2>
+        <p class="landing-features__subtitle">{{ $t('landing.features.subtitle') }}</p>
       </div>
 
       <div class="landing-features__grid">
