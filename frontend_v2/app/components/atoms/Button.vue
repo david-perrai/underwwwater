@@ -15,7 +15,7 @@ const props = defineProps<{
   loading?: boolean;
   loadingIcon?: string;
   link?: boolean;
-  severity?: "secondary" | "success" | "info" | "warn" | "danger" | "contrast";
+  severity?: "primary" | "secondary" | "success" | "info" | "warn" | "danger" | "contrast";
   raised?: boolean;
   rounded?: boolean;
   text?: boolean;

@@ -65,7 +65,7 @@ s
     <PVMenubar :model="menuItems">
       <!-- Logo -->
       <template #start>
-        <Logo />
+        <Logo :is-small="true" />
       </template>
       <!-- <template #item="{ item, props, hasSubmenu, root }">
         <a v-ripple class="flex items-center" v-bind="props.action">

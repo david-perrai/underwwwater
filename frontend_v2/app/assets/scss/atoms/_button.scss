@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 .button {
-  // Styles here
+  font-family: $font-roboto;
 }

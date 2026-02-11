@@ -1,9 +1,9 @@
 <script setup lang="ts">
-// definePageMeta({
-//   middleware: "anon-middleware",
-// });
+definePageMeta({
+  layout: "default",
+});
 </script>
 
 <template>  
-  <h1>tata</h1>
+toto
 </template>

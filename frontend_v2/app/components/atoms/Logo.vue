@@ -1,6 +1,8 @@
 <script setup lang="ts">
 /** Props */
-
+const props = defineProps<{
+  isSmall?: boolean;
+}>();
 /** Datas */
 
 /** Stores and Composables */
@@ -13,9 +15,10 @@
 </script>
 
 <template>
-  <NuxtLink to="/" :class="['logo']" :data-id="'logo'">
-    <div :class="['logo__inner']">
-      under<span :class="['logo__inner-bold']">www</span>ater
-    </div>
-  </NuxtLink>
+  <div 
+    :class="['logo', { 'logo--small': props.isSmall }]" 
+    :data-id="'logo'"
+  >
+    under<span :class="['logo__highlight']">www</span>ater
+  </div>
 </template>

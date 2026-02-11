@@ -1,17 +1,23 @@
 @use '../variables' as *;
 
 .logo {
-  font-size: 14px;
-  text-decoration: none;
+  font-family: $font-playfair;
+  font-size: 4rem;
+  color: $color-white;
+  line-height: 1.2;
+  font-weight: 700;
 
-  &__inner {
-    font-family: Barlow, sans-serif;
-    color: $white;
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
 
-    &-bold {
-      font-weight: bold;
-      text-shadow: rgba(119,209,199,1) 0px 0px 20px;
-      color: $greeny-blue;
-    }
+  &__highlight {
+    color: $color-turquoise;
+    font-style: normal;
+    font-family: $font-roboto;
+  }
+
+  &--small {
+    font-size: 1.25rem;
   }
 }
