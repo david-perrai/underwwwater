@@ -21,7 +21,9 @@ const severities: ("primary" | "secondary" | "success" | "info" | "warn" | "dang
       </div>
     </div>
 
-    <FormDive />
+    <FormSignup />
+
+    <GasPanel />
   </div>
 </template>
 

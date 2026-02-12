@@ -1,3 +1,5 @@
+import type { GasMix } from '~/types/GasMix'
+
 const translations = {
   GAS: {
     GAS_MIX: 'Gas Mix',
@@ -37,16 +39,104 @@ const {
 interface GasName {
   title: string
   subtitle: string
-  breathable: boolean
+  isBreathable: boolean
 }
 
 /**
- * Composable pour déterminer le nom et les propriétés d'un mélange gazeux
- * @param mix - Le mélange gazeux (peut être une ref, getter ou valeur)
- * @returns Les propriétés calculées du gaz
+ * useGasName Composable
+ * @description Determines the name and breathing properties of a gas mixture
+ * @param mix - The gas mixture (can be a ref, getter, or value)
  */
-export function useGasNameProvider(mix: MaybeRefOrGetter<GasMix>) {
-  // Helpers pour vérifier les types de gaz
+export const useGasMixName = (mix: MaybeRefOrGetter<GasMix>) => {
+  /** Computeds */
+  const gasName = computed<GasName>(() => {
+    const gasMix = toValue(mix)
+
+    // Pure Oxygen
+    if (isPureOxygen(gasMix)) {
+      return {
+        title: OXYGEN,
+        subtitle: '',
+        isBreathable: true,
+      }
+    }
+
+    // Pure Inert (non respirable)
+    if (isPureInert(gasMix)) {
+      return {
+        title: UNBREATHABLE,
+        subtitle: '',
+        isBreathable: false,
+      }
+    }
+
+    // Air
+    if (isAir(gasMix)) {
+      return {
+        title: AIR,
+        subtitle: '',
+        isBreathable: true,
+      }
+    }
+
+    // Nitrox
+    if (isNitrox(gasMix)) {
+      return {
+        title: NITROX,
+        subtitle: `(${gasMix.oxygen})`,
+        isBreathable: true,
+      }
+    }
+
+    // Heliox
+    if (isHeliox(gasMix)) {
+      return {
+        title: HELIOX,
+        subtitle: `(${gasMix.oxygen})`,
+        isBreathable: true,
+      }
+    }
+
+    // Trimix Normoxic
+    if (isNormoxicTrimix(gasMix)) {
+      return {
+        title: TRIMIX,
+        subtitle: `${NORMOXIC} (${gasMix.oxygen}/${gasMix.helium})`,
+        isBreathable: true,
+      }
+    }
+
+    // Trimix Hyperoxic
+    if (isHyperoxicTrimix(gasMix)) {
+      return {
+        title: TRIMIX,
+        subtitle: `${HYPEROXIC} (${gasMix.oxygen}/${gasMix.helium})`,
+        isBreathable: true,
+      }
+    }
+
+    // Trimix Hypoxic
+    if (isHypoxicTrimix(gasMix)) {
+      return {
+        title: TRIMIX,
+        subtitle: `${HYPOXIC} (${gasMix.oxygen}/${gasMix.helium})`,
+        isBreathable: true,
+      }
+    }
+
+    // Unbreathable par défaut
+    return {
+      title: UNBREATHABLE,
+      subtitle: '',
+      isBreathable: false,
+    }
+  })
+
+  const title = computed(() => gasName.value.title)
+  const subtitle = computed(() => gasName.value.subtitle)
+  const isBreathable = computed(() => gasName.value.isBreathable)
+
+  /** Methods */
   const isPureOxygen = (gasMix: GasMix): boolean => gasMix.oxygen === 100
 
   const isPureInert = (gasMix: GasMix): boolean =>
@@ -77,121 +167,10 @@ export function useGasNameProvider(mix: MaybeRefOrGetter<GasMix>) {
   const isHypoxicTrimix = (gasMix: GasMix): boolean =>
     isTrimix(gasMix) && gasMix.oxygen < 18 && gasMix.oxygen > 1
 
-  // Computed pour calculer le nom du gaz
-  const gasName = computed<GasName>(() => {
-    const gasMix = toValue(mix)
-
-    // Pure Oxygen
-    if (isPureOxygen(gasMix)) {
-      return {
-        title: OXYGEN,
-        subtitle: '',
-        breathable: true,
-      }
-    }
-
-    // Pure Inert (non respirable)
-    if (isPureInert(gasMix)) {
-      return {
-        title: UNBREATHABLE,
-        subtitle: '',
-        breathable: false,
-      }
-    }
-
-    // Air
-    if (isAir(gasMix)) {
-      return {
-        title: AIR,
-        subtitle: '',
-        breathable: true,
-      }
-    }
-
-    // Nitrox
-    if (isNitrox(gasMix)) {
-      return {
-        title: NITROX,
-        subtitle: `(${gasMix.oxygen})`,
-        breathable: true,
-      }
-    }
-
-    // Heliox
-    if (isHeliox(gasMix)) {
-      return {
-        title: HELIOX,
-        subtitle: `(${gasMix.oxygen})`,
-        breathable: true,
-      }
-    }
-
-    // Trimix Normoxic
-    if (isNormoxicTrimix(gasMix)) {
-      return {
-        title: TRIMIX,
-        subtitle: `${NORMOXIC} (${gasMix.oxygen}/${gasMix.helium})`,
-        breathable: true,
-      }
-    }
-
-    // Trimix Hyperoxic
-    if (isHyperoxicTrimix(gasMix)) {
-      return {
-        title: TRIMIX,
-        subtitle: `${HYPEROXIC} (${gasMix.oxygen}/${gasMix.helium})`,
-        breathable: true,
-      }
-    }
-
-    // Trimix Hypoxic
-    if (isHypoxicTrimix(gasMix)) {
-      return {
-        title: TRIMIX,
-        subtitle: `${HYPOXIC} (${gasMix.oxygen}/${gasMix.helium})`,
-        breathable: true,
-      }
-    }
-
-    // Unbreathable par défaut
-    return {
-      title: UNBREATHABLE,
-      subtitle: '',
-      breathable: false,
-    }
-  })
-
-  // Computed individuels pour un accès facile
-  const title = computed(() => gasName.value.title)
-  const subtitle = computed(() => gasName.value.subtitle)
-  const breathable = computed(() => gasName.value.breathable)
-
   return {
     gasName,
     title,
     subtitle,
-    breathable,
+    isBreathable
   }
 }
-
-
-// // Le composable accepte une ref, un getter ou une valeur
-// const { gasName, title, subtitle, breathable } = useGasNameProvider(gasMix)
-
-// // Ou avec un getter
-// const { gasName: computedGasName } = useGasNameProvider(() => ({
-//   oxygen: 32,
-//   nitrogen: 68,
-//   helium: 0,
-// }))
-// </script>
-
-// <template>
-//   <div>
-//     <h2>{{ title }}</h2>
-//     <p v-if="subtitle">{{ subtitle }}</p>
-//     <p :class="{ 'text-red': !breathable }">
-//       {{ breathable ? 'Respirable' : 'Non respirable' }}
-//     </p>
-//   </div>
-// </template>
