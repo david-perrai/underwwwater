@@ -55,7 +55,7 @@ export type divesControllerCreateResponse400 = {
   data: void
   status: 400
 }
-    
+
 export type divesControllerCreateResponseSuccess = (divesControllerCreateResponse201) & {
   headers: Headers;
 };
@@ -68,78 +68,80 @@ export type divesControllerCreateResponse = (divesControllerCreateResponseSucces
 export const getDivesControllerCreateUrl = () => {
 
 
-  
+
 
   return `/dives`
 }
 
 export const divesControllerCreate = async (createDiveDto: CreateDiveDto, options?: RequestInit): Promise<divesControllerCreateResponse> => {
-  
+
   return authFetch<divesControllerCreateResponse>(getDivesControllerCreateUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      createDiveDto,)
-  }
-);}
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(
+        createDiveDto,)
+    }
+  );
+}
 
 
 
 
 export const getDivesControllerCreateMutationOptions = <TError = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof divesControllerCreate>>, TError,{data: CreateDiveDto}, TContext>, request?: SecondParameter<typeof authFetch>}
-): UseMutationOptions<Awaited<ReturnType<typeof divesControllerCreate>>, TError,{data: CreateDiveDto}, TContext> => {
+  TContext = unknown>(options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof divesControllerCreate>>, TError, { data: CreateDiveDto }, TContext>, request?: SecondParameter<typeof authFetch> }
+  ): UseMutationOptions<Awaited<ReturnType<typeof divesControllerCreate>>, TError, { data: CreateDiveDto }, TContext> => {
 
-const mutationKey = ['divesControllerCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+  const mutationKey = ['divesControllerCreate'];
+  const { mutation: mutationOptions, request: requestOptions } = options ?
+    options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-      
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof divesControllerCreate>>, {data: CreateDiveDto}> = (props) => {
-          const {data} = props ?? {};
-
-          return  divesControllerCreate(data,requestOptions)
-        }
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey, }, request: undefined };
 
 
 
-        
+
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof divesControllerCreate>>, { data: CreateDiveDto }> = (props) => {
+    const { data } = props ?? {};
+
+    return divesControllerCreate(data, requestOptions)
+  }
 
 
-  return  { mutationFn, ...mutationOptions }}
 
-    export type DivesControllerCreateMutationResult = NonNullable<Awaited<ReturnType<typeof divesControllerCreate>>>
-    export type DivesControllerCreateMutationBody = CreateDiveDto
-    export type DivesControllerCreateMutationError = void
 
-    /**
- * @summary Create a new dive
- */
+
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type DivesControllerCreateMutationResult = NonNullable<Awaited<ReturnType<typeof divesControllerCreate>>>
+export type DivesControllerCreateMutationBody = CreateDiveDto
+export type DivesControllerCreateMutationError = void
+
+/**
+* @summary Create a new dive
+*/
 export const useDivesControllerCreate = <TError = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof divesControllerCreate>>, TError,{data: CreateDiveDto}, TContext>, request?: SecondParameter<typeof authFetch>}
- , queryClient?: QueryClient): UseMutationReturnType<
-        Awaited<ReturnType<typeof divesControllerCreate>>,
-        TError,
-        {data: CreateDiveDto},
-        TContext
-      > => {
-      return useMutation(getDivesControllerCreateMutationOptions(options), queryClient);
-    }
-    /**
- * @summary Get all dives
- */
+  TContext = unknown>(options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof divesControllerCreate>>, TError, { data: CreateDiveDto }, TContext>, request?: SecondParameter<typeof authFetch> }
+    , queryClient?: QueryClient): UseMutationReturnType<
+      Awaited<ReturnType<typeof divesControllerCreate>>,
+      TError,
+      { data: CreateDiveDto },
+      TContext
+    > => {
+  return useMutation(getDivesControllerCreateMutationOptions(options), queryClient);
+}
+/**
+* @summary Get all dives
+*/
 export type divesControllerFindAllResponse200 = {
   data: Dive[]
   status: 200
 }
-    
+
 export type divesControllerFindAllResponseSuccess = (divesControllerFindAllResponse200) & {
   headers: Headers;
 };
@@ -151,7 +153,7 @@ export const getDivesControllerFindAllUrl = (params?: DivesControllerFindAllPara
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
+
     if (value !== undefined) {
       normalizedParams.append(key, value === null ? 'null' : value.toString())
     }
@@ -163,43 +165,44 @@ export const getDivesControllerFindAllUrl = (params?: DivesControllerFindAllPara
 }
 
 export const divesControllerFindAll = async (params?: DivesControllerFindAllParams, options?: RequestInit): Promise<divesControllerFindAllResponse> => {
-  
+
   return authFetch<divesControllerFindAllResponse>(getDivesControllerFindAllUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
+    {
+      ...options,
+      method: 'GET'
+
+
+    }
+  );
+}
 
 
 
 
 
 export const getDivesControllerFindAllQueryKey = (params?: MaybeRef<DivesControllerFindAllParams>,) => {
-    return [
+  return [
     'dives', ...(params ? [params] : [])
-    ] as const;
-    }
+  ] as const;
+}
 
-    
-export const getDivesControllerFindAllQueryOptions = <TData = Awaited<ReturnType<typeof divesControllerFindAll>>, TError = unknown>(params?: MaybeRef<DivesControllerFindAllParams>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof authFetch>}
+
+export const getDivesControllerFindAllQueryOptions = <TData = Awaited<ReturnType<typeof divesControllerFindAll>>, TError = unknown>(params?: MaybeRef<DivesControllerFindAllParams>, options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof authFetch> }
 ) => {
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  getDivesControllerFindAllQueryKey(params);
+  const queryKey = getDivesControllerFindAllQueryKey(params);
 
-  
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof divesControllerFindAll>>> = ({ signal }) => divesControllerFindAll(unref(params), { signal, ...requestOptions });
 
-      
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof divesControllerFindAll>>> = ({ signal }) => divesControllerFindAll(unref(params), { signal, ...requestOptions });
 
-      
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindAll>>, TError, TData> 
+
+
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindAll>>, TError, TData>
 }
 
 export type DivesControllerFindAllQueryResult = NonNullable<Awaited<ReturnType<typeof divesControllerFindAll>>>
@@ -211,11 +214,11 @@ export type DivesControllerFindAllQueryError = unknown
  */
 
 export function useDivesControllerFindAll<TData = Awaited<ReturnType<typeof divesControllerFindAll>>, TError = unknown>(
- params?: MaybeRef<DivesControllerFindAllParams>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof authFetch>}
- , queryClient?: QueryClient 
- ): UseQueryReturnType<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  params?: MaybeRef<DivesControllerFindAllParams>, options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof authFetch> }
+  , queryClient?: QueryClient
+): UseQueryReturnType<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getDivesControllerFindAllQueryOptions(params,options)
+  const queryOptions = getDivesControllerFindAllQueryOptions(params, options)
 
   const query = useQuery(queryOptions, queryClient) as UseQueryReturnType<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
@@ -239,7 +242,7 @@ export type divesControllerFindOneResponse404 = {
   data: void
   status: 404
 }
-    
+
 export type divesControllerFindOneResponseSuccess = (divesControllerFindOneResponse200) & {
   headers: Headers;
 };
@@ -252,49 +255,50 @@ export type divesControllerFindOneResponse = (divesControllerFindOneResponseSucc
 export const getDivesControllerFindOneUrl = (id: number,) => {
 
 
-  
+
 
   return `/dives/${id}`
 }
 
 export const divesControllerFindOne = async (id: number, options?: RequestInit): Promise<divesControllerFindOneResponse> => {
-  
+
   return authFetch<divesControllerFindOneResponse>(getDivesControllerFindOneUrl(id),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
+    {
+      ...options,
+      method: 'GET'
+
+
+    }
+  );
+}
 
 
 
 
 
 export const getDivesControllerFindOneQueryKey = (id: MaybeRef<number>,) => {
-    return [
-    'dives',id
-    ] as const;
-    }
+  return [
+    'dives', id
+  ] as const;
+}
 
-    
-export const getDivesControllerFindOneQueryOptions = <TData = Awaited<ReturnType<typeof divesControllerFindOne>>, TError = void>(id: MaybeRef<number>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof authFetch>}
+
+export const getDivesControllerFindOneQueryOptions = <TData = Awaited<ReturnType<typeof divesControllerFindOne>>, TError = void>(id: MaybeRef<number>, options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof authFetch> }
 ) => {
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  getDivesControllerFindOneQueryKey(id);
+  const queryKey = getDivesControllerFindOneQueryKey(id);
 
-  
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof divesControllerFindOne>>> = ({ signal }) => divesControllerFindOne(unref(id), { signal, ...requestOptions });
 
-      
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof divesControllerFindOne>>> = ({ signal }) => divesControllerFindOne(unref(id), { signal, ...requestOptions });
 
-      
 
-   return  { queryKey, queryFn, enabled: computed(() => !!(unref(id))), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindOne>>, TError, TData> 
+
+
+
+  return { queryKey, queryFn, enabled: computed(() => !!(unref(id))), ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindOne>>, TError, TData>
 }
 
 export type DivesControllerFindOneQueryResult = NonNullable<Awaited<ReturnType<typeof divesControllerFindOne>>>
@@ -306,11 +310,11 @@ export type DivesControllerFindOneQueryError = void
  */
 
 export function useDivesControllerFindOne<TData = Awaited<ReturnType<typeof divesControllerFindOne>>, TError = void>(
- id: MaybeRef<number>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof authFetch>}
- , queryClient?: QueryClient 
- ): UseQueryReturnType<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  id: MaybeRef<number>, options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindOne>>, TError, TData>>, request?: SecondParameter<typeof authFetch> }
+  , queryClient?: QueryClient
+): UseQueryReturnType<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getDivesControllerFindOneQueryOptions(id,options)
+  const queryOptions = getDivesControllerFindOneQueryOptions(id, options)
 
   const query = useQuery(queryOptions, queryClient) as UseQueryReturnType<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
@@ -334,7 +338,7 @@ export type divesControllerUpdateResponse404 = {
   data: void
   status: 404
 }
-    
+
 export type divesControllerUpdateResponseSuccess = (divesControllerUpdateResponse200) & {
   headers: Headers;
 };
@@ -347,74 +351,76 @@ export type divesControllerUpdateResponse = (divesControllerUpdateResponseSucces
 export const getDivesControllerUpdateUrl = (id: number,) => {
 
 
-  
+
 
   return `/dives/${id}`
 }
 
 export const divesControllerUpdate = async (id: number,
-    updateDiveDto: UpdateDiveDto, options?: RequestInit): Promise<divesControllerUpdateResponse> => {
-  
+  updateDiveDto: UpdateDiveDto, options?: RequestInit): Promise<divesControllerUpdateResponse> => {
+
   return authFetch<divesControllerUpdateResponse>(getDivesControllerUpdateUrl(id),
-  {      
-    ...options,
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      updateDiveDto,)
-  }
-);}
+    {
+      ...options,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(
+        updateDiveDto,)
+    }
+  );
+}
 
 
 
 
 export const getDivesControllerUpdateMutationOptions = <TError = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof divesControllerUpdate>>, TError,{id: number;data: UpdateDiveDto}, TContext>, request?: SecondParameter<typeof authFetch>}
-): UseMutationOptions<Awaited<ReturnType<typeof divesControllerUpdate>>, TError,{id: number;data: UpdateDiveDto}, TContext> => {
+  TContext = unknown>(options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof divesControllerUpdate>>, TError, { id: number; data: UpdateDiveDto }, TContext>, request?: SecondParameter<typeof authFetch> }
+  ): UseMutationOptions<Awaited<ReturnType<typeof divesControllerUpdate>>, TError, { id: number; data: UpdateDiveDto }, TContext> => {
 
-const mutationKey = ['divesControllerUpdate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+  const mutationKey = ['divesControllerUpdate'];
+  const { mutation: mutationOptions, request: requestOptions } = options ?
+    options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-      
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof divesControllerUpdate>>, {id: number;data: UpdateDiveDto}> = (props) => {
-          const {id,data} = props ?? {};
-
-          return  divesControllerUpdate(id,data,requestOptions)
-        }
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey, }, request: undefined };
 
 
 
-        
+
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof divesControllerUpdate>>, { id: number; data: UpdateDiveDto }> = (props) => {
+    const { id, data } = props ?? {};
+
+    return divesControllerUpdate(id, data, requestOptions)
+  }
 
 
-  return  { mutationFn, ...mutationOptions }}
 
-    export type DivesControllerUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof divesControllerUpdate>>>
-    export type DivesControllerUpdateMutationBody = UpdateDiveDto
-    export type DivesControllerUpdateMutationError = void
 
-    /**
- * @summary Update a dive
- */
+
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type DivesControllerUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof divesControllerUpdate>>>
+export type DivesControllerUpdateMutationBody = UpdateDiveDto
+export type DivesControllerUpdateMutationError = void
+
+/**
+* @summary Update a dive
+*/
 export const useDivesControllerUpdate = <TError = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof divesControllerUpdate>>, TError,{id: number;data: UpdateDiveDto}, TContext>, request?: SecondParameter<typeof authFetch>}
- , queryClient?: QueryClient): UseMutationReturnType<
-        Awaited<ReturnType<typeof divesControllerUpdate>>,
-        TError,
-        {id: number;data: UpdateDiveDto},
-        TContext
-      > => {
-      return useMutation(getDivesControllerUpdateMutationOptions(options), queryClient);
-    }
-    /**
- * @summary Delete a dive
- */
+  TContext = unknown>(options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof divesControllerUpdate>>, TError, { id: number; data: UpdateDiveDto }, TContext>, request?: SecondParameter<typeof authFetch> }
+    , queryClient?: QueryClient): UseMutationReturnType<
+      Awaited<ReturnType<typeof divesControllerUpdate>>,
+      TError,
+      { id: number; data: UpdateDiveDto },
+      TContext
+    > => {
+  return useMutation(getDivesControllerUpdateMutationOptions(options), queryClient);
+}
+/**
+* @summary Delete a dive
+*/
 export type divesControllerRemoveResponse200 = {
   data: void
   status: 200
@@ -424,7 +430,7 @@ export type divesControllerRemoveResponse404 = {
   data: void
   status: 404
 }
-    
+
 export type divesControllerRemoveResponseSuccess = (divesControllerRemoveResponse200) & {
   headers: Headers;
 };
@@ -437,67 +443,68 @@ export type divesControllerRemoveResponse = (divesControllerRemoveResponseSucces
 export const getDivesControllerRemoveUrl = (id: number,) => {
 
 
-  
+
 
   return `/dives/${id}`
 }
 
 export const divesControllerRemove = async (id: number, options?: RequestInit): Promise<divesControllerRemoveResponse> => {
-  
+
   return authFetch<divesControllerRemoveResponse>(getDivesControllerRemoveUrl(id),
-  {      
-    ...options,
-    method: 'DELETE'
-    
-    
-  }
-);}
+    {
+      ...options,
+      method: 'DELETE'
+
+
+    }
+  );
+}
 
 
 
 
 export const getDivesControllerRemoveMutationOptions = <TError = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof divesControllerRemove>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof authFetch>}
-): UseMutationOptions<Awaited<ReturnType<typeof divesControllerRemove>>, TError,{id: number}, TContext> => {
+  TContext = unknown>(options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof divesControllerRemove>>, TError, { id: number }, TContext>, request?: SecondParameter<typeof authFetch> }
+  ): UseMutationOptions<Awaited<ReturnType<typeof divesControllerRemove>>, TError, { id: number }, TContext> => {
 
-const mutationKey = ['divesControllerRemove'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+  const mutationKey = ['divesControllerRemove'];
+  const { mutation: mutationOptions, request: requestOptions } = options ?
+    options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-      
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof divesControllerRemove>>, {id: number}> = (props) => {
-          const {id} = props ?? {};
-
-          return  divesControllerRemove(id,requestOptions)
-        }
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey, }, request: undefined };
 
 
 
-        
+
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof divesControllerRemove>>, { id: number }> = (props) => {
+    const { id } = props ?? {};
+
+    return divesControllerRemove(id, requestOptions)
+  }
 
 
-  return  { mutationFn, ...mutationOptions }}
 
-    export type DivesControllerRemoveMutationResult = NonNullable<Awaited<ReturnType<typeof divesControllerRemove>>>
-    
-    export type DivesControllerRemoveMutationError = void
 
-    /**
- * @summary Delete a dive
- */
+
+
+  return { mutationFn, ...mutationOptions }
+}
+
+export type DivesControllerRemoveMutationResult = NonNullable<Awaited<ReturnType<typeof divesControllerRemove>>>
+
+export type DivesControllerRemoveMutationError = void
+
+/**
+* @summary Delete a dive
+*/
 export const useDivesControllerRemove = <TError = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof divesControllerRemove>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof authFetch>}
- , queryClient?: QueryClient): UseMutationReturnType<
-        Awaited<ReturnType<typeof divesControllerRemove>>,
-        TError,
-        {id: number},
-        TContext
-      > => {
-      return useMutation(getDivesControllerRemoveMutationOptions(options), queryClient);
-    }
-    
+  TContext = unknown>(options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof divesControllerRemove>>, TError, { id: number }, TContext>, request?: SecondParameter<typeof authFetch> }
+    , queryClient?: QueryClient): UseMutationReturnType<
+      Awaited<ReturnType<typeof divesControllerRemove>>,
+      TError,
+      { id: number },
+      TContext
+    > => {
+  return useMutation(getDivesControllerRemoveMutationOptions(options), queryClient);
+}

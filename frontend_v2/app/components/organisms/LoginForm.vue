@@ -134,7 +134,7 @@ const clearError = (field: keyof typeof errors.value) => {
   }
 
   &__subtitle {
-    font-family: $font-roboto;
+    font-family: $font-inter;
     font-size: 1rem;
     color: rgba($color-white, 0.7);
   }
@@ -163,7 +163,7 @@ const clearError = (field: keyof typeof errors.value) => {
 
   :deep(.p-inputtext) {
     width: 100%;
-    font-family: $font-roboto;
+    font-family: $font-inter;
     font-size: 1rem;
     padding: 1rem;
     background: rgba($color-marine, 0.5);
@@ -201,7 +201,7 @@ const clearError = (field: keyof typeof errors.value) => {
 
   .p-error {
     color: $color-red;
-    font-family: $font-roboto;
+    font-family: $font-inter;
     font-size: 0.8rem;
     margin-left: 0.5rem;
     margin-top: 0.25rem;
@@ -242,7 +242,7 @@ const clearError = (field: keyof typeof errors.value) => {
   }
 
   &__link {
-    font-family: $font-roboto;
+    font-family: $font-inter;
     font-size: 0.875rem;
     color: $color-turquoise;
     text-decoration: none;
