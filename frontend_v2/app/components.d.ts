@@ -9,7 +9,11 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     PVButton: typeof import('primevue/button')['default']
+    PVDivider: typeof import('primevue/divider')['default']
+    PVFloatLabel: typeof import('primevue/floatlabel')['default']
+    PVInputText: typeof import('primevue/inputtext')['default']
     PVMenubar: typeof import('primevue/menubar')['default']
+    PVPassword: typeof import('primevue/password')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

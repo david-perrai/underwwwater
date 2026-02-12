@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { useAuthControllerLogin } from '~/api/generated/auth/auth';
-import { statsControllerGetGlobalStats } from '~/api/generated/stats/stats';
-import { usersControllerFindMe } from '~/api/generated/users/users';
-import { useAuthStore } from '~/stores/auth';
+import { useAuthControllerLogin } from '~/composables/api/generated/auth/auth';
+import { statsControllerGetGlobalStats } from '~/composables/api/generated/stats/stats';
+import { usersControllerFindMe } from '~/composables/api/generated/users/users';
+
 
 /** Props */
 
 /** Datas */
-const menuItems = ref([
+const { t } = useI18n();
+
+const menuItems = computed(() => [
   {
-    label: "Home",
+    label: t('common.menu.home'),
     icon: "pi pi-home",
   },
 ]);
@@ -92,7 +94,7 @@ s
 
       <!-- Auth -->
       <template #end>
-        <Button @click="handleClick" :label="'login'" />
+        <Button @click="handleClick" :label="t('common.actions.login')" />
       </template>
     </PVMenubar>
   </header>

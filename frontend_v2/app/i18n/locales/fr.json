@@ -1,0 +1,103 @@
+{
+  "auth": {
+    "login": {
+      "title": "Se connecter",
+      "subtitle": "Accédez à votre carnet de plongée",
+      "emailOrUsername": "Email ou nom d'utilisateur",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "forgotPassword": "Mot de passe oublié ?",
+      "errors": {
+        "identifierRequired": "L'email ou nom d'utilisateur est requis",
+        "passwordRequired": "Le mot de passe est requis"
+      }
+    },
+    "signup": {
+      "title": "Créer un compte",
+      "subtitle": "Commencez à enregistrer vos plongées",
+      "email": "Email",
+      "username": "Nom d'utilisateur",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "submit": "S'inscrire",
+      "errors": {
+        "emailRequired": "L'email est requis",
+        "emailInvalid": "Email invalide",
+        "usernameRequired": "Le nom d'utilisateur est requis",
+        "usernameMinLength": "Le nom d'utilisateur doit contenir au moins 3 caractères",
+        "passwordRequired": "Le mot de passe est requis",
+        "passwordMinLength": "Le mot de passe doit contenir au moins 10 caractères",
+        "passwordUppercase": "Le mot de passe doit contenir au moins une majuscule",
+        "passwordSymbol": "Le mot de passe doit contenir au moins un symbole",
+        "confirmPasswordRequired": "Veuillez confirmer votre mot de passe",
+        "passwordMismatch": "Les mots de passe ne correspondent pas"
+      }
+    },
+    "passwordStrength": {
+      "weak": "Faible",
+      "medium": "Moyen",
+      "strong": "Fort"
+    },
+    "ariaLabels": {
+      "showPassword": "Afficher le mot de passe",
+      "hidePassword": "Masquer le mot de passe"
+    }
+  },
+  "landing": {
+    "hero": {
+      "title": "Explorez l'",
+      "titleHighlight": "Invisible",
+      "subtitle": "Votre compagnon ultime pour les aventures sous-marines. Enregistrez vos plongées, suivez vos statistiques et découvrez les profondeurs.",
+      "startLogging": "Commencer",
+      "learnMore": "En savoir plus"
+    },
+    "features": {
+      "title": "Pourquoi choisir Underwater ?",
+      "subtitle": "Tout ce dont vous avez besoin pour capturer vos expériences aquatiques.",
+      "detailedLogs": {
+        "title": "Journaux de plongée détaillés",
+        "description": "Enregistrez chaque détail de votre voyage sous-marin. Profondeur, durée, emplacement et équipement - gardez tout organisé."
+      },
+      "statistics": {
+        "title": "Statistiques avancées",
+        "description": "Visualisez vos progrès avec des graphiques complets. Suivez votre temps de fond, les tendances de profondeur et plus encore."
+      },
+      "community": {
+        "title": "Communauté et partage",
+        "description": "Partagez vos meilleures plongées avec des amis ou la communauté. Découvrez de nouveaux spots et inspirez-vous."
+      }
+    },
+    "footer": {
+      "tagline": "Explorez les profondeurs.",
+      "privacy": "Confidentialité",
+      "terms": "Conditions",
+      "contact": "Contact",
+      "copyright": "Tous droits réservés."
+    }
+  },
+  "pages": {
+    "login": {
+      "title": "Connexion - Underwater",
+      "description": "Connectez-vous ou créez un compte pour commencer à enregistrer vos plongées.",
+      "divider": "ou",
+      "backToHome": "Retour à l'accueil"
+    },
+    "home": {
+      "title": "Underwater - Journal de plongée et statistiques",
+      "description": "Suivez vos plongées, analysez vos statistiques et explorez le monde sous-marin avec Underwater."
+    }
+  },
+  "common": {
+    "menu": {
+      "home": "Accueil"
+    },
+    "actions": {
+      "login": "Connexion"
+    },
+    "placeholders": {
+      "email": "votre{'@'}email.com",
+      "username": "Votre nom d'utilisateur",
+      "password": "••••••••••"
+    }
+  }
+}

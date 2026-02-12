@@ -7,12 +7,12 @@ export default defineConfig({
     },
     output: {
       mode: 'tags-split',
-      target: './app/api/generated',
-      schemas: './app/api/generated/model',
+      target: './app/composables/api/generated',
+      schemas: './app/composables/api/generated/model',
       client: 'vue-query',
       override: {
         mutator: {
-          path: './app/api/fetch-instance.ts',
+          path: './app/composables/api/fetch-instance.ts',
           name: 'authFetch',
         },
       },

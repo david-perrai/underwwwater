@@ -32,7 +32,7 @@ const props = defineProps<{
 
   &.is-primary {
     background: $color-turquoise;
-    color: $color-navy;
+    color: $color-marine;
     border: 1px solid $color-turquoise;
 
     &:hover {
