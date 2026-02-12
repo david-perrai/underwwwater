@@ -184,11 +184,11 @@ const clearError = (field: keyof typeof errors.value) => {
       </div>
 
       <div :class="['form__actions']">
-        <PVButton 
+        <Button 
           type="submit" 
           :label="$t('auth.signup.submit')" 
-          icon="pi pi-user-plus" 
-          class="w-full"
+          :size="'large'" 
+          :severity="'secondary'"
         />
       </div>
     </form>
