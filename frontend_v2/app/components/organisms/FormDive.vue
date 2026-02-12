@@ -23,7 +23,7 @@
   
 
       <div :class="['field']">
-
+				<GasPanel />
       </div>
 
       <div :class="['form__actions']">
