@@ -1,0 +1,122 @@
+@use '../variables' as *;
+
+.gas-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gas-color);
+  }
+
+  &[color="primary"] {
+    --gas-color: #00FFEF;
+  }
+
+  &[color="secondary"] {
+    --gas-color: #244cff;
+  }
+
+  &[color="warn"] {
+    --gas-color: #FFD600;
+  }
+
+  &:hover:not(.gas-control--locked) {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+  }
+
+  &--locked {
+    opacity: 0.5;
+    background: rgba(0, 0, 0, 0.2);
+    filter: grayscale(0.5);
+
+    .gas-control__label {
+      color: rgba(255, 255, 255, 0.4);
+    }
+  }
+
+  &__label {
+    font-family: $font-inter;
+    font-size: 1rem;
+    color: $color-white;
+  }
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+
+    .p-knob-text {
+      display: none;
+    }
+
+    .gas-control__input {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+
+      &-inner {
+        width: -webkit-fill-available;
+        max-width: 60px;
+        font-family: $font-inter;
+        font-size: 1rem;
+        padding: 0.5rem;
+        text-align: center;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        border-radius: 0%;
+        // text-align: center !important;
+        // background: rgba(0, 0, 0, 0.2) !important;
+        // border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        // border-radius: 0.5rem !important;
+        // font-weight: 700 !important;
+        // font-size: 1.4rem !important;
+        // color: var(--gas-color) !important;
+        // padding: 0.5rem !important;
+
+        &:focus {
+          border-bottom: 1px solid var(--gas-color) !important;
+          box-shadow: 0 0 15px rgba(var(--gas-color-rgb), 0.3) !important;
+        }
+      }
+    }
+
+    &__lock {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      transition: color 0.2s;
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      label {
+        cursor: pointer;
+      }
+    }
+  }
+}

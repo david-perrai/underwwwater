@@ -23,7 +23,7 @@ const severities: ("primary" | "secondary" | "success" | "info" | "warn" | "dang
 
     <FormSignup />
 
-    <GasPanel />
+    <GasMix />
   </div>
 </template>
 
