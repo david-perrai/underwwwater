@@ -189,6 +189,7 @@ const clearError = (field: keyof typeof errors.value) => {
           :label="$t('auth.signup.submit')" 
           :size="'large'" 
           :severity="'secondary'"
+          :is-important="true"
         />
       </div>
     </form>

@@ -105,6 +105,7 @@ const clearError = (field: keyof typeof errors.value) => {
           :size="'large'" 
           :severity="'primary'"
           :outlined="true"
+          :is-important="true"
         />
       </div>
 

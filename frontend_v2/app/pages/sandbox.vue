@@ -20,6 +20,8 @@ const severities: ("primary" | "secondary" | "success" | "info" | "warn" | "dang
         </div>
       </div>
     </div>
+
+    <FormDive />
   </div>
 </template>
 

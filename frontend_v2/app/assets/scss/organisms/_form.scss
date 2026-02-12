@@ -41,7 +41,7 @@
     display: block;
 
     label {
-      font-family: $font-barlow;
+      font-family: $font-inter;
       color: rgba($color-white, 0.6);
     }
   }
@@ -97,29 +97,6 @@
     margin-top: 1rem;
     display: flex;
     justify-content: center;
-
-    .p-button {
-      width: 100%;
-      background: rgba($color-turquoise, 0.1);
-      border: 1px solid $color-turquoise;
-      color: $color-turquoise;
-      font-family: $font-barlow;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 1rem;
-      transition: all 0.3s ease;
-
-      .p-button-label {
-        font-weight: 600;
-      }
-
-      &:hover {
-        background: $color-turquoise;
-        color: $color-marine;
-        border-color: $color-turquoise;
-      }
-    }
   }
 
   &__footer {
