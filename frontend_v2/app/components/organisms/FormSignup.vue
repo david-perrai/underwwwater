@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useAuthControllerLogin } from '~/composables/api/generated/auth/auth';
 import { useUsersControllerCreate } from '~/composables/api/generated/users/users';
 
+/** Datas */
 const email = ref('');
 const username = ref('');
 const password = ref('');
@@ -15,11 +14,11 @@ const errors = ref<{
   passwordConfirm?: string;
 }>({});
 
+/** Composables */
 const { t } = useI18n();
-
 const signup = useUsersControllerCreate();
 
-
+/** Functions */
 const validatePassword = (pwd: string): string | undefined => {
   if (pwd.length < 10) {
     return t('auth.signup.errors.passwordMinLength');
@@ -105,15 +104,15 @@ const clearError = (field: keyof typeof errors.value) => {
 </script>
 
 <template>
-  <div class="signup-form">
-    <div class="signup-form__header">
-      <h2 class="signup-form__title">{{ $t('auth.signup.title') }}</h2>
-      <p class="signup-form__subtitle">{{ $t('auth.signup.subtitle') }}</p>
+  <div :class="['form', 'form-signup']" :data-id="'form-signup'">
+    <div :class="['form__header']">
+      <h2 :class="['form__title']">{{ $t('auth.signup.title') }}</h2>
+      <p :class="['form__subtitle']">{{ $t('auth.signup.subtitle') }}</p>
     </div>
 
-    <form @submit.prevent="handleSubmit" class="signup-form__form">
+    <form @submit.prevent="handleSubmit" :class="['form__inner']">
       
-      <div class="field">
+      <div :class="['field']">
         <PVFloatLabel>
           <PVInputText 
             id="email" 
@@ -127,7 +126,7 @@ const clearError = (field: keyof typeof errors.value) => {
         <small v-if="errors.email" class="p-error">{{ errors.email }}</small>
       </div>
 
-      <div class="field">
+      <div :class="['field']">
         <PVFloatLabel variant="over">
           <PVInputText 
             id="username" 
@@ -141,7 +140,7 @@ const clearError = (field: keyof typeof errors.value) => {
         <small v-if="errors.username" class="p-error">{{ errors.username }}</small>
       </div>
 
-      <div class="field">
+      <div :class="['field']">
         <PVFloatLabel variant="over">
           <PVPassword 
             id="password" 
@@ -167,7 +166,7 @@ const clearError = (field: keyof typeof errors.value) => {
         <small v-if="errors.password" class="p-error">{{ errors.password }}</small>
       </div>
 
-      <div class="field">
+      <div :class="['field']">
         <PVFloatLabel>
           <PVPassword 
             id="passwordConfirm" 
@@ -184,7 +183,7 @@ const clearError = (field: keyof typeof errors.value) => {
         <small v-if="errors.passwordConfirm" class="p-error">{{ errors.passwordConfirm }}</small>
       </div>
 
-      <div class="signup-form__actions">
+      <div :class="['form__actions']">
         <PVButton 
           type="submit" 
           :label="$t('auth.signup.submit')" 
@@ -195,132 +194,3 @@ const clearError = (field: keyof typeof errors.value) => {
     </form>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@use '@/assets/scss/variables' as *;
-
-.signup-form {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  padding-bottom: 2rem;
-
-  &__header {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-
-  &__title {
-    font-family: $font-playfair;
-    font-size: 2.5rem;
-    color: $color-white;
-    margin-bottom: 0.5rem;
-  }
-
-  &__subtitle {
-    font-family: $font-inter;
-    font-size: 1rem;
-    color: rgba($color-white, 0.7);
-  }
-
-  &__form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
-  }
-
-
-
-  :deep(.p-floatlabel) {
-    display: block; 
-    
-    label {
-      font-family: $font-barlow;
-      color: rgba($color-white, 0.6)
-    }
-
-  }
-
-  :deep(.p-inputtext) {
-    width: 100%;
-    font-family: $font-inter;
-    font-size: 1rem;
-    padding: 1rem;
-    background: rgba($color-marine, 0.5);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba($color-white, 0.2);
-    border-radius: 4px;
-    color: $color-white;
-    transition: all 0.3s ease;
-    
-    &:enabled:hover {
-      border-color: rgba($color-turquoise, 0.5);
-    }
-
-    &:enabled:focus {
-      border-color: $color-turquoise;
-      box-shadow: 0 0 0 1px $color-turquoise;
-    }
-
-    &.p-invalid {
-      border-color: $color-red;
-      &:focus {
-        box-shadow: 0 0 0 1px $color-red;
-      }
-    }
-  }
-
-  // Specific override for Password component which has a wrapper
-  :deep(.p-password) {
-    width: 100%;
-    
-    .p-password-input {
-      width: 100%;
-    }
-  }
-
-  .p-error {
-    color: $color-red;
-    font-family: $font-inter;
-    font-size: 0.8rem;
-    margin-left: 0.5rem;
-    margin-top: 0.25rem;
-  }
-
-  &__actions {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: center;
-
-    :deep(.p-button) {
-      width: 100%;
-      background: rgba($color-turquoise, 0.1); 
-      border: 1px solid $color-turquoise;
-      color: $color-turquoise;
-      font-family: $font-barlow;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 1rem;
-      transition: all 0.3s ease;
-      
-      .p-button-label {
-        font-weight: 600;
-      }
-
-      &:hover {
-        background: $color-turquoise;
-        color: $color-marine;
-        border-color: $color-turquoise;
-      }
-    }
-  }
-}
-</style>

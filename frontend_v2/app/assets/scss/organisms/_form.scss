@@ -1,0 +1,142 @@
+@use '../variables' as *;
+
+.form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+
+  /* Header */
+  &__header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  &__title {
+    font-family: $font-playfair;
+    font-size: 2.5rem;
+    color: $color-white;
+    margin-bottom: 0.5rem;
+  }
+
+  &__subtitle {
+    font-family: $font-inter;
+    font-size: 1rem;
+    color: rgba($color-white, 0.7);
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .p-floatlabel {
+    display: block;
+
+    label {
+      font-family: $font-barlow;
+      color: rgba($color-white, 0.6);
+    }
+  }
+
+  .p-inputtext {
+    width: 100%;
+    font-family: $font-inter;
+    font-size: 1rem;
+    padding: 1rem;
+    background: rgba($color-marine, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba($color-white, 0.2);
+    border-radius: 4px;
+    color: $color-white;
+    transition: all 0.3s ease;
+
+    &:enabled:hover {
+      border-color: rgba($color-turquoise, 0.5);
+    }
+
+    &:enabled:focus {
+      border-color: $color-turquoise;
+      box-shadow: 0 0 0 1px $color-turquoise;
+    }
+
+    &.p-invalid {
+      border-color: $color-red;
+
+      &:focus {
+        box-shadow: 0 0 0 1px $color-red;
+      }
+    }
+  }
+
+  // Password wrapper adjustment
+  .p-password {
+    width: 100%;
+
+    .p-password-input {
+      width: 100%;
+    }
+  }
+
+  .p-error {
+    color: $color-red;
+    font-family: $font-inter;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  &__actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+
+    .p-button {
+      width: 100%;
+      background: rgba($color-turquoise, 0.1);
+      border: 1px solid $color-turquoise;
+      color: $color-turquoise;
+      font-family: $font-barlow;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 1rem;
+      transition: all 0.3s ease;
+
+      .p-button-label {
+        font-weight: 600;
+      }
+
+      &:hover {
+        background: $color-turquoise;
+        color: $color-marine;
+        border-color: $color-turquoise;
+      }
+    }
+  }
+
+  &__footer {
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  &__link {
+    font-family: $font-inter;
+    font-size: 0.875rem;
+    color: $color-turquoise;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: rgba($color-turquoise, 0.8);
+      text-decoration: underline;
+    }
+  }
+}

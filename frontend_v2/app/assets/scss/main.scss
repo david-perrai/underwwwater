@@ -1,8 +1,9 @@
-@use './_variables.scss';
+@use './variables';
 @use './landing';
 
-@use './themes/_layouts.scss';
+@use './themes/layouts';
 
-@use './organisms/_header.scss';
-@use './atoms/_logo.scss';
-@use './atoms/_button.scss';
+@use './organisms/header';
+@use './atoms/logo';
+@use './atoms/button';
+@use './organisms/form';

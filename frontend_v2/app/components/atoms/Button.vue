@@ -28,6 +28,9 @@ const props = defineProps<{
   href?: string;
   target?: string;
   ariaLabel?: string;
+
+  // Custom props:
+  isImportant?: boolean;
 }>();
 
 /** Emits */
@@ -63,8 +66,12 @@ const handleClick = (event: Event) => {
     :disabled="disabled"
     :type="type"
     :aria-label="ariaLabel"
-    :class="['button']"
+    :class="['button', { 'button--important': isImportant }]"
     :data-id="'button'"
+    :to="to"
+    :href="href"
+    :target="target"
+    :as="to ? 'router-link' : href ? 'a' : 'button'"
     @click="handleClick"
   >
     <slot />

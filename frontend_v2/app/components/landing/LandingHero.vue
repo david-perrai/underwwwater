@@ -17,11 +17,20 @@
       </p>
       
       <div class="landing-hero__actions">
-        <Button label="Login" to="/login" size="large" severity="primary" />
-        <Button label="Sign-up" to="/login" size="large" severity="secondary" />
-        <Button label="Learn More" to="#features" size="large" severity="contrast" outlined />
-        <BaseButton :label="$t('landing.hero.startLogging')" to="/login" variant="primary" icon="pi pi-arrow-right" />
-        <BaseButton :label="$t('landing.hero.learnMore')" to="#features" variant="secondary" />
+        <Button 
+          :label="$t('landing.hero.startLogging')" 
+          :to="'/login'" 
+          :size="'large'" 
+          :severity="'primary'" 
+          :is-important="true" 
+        />
+        <Button 
+          :label="$t('landing.hero.learnMore')" 
+          to="#features" 
+          :size="'large'" 
+          :severity="'contrast'" 
+          :is-important="true"
+        />
       </div>
     </div>
     

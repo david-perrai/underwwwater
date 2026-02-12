@@ -38,4 +38,12 @@
 .button {
   font-family: $font-inter;
 
+  &--important {
+    padding: 0.75rem 2rem;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
 }
