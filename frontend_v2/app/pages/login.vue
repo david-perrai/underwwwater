@@ -22,7 +22,7 @@ useHead({
       <!-- Login Section -->
       <section class="auth-page__section auth-page__section--login">
         <div class="auth-page__card">
-          <LoginForm />
+          <FormLogin />
         </div>
       </section>
       <!-- Divider -->
@@ -33,7 +33,7 @@ useHead({
       <!-- Signup Section -->
       <section class="auth-page__section auth-page__section--signup">
         <div class="auth-page__card">
-          <SignupForm />
+          <FormSignup />
         </div>
       </section>
      
