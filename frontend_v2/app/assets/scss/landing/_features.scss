@@ -24,7 +24,7 @@
     }
 
     &__subtitle {
-        font-family: $font-roboto;
+        font-family: $font-inter;
         color: $stone-gray;
         font-size: 1.1rem;
     }
@@ -70,7 +70,7 @@
     }
 
     &__description {
-        font-family: $font-roboto;
+        font-family: $font-inter;
         color: color.scale($color-white, $lightness: -20%);
         line-height: 1.6;
         font-size: 1rem;

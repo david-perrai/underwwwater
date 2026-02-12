@@ -1,5 +1,41 @@
 @use '../variables' as *;
 
+:root {
+  /* Secondary button - solid */
+  --p-button-secondary-background: #244cff;
+  --p-button-secondary-hover-background: #3d5fff;
+  --p-button-secondary-active-background: #5672ff;
+  --p-button-secondary-border-color: #244cff;
+  --p-button-secondary-hover-border-color: #3d5fff;
+  --p-button-secondary-active-border-color: #5672ff;
+  --p-button-secondary-color: $color-white;
+  --p-button-secondary-hover-color: $color-white;
+  --p-button-secondary-active-color: $color-white;
+
+  /* Secondary button - outlined */
+  --p-button-outlined-secondary-border-color: #244cff;
+  --p-button-outlined-secondary-color: #244cff;
+  --p-button-outlined-secondary-hover-background: color-mix(in srgb, #244cff, transparent 96%);
+  --p-button-outlined-secondary-hover-border-color: #3d5fff;
+  --p-button-outlined-secondary-hover-color: #3d5fff;
+  --p-button-outlined-secondary-active-background: color-mix(in srgb, #244cff, transparent 84%);
+  --p-button-outlined-secondary-active-border-color: #5672ff;
+  --p-button-outlined-secondary-active-color: #5672ff;
+
+  /* Secondary button - text */
+  --p-button-text-secondary-color: #244cff;
+  --p-button-text-secondary-hover-background: color-mix(in srgb, #244cff, transparent 96%);
+  --p-button-text-secondary-hover-color: #3d5fff;
+  --p-button-text-secondary-active-background: color-mix(in srgb, #244cff, transparent 84%);
+  --p-button-text-secondary-active-color: #5672ff;
+
+  /* Contrast button - text */
+  --p-button-outlined-contrast-hover-background: rgba(255, 255, 255, 0.1);
+  --p-button-outlined-contrast-border-color: $color-white;
+  --p-button-outlined-contrast-border-color: $color-white;
+}
+
 .button {
-  font-family: $font-roboto;
+  font-family: $font-inter;
+
 }
