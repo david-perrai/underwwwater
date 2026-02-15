@@ -105,5 +105,19 @@
       "username": "Your username",
       "password": "••••••••••"
     }
+  },
+  "validation": {
+    "required": "This field is required",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email",
+    "identifierRequired": "Email or username is required",
+    "usernameRequired": "Username is required",
+    "usernameMinLength": "Username must be at least {min} characters",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password must be at least {min} characters",
+    "passwordUppercase": "Password must contain at least one uppercase letter",
+    "passwordSymbol": "Password must contain at least one symbol",
+    "confirmPasswordRequired": "Please confirm your password",
+    "passwordMismatch": "Passwords do not match"
   }
 }

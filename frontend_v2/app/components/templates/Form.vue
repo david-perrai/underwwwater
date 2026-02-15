@@ -1,6 +1,8 @@
 <script setup lang="ts">
 /** Props */
-
+defineProps<{
+  header?: string;
+}>();
 /** Datas */
 
 /** Stores and Composables */
@@ -13,5 +15,8 @@
 </script>
 
 <template>
+  <PVPanel>
+    
+  </PVPanel>
   <div :class="['form']" :data-id="'form'"></div>
 </template>

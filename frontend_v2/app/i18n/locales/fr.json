@@ -99,5 +99,19 @@
       "username": "Votre nom d'utilisateur",
       "password": "••••••••••"
     }
+  },
+  "validation": {
+    "required": "Ce champ est requis",
+    "emailRequired": "L'email est requis",
+    "emailInvalid": "Email invalide",
+    "identifierRequired": "L'email ou nom d'utilisateur est requis",
+    "usernameRequired": "Le nom d'utilisateur est requis",
+    "usernameMinLength": "Le nom d'utilisateur doit contenir au moins {min} caractères",
+    "passwordRequired": "Le mot de passe est requis",
+    "passwordMinLength": "Le mot de passe doit contenir au moins {min} caractères",
+    "passwordUppercase": "Le mot de passe doit contenir au moins une majuscule",
+    "passwordSymbol": "Le mot de passe doit contenir au moins un symbole",
+    "confirmPasswordRequired": "Veuillez confirmer votre mot de passe",
+    "passwordMismatch": "Les mots de passe ne correspondent pas"
   }
 }

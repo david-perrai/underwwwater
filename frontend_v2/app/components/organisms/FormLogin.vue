@@ -1,39 +1,24 @@
 <script setup lang="ts">
 import { useAuthControllerLogin } from '~/composables/api/generated/auth/auth';
+import { required } from '~/composables/useFormValidator';
 
 /** Datas */
 const identifier = ref('');
 const password = ref('');
 
-const errors = ref<{
-  identifier?: string;
-  password?: string;
-}>({});
-
 /** Composables */
 const login = useAuthControllerLogin();
 const { t } = useI18n();
 
+const { errors, validateForm, clearError } = useFormValidator(
+  { identifier, password },
+  {
+    identifier: [required(t('validation.identifierRequired'))],
+    password: [required(t('validation.passwordRequired'))],
+  },
+);
+
 /** Functions */
-const validateForm = (): boolean => {
-  errors.value = {};
-  let isValid = true;
-
-  // Identifier validation (email or username)
-  if (!identifier.value) {
-    errors.value.identifier = t('auth.login.errors.identifierRequired');
-    isValid = false;
-  }
-
-  // Password validation
-  if (!password.value) {
-    errors.value.password = t('auth.login.errors.passwordRequired');
-    isValid = false;
-  }
-
-  return isValid;
-};
-
 const handleSubmit = async () => {
   if (validateForm()) {
      const response = await login.mutateAsync({
@@ -47,13 +32,6 @@ const handleSubmit = async () => {
       //todo à remplacer par une navigation vers le dashboard
       alert('User logged successfully')
     }
-  }
-};
-
-// Clear error when user starts typing
-const clearError = (field: keyof typeof errors.value) => {
-  if (errors.value[field]) {
-    errors.value[field] = undefined;
   }
 };
 </script>
