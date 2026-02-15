@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia';
 import { useCookie } from '#imports';
 
+/**
+ * Authentication Store
+ */
 export const useAuthStore = defineStore('auth', () => {
   const accessToken = useCookie<string | null>('access_token', {
     maxAge: 60 * 60 * 24, // 1 jour par défaut, sera écrasé par le token réel
