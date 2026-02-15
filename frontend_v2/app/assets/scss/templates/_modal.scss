@@ -15,4 +15,8 @@
       color: rgba($color-white, 0.7);
     }
   }
+
+  // Make modal wider for forms like FormDive
+  width: 70rem;
+  max-width: 90vw;
 }

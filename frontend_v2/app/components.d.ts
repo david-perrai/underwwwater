@@ -19,6 +19,7 @@ declare module 'vue' {
     PVKnob: typeof import('primevue/knob')['default']
     PVMenubar: typeof import('primevue/menubar')['default']
     PVPassword: typeof import('primevue/password')['default']
+    PVSplitButton: typeof import('primevue/splitbutton')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

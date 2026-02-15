@@ -58,6 +58,13 @@
       "totalTime": "Duration (min)",
       "submit": "Add dive",
       "submitAndContinue": "Add & continue"
+    },
+    "gas": {
+      "add": "Add Tank",
+      "submit": "Save Tank",
+      "pressureStart": "Start Pressure",
+      "pressureEnd": "End Pressure",
+      "pressureError": "End pressure cannot be higher than start pressure"
     }
   },
   "landing": {

@@ -52,6 +52,13 @@
       "totalTime": "Durée (min)",
       "submit": "Ajouter",
       "submitAndContinue": "Ajouter et continuer"
+    },
+    "gas": {
+      "add": "Ajouter Bouteille",
+      "submit": "Enregistrer Bouteille",
+      "pressureStart": "Pression Départ",
+      "pressureEnd": "Pression Fin",
+      "pressureError": "La pression de fin ne peut être supérieure au départ"
     }
   },
   "landing": {
