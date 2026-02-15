@@ -1,22 +1,52 @@
 <script setup lang="ts">
 /** Props */
 defineProps<{
-  header?: string;
+  title: string;
+  subtitle?: string;
+  submitLabel: string;
+  submitSeverity?: string;
+  submitOutlined?: boolean;
+  name?: string;
 }>();
-/** Datas */
 
-/** Stores and Composables */
-
-/** Computeds */
+/** Emits */
+const emit = defineEmits<{
+  submit: [];
+}>();
 
 /** Functions */
-
-/** Lifecyle Hooks */
+const onSubmit = () => {
+  emit('submit');
+};
 </script>
 
 <template>
-  <PVPanel>
-    
-  </PVPanel>
-  <div :class="['form']" :data-id="'form'"></div>
+  <div :class="['form', name ? `form-${name}` : '']" :data-id="name ? `form-${name}` : 'form'">
+    <div :class="['form__header']">
+      <h2 :class="['form__title']">{{ title }}</h2>
+      <p v-if="subtitle" :class="['form__subtitle']">{{ subtitle }}</p>
+    </div>
+
+    <form @submit.prevent="onSubmit" :class="['form__inner']">
+      <!-- Fields (default slot) -->
+      <slot />
+
+      <!-- Actions -->
+      <div :class="['form__actions']">
+        <Button
+          type="submit"
+          :label="submitLabel"
+          size="large"
+          :severity="submitSeverity ?? 'primary'"
+          :outlined="submitOutlined ?? false"
+          :is-important="true"
+        />
+      </div>
+
+      <!-- Footer (optional) -->
+      <div v-if="$slots.footer" :class="['form__footer']">
+        <slot name="footer" />
+      </div>
+    </form>
+  </div>
 </template>

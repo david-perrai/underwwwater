@@ -37,59 +37,48 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <div :class="['form', 'form-login']" :data-id="'form-login'">
-    <div :class="['form__header']">
-      <h2 :class="['form__title']">{{ $t('auth.login.title') }}</h2>
-      <p :class="['form__subtitle']">{{ $t('auth.login.subtitle') }}</p>
+  <Form
+    :title="$t('auth.login.title')"
+    :subtitle="$t('auth.login.subtitle')"
+    :submit-label="$t('auth.login.submit')"
+    submit-severity="primary"
+    :submit-outlined="true"
+    name="login"
+    @submit="handleSubmit"
+  >
+    <div :class="['field']">
+      <PVFloatLabel>
+        <PVInputText 
+          id="identifier" 
+          v-model="identifier" 
+          :class="{'p-invalid': errors.identifier}"
+          class="w-full"
+          @update:modelValue="clearError('identifier')"
+        />
+        <label for="identifier">{{ $t('auth.login.emailOrUsername') }}</label>
+      </PVFloatLabel>
+      <small v-if="errors.identifier" class="p-error">{{ errors.identifier }}</small>
     </div>
 
-    <form @submit.prevent="handleSubmit" :class="['form__inner']">
-      
-      <div :class="['field']">
-        <PVFloatLabel>
-          <PVInputText 
-            id="identifier" 
-            v-model="identifier" 
-            :class="{'p-invalid': errors.identifier}"
-            class="w-full"
-            @update:modelValue="clearError('identifier')"
-          />
-          <label for="identifier">{{ $t('auth.login.emailOrUsername') }}</label>
-        </PVFloatLabel>
-        <small v-if="errors.identifier" class="p-error">{{ errors.identifier }}</small>
-      </div>
-
-      <div :class="['field']">
-        <PVFloatLabel>
-          <PVPassword 
-            id="password" 
-            v-model="password" 
-            :feedback="false" 
-            toggleMask 
-            :class="{'p-invalid': errors.password}"
-            class="w-full"
-            inputClass="w-full"
-            @update:modelValue="clearError('password')"
-          />
-          <label for="password">{{ $t('auth.login.password') }}</label>
-        </PVFloatLabel>
-        <small v-if="errors.password" class="p-error">{{ errors.password }}</small>
-      </div>
-
-      <div :class="['form__actions']">
-        <Button 
-          type="submit" 
-          :label="$t('auth.login.submit')" 
-          :size="'large'" 
-          :severity="'primary'"
-          :outlined="true"
-          :is-important="true"
+    <div :class="['field']">
+      <PVFloatLabel>
+        <PVPassword 
+          id="password" 
+          v-model="password" 
+          :feedback="false" 
+          toggleMask 
+          :class="{'p-invalid': errors.password}"
+          class="w-full"
+          inputClass="w-full"
+          @update:modelValue="clearError('password')"
         />
-      </div>
+        <label for="password">{{ $t('auth.login.password') }}</label>
+      </PVFloatLabel>
+      <small v-if="errors.password" class="p-error">{{ errors.password }}</small>
+    </div>
 
-      <div :class="['form__footer']">
-        <a href="#" :class="['form__link']">{{ $t('auth.login.forgotPassword') }}</a>
-      </div>
-    </form>
-  </div>
+    <template #footer>
+      <a href="#" :class="['form__link']">{{ $t('auth.login.forgotPassword') }}</a>
+    </template>
+  </Form>
 </template>

@@ -56,94 +56,83 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <div :class="['form', 'form-signup']" :data-id="'form-signup'">
-    <div :class="['form__header']">
-      <h2 :class="['form__title']">{{ $t('auth.signup.title') }}</h2>
-      <p :class="['form__subtitle']">{{ $t('auth.signup.subtitle') }}</p>
+  <Form
+    :title="$t('auth.signup.title')"
+    :subtitle="$t('auth.signup.subtitle')"
+    :submit-label="$t('auth.signup.submit')"
+    submit-severity="secondary"
+    name="signup"
+    @submit="handleSubmit"
+  >
+    <div :class="['field']">
+      <PVFloatLabel>
+        <PVInputText 
+          id="email" 
+          v-model="emailField" 
+          :class="{'p-invalid': errors.email}" 
+          class="w-full"
+          @update:modelValue="clearError('email')"
+        />
+        <label for="email">{{ $t('auth.signup.email') }}</label>
+      </PVFloatLabel>
+      <small v-if="errors.email" class="p-error">{{ errors.email }}</small>
     </div>
 
-    <form @submit.prevent="handleSubmit" :class="['form__inner']">
-      
-      <div :class="['field']">
-        <PVFloatLabel>
-          <PVInputText 
-            id="email" 
-            v-model="emailField" 
-            :class="{'p-invalid': errors.email}" 
-            class="w-full"
-            @update:modelValue="clearError('email')"
-          />
-          <label for="email">{{ $t('auth.signup.email') }}</label>
-        </PVFloatLabel>
-        <small v-if="errors.email" class="p-error">{{ errors.email }}</small>
-      </div>
-
-      <div :class="['field']">
-        <PVFloatLabel variant="over">
-          <PVInputText 
-            id="username" 
-            v-model="username" 
-            :class="{'p-invalid': errors.username}" 
-            class="w-full"
-            @update:modelValue="clearError('username')"
-          />
-          <label for="username">{{ $t('auth.signup.username') }}</label>
-        </PVFloatLabel>
-        <small v-if="errors.username" class="p-error">{{ errors.username }}</small>
-      </div>
-
-      <div :class="['field']">
-        <PVFloatLabel variant="over">
-          <PVPassword 
-            id="password" 
-            v-model="password" 
-            toggleMask 
-            :class="{'p-invalid': errors.password}"
-            class="w-full"
-            inputClass="w-full"
-            @update:modelValue="clearError('password')"
-          >           
-            <template #footer>            
-              <p class="mt-2 text-sm">{{ $t('auth.passwordStrength.requirements') || 'Requirements:' }}</p>
-              <ul class="pl-2 ml-2 mt-0 list-disc line-height-3 text-sm">
-                <li>{{ $t('auth.passwordStrength.min') || 'At least 10 characters' }}</li>
-                <li>{{ $t('auth.passwordStrength.upper') || 'At least one uppercase' }}</li>
-                <li>{{ $t('auth.passwordStrength.numeric') || 'At least one numeric' }}</li>
-                <li>{{ $t('auth.passwordStrength.symbol') || 'At least one symbol' }}</li>
-              </ul>
-            </template>
-          </PVPassword>
-          <label for="password">{{ $t('auth.signup.password') }}</label>
-        </PVFloatLabel>
-        <small v-if="errors.password" class="p-error">{{ errors.password }}</small>
-      </div>
-
-      <div :class="['field']">
-        <PVFloatLabel>
-          <PVPassword 
-            id="passwordConfirm" 
-            v-model="passwordConfirm" 
-            :feedback="false" 
-            toggleMask 
-            :class="{'p-invalid': errors.passwordConfirm}"
-            class="w-full"
-            inputClass="w-full"
-            @update:modelValue="clearError('passwordConfirm')"
-          />
-          <label for="passwordConfirm">{{ $t('auth.signup.confirmPassword') }}</label>
-        </PVFloatLabel>
-        <small v-if="errors.passwordConfirm" class="p-error">{{ errors.passwordConfirm }}</small>
-      </div>
-
-      <div :class="['form__actions']">
-        <Button 
-          type="submit" 
-          :label="$t('auth.signup.submit')" 
-          :size="'large'" 
-          :severity="'secondary'"
-          :is-important="true"
+    <div :class="['field']">
+      <PVFloatLabel variant="over">
+        <PVInputText 
+          id="username" 
+          v-model="username" 
+          :class="{'p-invalid': errors.username}" 
+          class="w-full"
+          @update:modelValue="clearError('username')"
         />
-      </div>
-    </form>
-  </div>
+        <label for="username">{{ $t('auth.signup.username') }}</label>
+      </PVFloatLabel>
+      <small v-if="errors.username" class="p-error">{{ errors.username }}</small>
+    </div>
+
+    <div :class="['field']">
+      <PVFloatLabel variant="over">
+        <PVPassword 
+          id="password" 
+          v-model="password" 
+          toggleMask 
+          :class="{'p-invalid': errors.password}"
+          class="w-full"
+          inputClass="w-full"
+          @update:modelValue="clearError('password')"
+        >           
+          <template #footer>            
+            <p class="mt-2 text-sm">{{ $t('auth.passwordStrength.requirements') || 'Requirements:' }}</p>
+            <ul class="pl-2 ml-2 mt-0 list-disc line-height-3 text-sm">
+              <li>{{ $t('auth.passwordStrength.min') || 'At least 10 characters' }}</li>
+              <li>{{ $t('auth.passwordStrength.upper') || 'At least one uppercase' }}</li>
+              <li>{{ $t('auth.passwordStrength.numeric') || 'At least one numeric' }}</li>
+              <li>{{ $t('auth.passwordStrength.symbol') || 'At least one symbol' }}</li>
+            </ul>
+          </template>
+        </PVPassword>
+        <label for="password">{{ $t('auth.signup.password') }}</label>
+      </PVFloatLabel>
+      <small v-if="errors.password" class="p-error">{{ errors.password }}</small>
+    </div>
+
+    <div :class="['field']">
+      <PVFloatLabel>
+        <PVPassword 
+          id="passwordConfirm" 
+          v-model="passwordConfirm" 
+          :feedback="false" 
+          toggleMask 
+          :class="{'p-invalid': errors.passwordConfirm}"
+          class="w-full"
+          inputClass="w-full"
+          @update:modelValue="clearError('passwordConfirm')"
+        />
+        <label for="passwordConfirm">{{ $t('auth.signup.confirmPassword') }}</label>
+      </PVFloatLabel>
+      <small v-if="errors.passwordConfirm" class="p-error">{{ errors.passwordConfirm }}</small>
+    </div>
+  </Form>
 </template>
