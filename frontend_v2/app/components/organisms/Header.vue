@@ -17,6 +17,7 @@ const menuItems = computed(() => [
 ]);
 
 /** Stores and Composables */
+const navigationStore = useNavigationStore();
 
 const authControllerLogin = useAuthControllerLogin();
 
@@ -59,6 +60,11 @@ const handleClick = async (event: Event) => {
   console.log(globalStats);
 
 };
+
+const handleAddDive = async () => {
+  await navigateTo('/dives');
+  navigationStore.toggleModalDive();
+};
 /** Lifecyle Hooks */
 </script>
 s
@@ -94,7 +100,15 @@ s
 
       <!-- Auth -->
       <template #end>
-        <Button @click="handleClick" :label="t('common.actions.login')" />
+        <div class="flex items-center gap-2">
+          <Button 
+            @click="handleAddDive" 
+            :label="t('common.actions.add_dive', 'Add dive')" 
+            severity="success" 
+            class="mr-2"
+          />
+          <Button @click="handleClick" :label="t('common.actions.login')" />
+        </div>
       </template>
     </PVMenubar>
   </header>
