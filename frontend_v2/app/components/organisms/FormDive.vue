@@ -14,11 +14,6 @@
 
 <template>
   <div :class="['form', 'form-dive']" :data-id="'form-dive'">
-    <div :class="['form__header']">
-      <h2 :class="['form__title']">{{ $t('auth.login.title') }}</h2>
-      <p :class="['form__subtitle']">{{ $t('auth.login.subtitle') }}</p>
-    </div>
-
     <form @submit.prevent="handleSubmit" :class="['form__inner']">
   
 

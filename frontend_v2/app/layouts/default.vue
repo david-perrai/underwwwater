@@ -10,8 +10,8 @@ const navigationStore = useNavigationStore();
 
     <div id="modals" :class="['modals']" :data-id="'modals'">
       <Modal 
-        v-if="navigationStore.isModalDiveVisible" 
-        @close="navigationStore.toggleModalDive()"
+        :visible="navigationStore.isModalDiveVisible"
+        @update:visible="navigationStore.toggleModalDive"
       >
         <FormDive />
       </Modal>
