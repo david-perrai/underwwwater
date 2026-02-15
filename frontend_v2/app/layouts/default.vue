@@ -11,6 +11,7 @@ const navigationStore = useNavigationStore();
     <div id="modals" :class="['modals']" :data-id="'modals'">
       <Modal 
         :visible="navigationStore.isModalDiveVisible"
+        :header="'Add Dive'"
         @update:visible="navigationStore.toggleModalDive"
       >
         <FormDive />

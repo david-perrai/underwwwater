@@ -1,14 +1,26 @@
+/* Base */
 @use './variables';
-@use './landing';
 
-@use './themes/layouts';
-
-@use './organisms/header';
+/* Atoms */
 @use './atoms/logo';
 @use './atoms/button';
-@use './organisms/form';
-@use './molecules/gas-panel';
-
 @use './atoms/gas-control';
 
-@use './templates/modal.scss';
+/* Molecules */
+@use './molecules/gas-panel';
+
+/* Organisms */
+@use './organisms/header';
+
+/* Templates */
+@use './templates/form';
+@use './templates/modal';
+
+/* Pages */
+@use './pages/index';
+@use './pages/features';
+@use './pages/footer';
+@use './pages/hero';
+
+/* Themes */
+@use './themes/layouts';
