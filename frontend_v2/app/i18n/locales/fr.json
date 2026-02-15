@@ -43,6 +43,17 @@
       "hidePassword": "Masquer le mot de passe"
     }
   },
+  "dive": {
+    "form": {
+      "title": "Ajouter une plongée",
+      "subtitle": "Enregistrez votre aventure sous-marine",
+      "date": "Date et heure",
+      "maxDepth": "Profondeur max (m)",
+      "totalTime": "Durée (min)",
+      "submit": "Ajouter",
+      "submitAndContinue": "Ajouter et continuer"
+    }
+  },
   "landing": {
     "hero": {
       "title": "Explorez l'",
@@ -112,6 +123,8 @@
     "passwordUppercase": "Le mot de passe doit contenir au moins une majuscule",
     "passwordSymbol": "Le mot de passe doit contenir au moins un symbole",
     "confirmPasswordRequired": "Veuillez confirmer votre mot de passe",
-    "passwordMismatch": "Les mots de passe ne correspondent pas"
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "dateRequired": "La date est requise",
+    "minValue": "Doit être au moins {min}"
   }
 }

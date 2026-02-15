@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useAuthControllerLogin } from '~/composables/api/generated/auth/auth';
-import { required } from '~/composables/useFormValidator';
 
 /** Datas */
 const identifier = ref('');

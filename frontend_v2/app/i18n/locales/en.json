@@ -49,6 +49,17 @@
       "hidePassword": "Hide password"
     }
   },
+  "dive": {
+    "form": {
+      "title": "Add a Dive",
+      "subtitle": "Log your underwater adventure",
+      "date": "Date & time",
+      "maxDepth": "Max depth (m)",
+      "totalTime": "Duration (min)",
+      "submit": "Add dive",
+      "submitAndContinue": "Add & continue"
+    }
+  },
   "landing": {
     "hero": {
       "title": "Explore the",
@@ -118,6 +129,8 @@
     "passwordUppercase": "Password must contain at least one uppercase letter",
     "passwordSymbol": "Password must contain at least one symbol",
     "confirmPasswordRequired": "Please confirm your password",
-    "passwordMismatch": "Passwords do not match"
+    "passwordMismatch": "Passwords do not match",
+    "dateRequired": "Date is required",
+    "minValue": "Must be at least {min}"
   }
 }

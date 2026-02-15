@@ -5,10 +5,10 @@ import type { Ref } from 'vue';
 // ──────────────────────────────────────────────
 
 /** A single validation rule: returns an error message or undefined if valid */
-export type ValidatorRule = (value: string) => string | undefined;
+export type ValidatorRule = (value: any) => string | undefined;
 
-/** Map of field names → their current Ref<string> value */
-export type FieldRefs<T extends string = string> = Record<T, Ref<string>>;
+/** Map of field names → their current Ref value */
+export type FieldRefs<T extends string = string> = Record<T, Ref<any>>;
 
 /** Map of field names → array of rules to run (in order) */
 export type ValidationRules<T extends string = string> = Partial<Record<T, ValidatorRule[]>>;
@@ -62,6 +62,16 @@ export const matches = (otherRef: Ref<string>, msg?: string): ValidatorRule => {
   const { t } = useI18n();
   const message = msg ?? t('validation.passwordMismatch');
   return (value: string) => (value !== otherRef.value ? message : undefined);
+};
+
+/** Numeric value must be at least `min` */
+export const minValue = (min: number, msg?: string): ValidatorRule => {
+  const { t } = useI18n();
+  const message = msg ?? t('validation.minValue', { min });
+  return (value: any) => {
+    const num = Number(value);
+    return isNaN(num) || num < min ? message : undefined;
+  };
 };
 
 // ──────────────────────────────────────────────

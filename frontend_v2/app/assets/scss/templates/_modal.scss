@@ -1,3 +1,18 @@
-.modal {
-  // Styles here
+@use '../variables' as *;
+
+.p-dialog {
+  .p-dialog-header {
+    .p-dialog-title {
+      font-family: $font-playfair;
+      font-size: 1.5rem;
+    }
+  }
+
+  .p-dialog-close-button {
+    color: $color-white;
+
+    &:hover {
+      color: rgba($color-white, 0.7);
+    }
+  }
 }

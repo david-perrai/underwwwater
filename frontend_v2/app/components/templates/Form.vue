@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /** Props */
 defineProps<{
-  title: string;
+  title?: string;
   subtitle?: string;
   submitLabel: string;
   submitSeverity?: string;
@@ -22,7 +22,7 @@ const onSubmit = () => {
 
 <template>
   <div :class="['form', name ? `form-${name}` : '']" :data-id="name ? `form-${name}` : 'form'">
-    <div :class="['form__header']">
+    <div v-if="title" :class="['form__header']">
       <h2 :class="['form__title']">{{ title }}</h2>
       <p v-if="subtitle" :class="['form__subtitle']">{{ subtitle }}</p>
     </div>
@@ -33,14 +33,16 @@ const onSubmit = () => {
 
       <!-- Actions -->
       <div :class="['form__actions']">
-        <Button
-          type="submit"
-          :label="submitLabel"
-          size="large"
-          :severity="submitSeverity ?? 'primary'"
-          :outlined="submitOutlined ?? false"
-          :is-important="true"
-        />
+        <slot name="actions">
+          <Button
+            type="submit"
+            :label="submitLabel"
+            size="large"
+            :severity="submitSeverity ?? 'primary'"
+            :outlined="submitOutlined ?? false"
+            :is-important="true"
+          />
+        </slot>
       </div>
 
       <!-- Footer (optional) -->

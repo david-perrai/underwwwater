@@ -10,6 +10,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     PVButton: typeof import('primevue/button')['default']
     PVCheckbox: typeof import('primevue/checkbox')['default']
+    PVDatePicker: typeof import('primevue/datepicker')['default']
     PVDialog: typeof import('primevue/dialog')['default']
     PVDivider: typeof import('primevue/divider')['default']
     PVFloatLabel: typeof import('primevue/floatlabel')['default']
