@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { useNavigationStore } from '~/stores/navigation';
-import Modal from '~/components/templates/Modal.vue';
-import FormDive from '~/components/organisms/FormDive.vue';
-
 const navigationStore = useNavigationStore();
 </script>
 

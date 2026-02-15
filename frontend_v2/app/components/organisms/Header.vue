@@ -18,7 +18,6 @@ const menuItems = computed(() => [
 
 /** Stores and Composables */
 const navigationStore = useNavigationStore();
-
 const authControllerLogin = useAuthControllerLogin();
 
 /** Computeds */
