@@ -158,7 +158,6 @@ const handleSubmitAndContinue = async () => {
         :label="$t('dive.form.submit')"
         size="large"
         severity="success"
-        :is-important="true"
       />
       <Button
         type="button"

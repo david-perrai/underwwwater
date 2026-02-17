@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Button from "~/components/atoms/Button.vue";
 
 const severities: ("primary" | "secondary" | "success" | "info" | "warn" | "danger" | "contrast")[] = ["primary", "secondary", "success", "info", "warn", "danger", "contrast"];
 </script>
@@ -13,10 +12,9 @@ const severities: ("primary" | "secondary" | "success" | "info" | "warn" | "dang
         <h3>{{ severity }}</h3>
         <div class="button-group">
           <Button :label="severity" :severity="severity" />
-          <Button :label="severity + ' outlined'" :severity="severity" outlined />
-          <Button :label="severity + ' text'" :severity="severity" text />
-          <Button :label="severity + ' raised'" :severity="severity" raised />
-          <Button :label="severity + ' rounded'" :severity="severity" rounded />
+          <Button :label="severity + ' outlined'" :severity="severity" variant="outlined" />
+          <Button :label="severity + ' text'" :severity="severity" variant="text" />
+          <Button :label="severity + ' link'" :severity="severity" variant="link" />
         </div>
       </div>
     </div>

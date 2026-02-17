@@ -40,7 +40,7 @@ const onSubmit = () => {
             size="large"
             :severity="submitSeverity ?? 'primary'"
             :outlined="submitOutlined ?? false"
-            :is-important="true"
+            :translate="true"
           />
         </slot>
       </div>

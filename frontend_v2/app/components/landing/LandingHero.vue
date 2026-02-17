@@ -22,14 +22,14 @@
           :to="'/login'" 
           :size="'large'" 
           :severity="'primary'" 
-          :is-important="true" 
+          :is-jumping="true"
         />
         <Button 
           :label="$t('landing.hero.learnMore')" 
           to="#features" 
           :size="'large'" 
           :severity="'contrast'" 
-          :is-important="true"
+          :is-jumping="true"
         />
       </div>
     </div>

@@ -4,33 +4,17 @@ const props = defineProps<{
   label?: string;
   icon?: string;
   iconPos?: "left" | "right" | "top" | "bottom";
-  badge?: string;
-  badgeSeverity?:
-    | "secondary"
-    | "success"
-    | "info"
-    | "warn"
-    | "danger"
-    | "contrast";
   loading?: boolean;
-  loadingIcon?: string;
-  link?: boolean;
   severity?: "primary" | "secondary" | "success" | "info" | "warn" | "danger" | "contrast";
-  raised?: boolean;
+  variant?: "plain" | "outlined" | "text" | "link";
   rounded?: boolean;
-  text?: boolean;
-  outlined?: boolean;
   size?: "small" | "large";
-  plain?: boolean;
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
   to?: string | object;
   href?: string;
   target?: string;
-  ariaLabel?: string;
-
-  // Custom props:
-  isImportant?: boolean;
+  isJumping?: boolean;
 }>();
 
 /** Emits */
@@ -51,27 +35,41 @@ const handleClick = (event: Event) => {
     :label="label"
     :icon="icon"
     :iconPos="iconPos"
-    :badge="badge"
-    :badgeSeverity="badgeSeverity"
     :loading="loading"
-    :loadingIcon="loadingIcon"
-    :link="link"
-    :severity="severity"
-    :raised="raised"
     :rounded="rounded"
-    :text="text"
-    :outlined="outlined"
     :size="size"
-    :plain="plain"
     :disabled="disabled"
     :type="type"
-    :aria-label="ariaLabel"
-    :class="['button', { 'button--important': isImportant }]"
-    :data-id="'button'"
     :to="to"
     :href="href"
     :target="target"
     :as="to ? 'router-link' : href ? 'a' : 'button'"
+    :class="[
+      'button', 
+      { 'button--jumping': isJumping },
+      variant === 'outlined' ? 
+      'button--outlined' : 
+      variant === 'text' ?
+      'button--text' : 
+      variant === 'link' ?
+      'button--link' : 
+      'button--plain',
+      severity === 'primary' ? 
+      'button--primary' : 
+      severity === 'secondary' ?
+      'button--secondary' : 
+      severity === 'success' ?
+      'button--success' : 
+      severity === 'info' ?
+      'button--info' : 
+      severity === 'warn' ?
+      'button--warn' : 
+      severity === 'danger' ?
+      'button--danger' : 
+      'button--contrast',
+    ]"
+    :unstyled="true"
+    :data-id="'button'"
     @click="handleClick"
   >
     <slot />

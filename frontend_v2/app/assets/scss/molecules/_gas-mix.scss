@@ -1,0 +1,52 @@
+.gas-mix {
+  padding: 30px;
+  background: rgba(25, 25, 35, 0.4);
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  max-width: 900px;
+  margin: 0 auto;
+
+  &__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    text-align: center;
+    color: white;
+    letter-spacing: -0.025em;
+    background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.7) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: -2.5rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  &__controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__error {
+    margin-top: 2rem;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    background: rgba(var(--p-error-rgb), 0.1);
+    color: var(--p-error-500);
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid rgba(var(--p-error-rgb), 0.2);
+  }
+}
