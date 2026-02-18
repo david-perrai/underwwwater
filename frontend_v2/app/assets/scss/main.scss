@@ -2,9 +2,10 @@
 @use './variables';
 
 /* Atoms */
-@use './atoms/logo';
 @use './atoms/button';
+@use './atoms/field-text';
 @use './atoms/gas-control';
+@use './atoms/logo';
 
 /* Molecules */
 @use './molecules/gas-panel';

@@ -45,36 +45,23 @@ const handleSubmit = async () => {
     name="login"
     @submit="handleSubmit"
   >
-    <div :class="['field']">
-      <PVFloatLabel>
-        <PVInputText 
-          id="identifier" 
-          v-model="identifier" 
-          :class="{'p-invalid': errors.identifier}"
-          class="w-full"
-          @update:modelValue="clearError('identifier')"
-        />
-        <label for="identifier">{{ $t('auth.login.emailOrUsername') }}</label>
-      </PVFloatLabel>
-      <small v-if="errors.identifier" class="p-error">{{ errors.identifier }}</small>
-    </div>
+    <FieldText
+      id="identifier"
+      v-model="identifier"
+      :label="$t('auth.login.emailOrUsername')"
+      :error="errors.identifier"
+      @update:model-value="clearError('identifier')"
+    />
 
-    <div :class="['field']">
-      <PVFloatLabel>
-        <PVPassword 
-          id="password" 
-          v-model="password" 
-          :feedback="false" 
-          toggleMask 
-          :class="{'p-invalid': errors.password}"
-          class="w-full"
-          inputClass="w-full"
-          @update:modelValue="clearError('password')"
-        />
-        <label for="password">{{ $t('auth.login.password') }}</label>
-      </PVFloatLabel>
-      <small v-if="errors.password" class="p-error">{{ errors.password }}</small>
-    </div>
+    <FieldText
+      id="password"
+      v-model="password"
+      type="password"
+      :label="$t('auth.login.password')"
+      :error="errors.password"
+      :toggle-mask="true"
+      @update:model-value="clearError('password')"
+    />
 
     <template #footer>
       <Button 

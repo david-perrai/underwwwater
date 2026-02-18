@@ -1,0 +1,64 @@
+@use '../variables' as *;
+
+.field-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+
+  .p-floatlabel {
+    display: block;
+
+    label {
+      font-family: $font-inter;
+      color: rgba($color-white, 0.6);
+    }
+  }
+
+  .p-inputtext {
+    width: 100%;
+    font-family: $font-inter;
+    font-size: 1rem;
+    padding: 1rem;
+    background: rgba($color-marine, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba($color-white, 0.2);
+    border-radius: 4px;
+    color: $color-white;
+    transition: all 0.3s ease;
+
+    &:enabled:hover {
+      border-color: rgba($color-turquoise, 0.5);
+    }
+
+    &:enabled:focus {
+      border-color: $color-turquoise;
+      box-shadow: 0 0 0 1px $color-turquoise;
+    }
+
+    &.p-invalid {
+      border-color: $color-red;
+
+      &:focus {
+        box-shadow: 0 0 0 1px $color-red;
+      }
+    }
+  }
+
+  // Password wrapper adjustment
+  .p-password {
+    width: 100%;
+
+    .p-password-input {
+      width: 100%;
+    }
+  }
+
+  .p-error {
+    color: $color-red;
+    font-family: $font-inter;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+    margin-top: 0.25rem;
+  }
+}
