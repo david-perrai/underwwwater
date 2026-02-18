@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 /** Model */
-const modelValue = defineModel<string>();
+const modelValue = defineModel<string | null>();
 
 /** Emits */
 const emit = defineEmits(['update:modelValue']);
@@ -34,14 +34,12 @@ const onUpdate = (value: any) => {
       <!-- Password field -->
       <PVPassword
         v-if="type === 'password'"
-        :id="id"
+        :inputId="'field-text-' + id"
         v-model="modelValue"
         :disabled="disabled"
         :feedback="feedback"
         :toggle-mask="toggleMask"
         :class="{ 'p-invalid': error }"
-        class="w-full"
-        input-class="w-full"
         @update:model-value="onUpdate"
       >
         <template #footer>
@@ -62,16 +60,15 @@ const onUpdate = (value: any) => {
       <!-- Text field -->
       <PVInputText
         v-else
-        :id="id"
+        :id="'field-text-' + id"
         v-model="modelValue"
         :type="type"
         :disabled="disabled"
         :class="{ 'p-invalid': error }"
-        class="w-full"
         @update:model-value="onUpdate"
       />
 
-      <label :for="id">{{ label }}</label>
+      <label :for="'field-text-' + id">{{ label }}</label>
     </PVFloatLabel>
     
     <small v-if="error" class="p-error">{{ error }}</small>

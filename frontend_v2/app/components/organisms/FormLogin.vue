@@ -4,6 +4,7 @@ import { useAuthControllerLogin } from '~/composables/api/generated/auth/auth';
 /** Datas */
 const identifier = ref('');
 const password = ref('');
+const maxDepth = ref<number | null>(null);
 
 /** Composables */
 const login = useAuthControllerLogin();
@@ -52,7 +53,13 @@ const handleSubmit = async () => {
       :error="errors.identifier"
       @update:model-value="clearError('identifier')"
     />
-
+     <FieldNumber
+        :id="'maxDepth'"
+        v-model="maxDepth"
+        :label="$t('dive.form.maxDepth')"
+        :min="1"
+        :maxFractionDigits="1"
+      />
     <FieldText
       id="password"
       v-model="password"

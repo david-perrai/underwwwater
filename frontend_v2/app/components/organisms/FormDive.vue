@@ -90,61 +90,38 @@ const handleSubmitAndContinue = async () => {
     @submit="handleSubmitAndClose"
   >
     <!-- Context Fields Row -->
-    <div class="form-dive__row flex gap-4 mb-4">
+    <div class="form-dive__row gap-4 mb-4">
       <!-- Date & Time -->
-      <div :class="['field', 'flex-1']">
-        <PVFloatLabel>
-          <PVDatePicker
-            id="date"
-            v-model="date"
-            showTime
-            hourFormat="24"
-            :class="{ 'p-invalid': errors.date }"
-            class="w-full"
-            dateFormat="dd/mm/yy"
-            @update:modelValue="clearError('date')"
-          />
-          <label for="date">{{ $t('dive.form.date') }}</label>
-        </PVFloatLabel>
-        <small v-if="errors.date" class="p-error">{{ errors.date }}</small>
-      </div>
+      <FieldDate
+        id="date"
+        v-model="date"
+        :label="$t('dive.form.date')"
+        showTime
+        :error="errors.date"
+        @update:model-value="clearError('date')"
+      />
 
       <!-- Max Depth -->
-      <div :class="['field', 'flex-1']">
-        <PVFloatLabel>
-          <PVInputNumber
-            id="maxDepth"
-            v-model="maxDepth"
-            :min="0"
-            :maxFractionDigits="1"
-            suffix=" m"
-            :class="{ 'p-invalid': errors.maxDepth }"
-            class="w-full"
-            inputClass="w-full"
-            @update:modelValue="clearError('maxDepth')"
-          />
-          <label for="maxDepth">{{ $t('dive.form.maxDepth') }}</label>
-        </PVFloatLabel>
-        <small v-if="errors.maxDepth" class="p-error">{{ errors.maxDepth }}</small>
-      </div>
+      <FieldNumber
+        :id="'maxDepth'"
+        v-model="maxDepth"
+        :label="$t('dive.form.maxDepth')"
+        :min="1"
+        :maxFractionDigits="1"
+        :error="errors.maxDepth"
+        @update:model-value="clearError('maxDepth')"
+      />
 
       <!-- Total Time -->
-      <div :class="['field', 'flex-1']">
-        <PVFloatLabel>
-          <PVInputNumber
-            id="totalTime"
-            v-model="totalTime"
-            :min="1"
-            suffix=" min"
-            :class="{ 'p-invalid': errors.totalTime }"
-            class="w-full"
-            inputClass="w-full"
-            @update:modelValue="clearError('totalTime')"
-          />
-          <label for="totalTime">{{ $t('dive.form.totalTime') }}</label>
-        </PVFloatLabel>
-        <small v-if="errors.totalTime" class="p-error">{{ errors.totalTime }}</small>
-      </div>
+      <FieldNumber
+        id="totalTime"
+        v-model="totalTime"
+        :label="$t('dive.form.totalTime')"
+        :min="1"
+        :maxFractionDigits="1"
+        :error="errors.totalTime"
+        @update:model-value="clearError('totalTime')"
+      />
     </div>
 
     <PVDivider />
