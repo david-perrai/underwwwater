@@ -10,6 +10,13 @@ const readline = createInterface({
 
 type ComponentType = "atoms" | "molecules" | "organisms" | "templates";
 
+const SECTION_COMMENTS: Record<ComponentType, string> = {
+  atoms: "/* Atoms */",
+  molecules: "/* Molecules */",
+  organisms: "/* Organisms */",
+  templates: "/* Templates */",
+};
+
 const question = (query: string): Promise<string> => {
   return new Promise((resolve) => {
     readline.question(query, resolve);
@@ -61,7 +68,7 @@ const generateVueTemplate = (
 
 const generateScssTemplate = (componentName: string): string => {
   const kebabName = toKebabCase(componentName);
-  return `.${kebabName} {\n  // Styles here\n}\n`;
+  return `@use '../variables' as *;\n\n.${kebabName} {\n  // Styles here\n}\n`;
 };
 
 const ensureDirectoryExists = (dirPath: string): void => {
@@ -70,12 +77,31 @@ const ensureDirectoryExists = (dirPath: string): void => {
   }
 };
 
+/**
+ * Extracts all @use paths from a section block (between two section comments).
+ */
+const extractSectionImports = (sectionBlock: string): string[] => {
+  const matches = sectionBlock.match(/^@use\s+['"][^'"]+['"]\s*;/gm);
+  return matches ?? [];
+};
+
+/**
+ * Sorts @use import lines alphabetically by their path.
+ */
+const sortImports = (imports: string[]): string[] => {
+  return [...imports].sort((a, b) => {
+    const pathA = a.match(/['"]([^'"]+)['"]/)?.[1] ?? "";
+    const pathB = b.match(/['"]([^'"]+)['"]/)?.[1] ?? "";
+    return pathA.localeCompare(pathB);
+  });
+};
+
 const addScssImport = (
-  scssPath: string,
+  scssBasePath: string,
   type: ComponentType,
-  fileName: string,
+  kebabName: string,
 ): void => {
-  const mainScssPath = resolve(scssPath, "main.scss");
+  const mainScssPath = resolve(scssBasePath, "main.scss");
 
   if (!existsSync(mainScssPath)) {
     console.log(`⚠️  Warning: ${mainScssPath} does not exist. Creating it...`);
@@ -83,16 +109,56 @@ const addScssImport = (
   }
 
   const content = readFileSync(mainScssPath, "utf-8");
-  const importStatement = `@use './${type}/_${fileName}';\n`;
+  const sectionComment = SECTION_COMMENTS[type];
+  // e.g. @use './atoms/button';  (no underscore, no extension)
+  const newImport = `@use './${type}/${kebabName}';`;
 
-  if (content.includes(importStatement.trim())) {
+  // Check for duplicate
+  if (content.includes(newImport)) {
     console.log("⚠️  Import already exists in main.scss");
     return;
   }
 
-  // Add import at the end of the file
-  writeFileSync(mainScssPath, content + importStatement);
-  console.log("✅ Added import to main.scss");
+  // Split file into lines for section-aware manipulation
+  const lines = content.split("\n");
+
+  // Find the index of the target section comment
+  const sectionIndex = lines.findIndex((line) => line.trim() === sectionComment);
+
+  if (sectionIndex === -1) {
+    // Section comment not found: append a new section at the end
+    const appended =
+      content.trimEnd() +
+      `\n\n${sectionComment}\n${newImport}\n`;
+    writeFileSync(mainScssPath, appended);
+    console.log(`✅ Created new section "${sectionComment}" and added import to main.scss`);
+    return;
+  }
+
+  // Collect all consecutive @use lines that belong to this section
+  // (from sectionIndex + 1 until a blank line or a non-@use / non-comment line)
+  let insertEnd = sectionIndex + 1;
+  while (
+    insertEnd < lines.length &&
+    (lines[insertEnd].trim().startsWith("@use") || lines[insertEnd].trim() === "")
+  ) {
+    // Stop at blank lines that separate sections
+    if (lines[insertEnd].trim() === "") break;
+    insertEnd++;
+  }
+
+  // Gather existing @use lines for this section and add the new one
+  const sectionImportLines = lines.slice(sectionIndex + 1, insertEnd);
+  const allImports = sortImports([...sectionImportLines, newImport]);
+
+  // Rebuild the file
+  const before = lines.slice(0, sectionIndex + 1); // includes the section comment
+  const after = lines.slice(insertEnd);
+
+  const rebuilt = [...before, ...allImports, ...after].join("\n");
+
+  writeFileSync(mainScssPath, rebuilt);
+  console.log("✅ Added import to main.scss (sorted alphabetically)");
 };
 
 const run = async (): Promise<void> => {
@@ -129,11 +195,11 @@ const run = async (): Promise<void> => {
 
   // Define paths
   const componentPath = resolve(process.cwd(), "app", "components", type);
-  const scssPath = resolve(process.cwd(), "app", "assets", "scss", type);
+  const scssTypePath = resolve(process.cwd(), "app", "assets", "scss", type);
 
   // Ensure directories exist
   ensureDirectoryExists(componentPath);
-  ensureDirectoryExists(scssPath);
+  ensureDirectoryExists(scssTypePath);
 
   // Create Vue component
   const vueFilePath = resolve(componentPath, `${pascalName}.vue`);
@@ -151,9 +217,9 @@ const run = async (): Promise<void> => {
   writeFileSync(vueFilePath, generateVueTemplate(nameAnswer, type));
   console.log(`✅ Created: ${vueFilePath}`);
 
-  // Create SCSS file
+  // Create SCSS file (stored as _kebab-name.scss on disk)
   const scssFileName = `_${kebabName}.scss`;
-  const scssFilePath = resolve(scssPath, scssFileName);
+  const scssFilePath = resolve(scssTypePath, scssFileName);
 
   if (existsSync(scssFilePath)) {
     const overwrite = await question(
@@ -169,11 +235,11 @@ const run = async (): Promise<void> => {
   writeFileSync(scssFilePath, generateScssTemplate(nameAnswer));
   console.log(`✅ Created: ${scssFilePath}`);
 
-  // Add import to main.scss
+  // Add import to main.scss (without underscore prefix or .scss extension)
   addScssImport(
     resolve(process.cwd(), "app", "assets", "scss"),
     type,
-    scssFileName,
+    kebabName,
   );
 
   console.log("\n🎉 Component generated successfully!\n");
