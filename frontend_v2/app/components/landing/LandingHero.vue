@@ -18,12 +18,13 @@
       
       <div class="landing-hero__actions">
         <Button 
-          :label="$t('landing.hero.startLogging')" 
-          :to="'/login'" 
+          :label="$t('landing.hero.startLogging')"
           :size="'large'" 
-          :severity="'primary'" 
+          :to="'/login'" 
           :is-jumping="true"
+          :severity="'primary'" 
         />
+
         <Button 
           :label="$t('landing.hero.learnMore')" 
           to="#features" 

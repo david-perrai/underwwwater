@@ -8,7 +8,6 @@ const props = defineProps<{
   severity?: "primary" | "secondary" | "success" | "info" | "warn" | "danger" | "contrast";
   variant?: "plain" | "outlined" | "text" | "link";
   rounded?: boolean;
-  size?: "small" | "large";
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
   to?: string | object;
@@ -37,7 +36,6 @@ const handleClick = (event: Event) => {
     :iconPos="iconPos"
     :loading="loading"
     :rounded="rounded"
-    :size="size"
     :disabled="disabled"
     :type="type"
     :to="to"

@@ -103,17 +103,4 @@
     text-align: center;
     margin-top: 1rem;
   }
-
-  &__link {
-    font-family: $font-inter;
-    font-size: 0.875rem;
-    color: $color-turquoise;
-    text-decoration: none;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: rgba($color-turquoise, 0.8);
-      text-decoration: underline;
-    }
-  }
 }

@@ -77,7 +77,12 @@ const handleSubmit = async () => {
     </div>
 
     <template #footer>
-      <a href="#" :class="['form__link']">{{ $t('auth.login.forgotPassword') }}</a>
+      <Button 
+        :label="$t('auth.login.forgotPassword')" 
+        href="#" 
+        :severity="'primary'" 
+        :variant="'link'"
+      />
     </template>
   </Form>
 </template>

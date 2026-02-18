@@ -4,8 +4,14 @@
 .button {
   font-family: $font-inter;
   color: $color-black;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
 
-  /* Primary */
+  /*************** Primary */
   &--primary {
     &.button--plain {
       background-color: $color-primary-500;
@@ -64,7 +70,7 @@
     }
   }
 
-  /* Secondary */
+  /*************** Secondary */
   &--secondary {
     &.button--plain {
       background-color: $color-secondary-500;
@@ -126,7 +132,7 @@
   }
 
 
-  /* Success */
+  /*************** Success */
   &--success {
     &.button--plain {
       background-color: $color-success-500;
@@ -186,7 +192,7 @@
   }
 
 
-  /* Info */
+  /*************** Info */
   &--info {
     &.button--plain {
       background-color: $color-info-500;
@@ -245,6 +251,7 @@
     }
   }
 
+  /*************** Warn */
   &--warn {
     &.button--plain {
       background-color: $color-warn-500;
@@ -303,6 +310,7 @@
     }
   }
 
+  /*************** Danger */
   &--danger {
     &.button--plain {
       background-color: $color-danger-500;
@@ -361,6 +369,7 @@
     }
   }
 
+  /*************** Contrast */
   &--contrast {
     &.button--plain {
       background-color: $color-white;
