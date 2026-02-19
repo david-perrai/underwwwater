@@ -15,21 +15,20 @@ const emit = defineEmits<{
 }>();
 
 /** Methods */
-const onUpdateValue = (value: number) => {
-  emit('update:modelValue', value);
+const onUpdateValue = (value: number | null | undefined) => {
+  emit('update:modelValue', value || 0);
 };
 
-const onToggleLock = (value: boolean) => {
-  emit('update:locked', value);
+const onToggleLock = (value: boolean | undefined) => {
+  emit('update:locked', value || false);
 };
 </script>
 
 <template>
-  <div :class="['gas-control', { 'gas-control--locked': locked }, 'field']" :color="color">
+  <div :class="['gas-control', 'field']" :color="color">
     <label class="gas-control__label">
       {{ label }}
     </label>
-
 
     <div class="gas-control__inner">
       <PVKnob 
@@ -44,21 +43,27 @@ const onToggleLock = (value: boolean) => {
         @update:model-value="onUpdateValue"
       />
 
-      <PVInputNumber 
+      <FieldNumberSlim 
         :model-value="modelValue" 
-        class="gas-control__input" 
-        input-class="gas-control__input-inner"
         :min="0" 
         :max="100"
         :disabled="locked"
-        @update:model-value="(v) => onUpdateValue(v || 0)"
+        :suffix="'%'"
+        @update:model-value="onUpdateValue"
       />
 
-    </div>
-
-    <div class="gas-control__lock">
-      <PVCheckbox :model-value="locked" :binary="true" :input-id="`lock-${id}`" @update:model-value="onToggleLock" />
-      <label :for="`lock-${id}`">Locked</label>
+      <div class="gas-control__lock">
+        <ButtonToggleIcon 
+          :model-value="locked"
+          :onLabel="'Locked'" 
+          :offLabel="'Unlocked'" 
+          :onIcon="'pi pi-lock'" 
+          :offIcon="'pi pi-lock-open'" 
+          :ariaLabel="'Lock or Unlock Gas'" 
+          unstyled
+          @update:model-value="onToggleLock"
+        />  
+      </div>
     </div>
   </div>
 </template>

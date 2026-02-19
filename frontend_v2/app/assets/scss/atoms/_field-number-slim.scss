@@ -1,0 +1,26 @@
+@use '../variables' as *;
+
+.field-number-slim {
+  &__inner {
+    width: -webkit-fill-available;
+    max-width: 60px;
+    font-family: $font-inter;
+    font-size: 1rem;
+    padding: 0.5rem;
+    text-align: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 0%;
+    color: inherit;
+
+    &:focus {
+      border-bottom: 1px solid var(--gas-color, currentColor) !important;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+}

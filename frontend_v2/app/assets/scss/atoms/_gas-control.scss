@@ -11,6 +11,7 @@
   border: 1px solid rgba(255, 255, 255, 0.03);
   position: relative;
   overflow: hidden;
+  width: 200px;
 
   &::before {
     content: '';
@@ -68,55 +69,15 @@
       display: none;
     }
 
-    .gas-control__input {
+    .field-number-slim {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-
-      &-inner {
-        width: -webkit-fill-available;
-        max-width: 60px;
-        font-family: $font-inter;
-        font-size: 1rem;
-        padding: 0.5rem;
-        text-align: center;
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-        border-radius: 0%;
-        // text-align: center !important;
-        // background: rgba(0, 0, 0, 0.2) !important;
-        // border: 1px solid rgba(255, 255, 255, 0.05) !important;
-        // border-radius: 0.5rem !important;
-        // font-weight: 700 !important;
-        // font-size: 1.4rem !important;
-        // color: var(--gas-color) !important;
-        // padding: 0.5rem !important;
-
-        &:focus {
-          border-bottom: 1px solid var(--gas-color) !important;
-          box-shadow: 0 0 15px rgba(var(--gas-color-rgb), 0.3) !important;
-        }
-      }
     }
 
-    &__lock {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.4);
-      cursor: pointer;
-      transition: color 0.2s;
-
-      &:hover {
-        color: rgba(255, 255, 255, 0.8);
-      }
-
-      label {
-        cursor: pointer;
-      }
+    .gas-control__lock {
+      position: absolute;
+      bottom: 0;
     }
   }
 }

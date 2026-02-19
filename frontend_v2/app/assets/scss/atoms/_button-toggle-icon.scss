@@ -1,0 +1,12 @@
+@use '../variables' as *;
+
+.button-toggle-icon {
+  padding: 10px;
+  background-color: transparent;
+  border: none;
+  color: white;
+
+  span[data-pc-section="label"] {
+    display: none;
+  }
+}

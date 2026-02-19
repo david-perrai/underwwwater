@@ -45,15 +45,15 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <div :class="['gas-panel']">
-    <div class="gas-panel__header">
-      <strong class="gas-panel__title">
+  <div :class="['gas-mix']">
+    <div class="gas-mix__header">
+      <strong class="gas-mix__title">
         {{ title }} 
         <span v-if="subtitle">{{ subtitle }}</span>
       </strong>
     </div>
     
-    <div class="gas-panel__grid">
+    <div class="gas-mix__grid">
       <GasControl
         id="o2"
         label="Oxygen (O2)"
@@ -83,7 +83,7 @@ const handleSubmit = () => {
     </div>
 
     <!-- Pressure Fields -->
-    <div class="gas-panel__pressure">
+    <div class="gas-mix__pressure">
       <div class="field">
         <label for="pressureStart">{{ $t('dive.gas.pressureStart') }}</label>
         <PVInputNumber
@@ -109,7 +109,7 @@ const handleSubmit = () => {
     </div>
 
     <!-- Submit Button -->
-    <div class="gas-panel__actions mt-4 flex justify-end">
+    <div class="gas-mix__actions mt-4 flex justify-end">
       <Button
         :label="$t('dive.gas.submit')"
         severity="success"
