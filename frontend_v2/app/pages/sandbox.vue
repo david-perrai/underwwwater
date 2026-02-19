@@ -4,12 +4,20 @@ const severities: ("primary" | "secondary" | "success" | "info" | "warn" | "dang
 </script>
 
 <template>
+
   <div class="sandbox-page">
-    <h1>Button Showcase (Neon/Dark Theme)</h1>
-    
+    <h1 class="typo-h1">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
+    <h1 class="typo-h2">Curabitur vel felis rhoncus, tincidunt diam vel.</h1>
+    <h1 class="typo-h3">Fusce vel luctus dolor, vel vulputate velit.</h1>
+    <h1 class="typo-h4">Proin blandit efficitur ultricies. Nullam eget pretium enim.</h1>
+    <br />
+    <h1 class="typo-h1--secondary">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
+    <h1 class="typo-h2--secondary">Curabitur vel felis rhoncus, tincidunt diam vel.</h1>
+    <h1 class="typo-h3--secondary">Fusce vel luctus dolor, vel vulputate velit.</h1>
+    <h1 class="typo-h4--secondary">Proin blandit efficitur ultricies. Nullam eget pretium enim.</h1>
+
     <div class="grid">
       <div v-for="severity in severities" :key="severity" class="card">
-        <h3>{{ severity }}</h3>
         <div class="button-group">
           <Button :label="severity" :severity="severity" />
           <Button :label="severity + ' outlined'" :severity="severity" variant="outlined" />
@@ -29,12 +37,8 @@ const severities: ("primary" | "secondary" | "success" | "info" | "warn" | "dang
   padding: 2rem;
   background-color: var(--p-content-background);
   min-height: 100vh;
-  color: white;
 
-  h1 {
-    margin-bottom: 2rem;
-    color: var(--p-primary-color);
-  }
+
 }
 
 .grid {

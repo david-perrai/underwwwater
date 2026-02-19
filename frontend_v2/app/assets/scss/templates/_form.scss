@@ -1,4 +1,5 @@
 @use '../variables' as *;
+@use '../base/typography' as *;
 
 .form {
   width: 100%;
@@ -12,16 +13,11 @@
   }
 
   &__title {
-    font-family: $font-playfair;
-    font-size: 2.5rem;
-    color: $color-white;
-    margin-bottom: 0.5rem;
+    @extend .typo-h1;
   }
 
   &__subtitle {
-    font-family: $font-inter;
-    font-size: 1rem;
-    color: rgba($color-white, 1);
+    @extend .typo-subtitle;
   }
 
   &__inner {

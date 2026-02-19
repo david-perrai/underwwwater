@@ -1,6 +1,9 @@
 /* Base */
 @use './variables';
 @use 'primeicons/primeicons.css';
+
+@use './base/typography';
+
 /* Atoms */
 @use './atoms/button';
 @use './atoms/button-toggle-icon';

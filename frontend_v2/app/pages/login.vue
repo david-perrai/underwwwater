@@ -100,7 +100,7 @@ useHead({
     border-radius: 12px;
     padding-bottom: 2rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
+    transition: all 0.15s ease;
 
     &:hover {
       border-color: rgba($color-turquoise, 0.4);
@@ -166,7 +166,7 @@ useHead({
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    transition: all 0.3s ease;
+    transition: all 0.15s ease;
     padding: 0.75rem 1.25rem;
     background: rgba($color-marine, 0.5);
     backdrop-filter: blur(10px);

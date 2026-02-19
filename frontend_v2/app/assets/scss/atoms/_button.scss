@@ -1,8 +1,8 @@
 @use '../variables' as *;
-
+@use '../base/typography' as *;
 
 .button {
-  font-family: $font-inter;
+  @extend .typo-subtitle;
   color: $color-black;
   border-radius: 6px;
   padding: 8px 12px;
@@ -429,7 +429,7 @@
   }
 
   &--jumping {
-    transition: transform 0.3s ease;
+    transition: transform 0.15s ease;
 
     &:hover {
       transform: translateY(-2px);

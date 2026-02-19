@@ -1,0 +1,76 @@
+@use '../variables' as *;
+
+.font-primary {
+    font-family: $font-playfair;
+}
+
+.font-secondary {
+    font-family: $font-inter;
+}
+
+
+.typo-h0 {
+    @extend .font-primary;
+    font-size: 62px;
+    color: $color-white;
+    line-height: 1.2;
+    margin: 0 0 0.75em;
+
+    &--secondary {
+        @extend .typo-h0;
+        @extend .font-secondary;
+    }
+}
+
+.typo-h1 {
+    @extend .font-primary;
+    font-size: 42px;
+    line-height: 1.15;
+    margin: 0 0 0.75em;
+    color: $color-white;
+
+    &--secondary {
+        @extend .typo-h1;
+        @extend .font-secondary;
+    }
+}
+
+.typo-h2 {
+    @extend .font-primary;
+    font-size: 32px;
+    line-height: 1.25;
+    margin: 0 0 0.6em;
+    color: $color-white;
+
+    &--secondary {
+        @extend .typo-h2;
+        @extend .font-secondary;
+    }
+}
+
+.typo-h3 {
+    @extend .font-primary;
+    font-size: 24px;
+    line-height: 1.35;
+    margin: 0 0 0.5em;
+    color: $color-white;
+
+    &--secondary {
+        @extend .typo-h3;
+        @extend .font-secondary;
+    }
+}
+
+.typo-subtitle {
+    @extend .font-secondary;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 0 0.5em;
+}
+
+.typo-texte {
+    @extend .font-secondary;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 0.5em;
+}
