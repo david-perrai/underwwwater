@@ -16,14 +16,28 @@ const severities: ("primary" | "secondary" | "success" | "info" | "warn" | "dang
     <h1 class="typo-h3--secondary">Fusce vel luctus dolor, vel vulputate velit.</h1>
     <h1 class="typo-h4--secondary">Proin blandit efficitur ultricies. Nullam eget pretium enim.</h1>
 
-    <div class="grid">
-      <div v-for="severity in severities" :key="severity" class="card">
-        <div class="button-group">
-          <Button :label="severity" :severity="severity" />
-          <Button :label="severity + ' outlined'" :severity="severity" variant="outlined" />
-          <Button :label="severity + ' text'" :severity="severity" variant="text" />
-          <Button :label="severity + ' link'" :severity="severity" variant="link" />
-        </div>
+    <div class="col">
+      <div v-for="severity in severities" :key="severity" class="flex">
+          <PrimeButton
+            :label="'Plain ' + severity" 
+            :severity="severity" 
+            variant="plain" 
+          />
+          <PrimeButton
+            :label="'Outlined ' + severity" 
+            :severity="severity" 
+            variant="outlined" 
+          />
+          <PrimeButton
+            :label="'Text ' + severity" 
+            :severity="severity" 
+            variant="text" 
+          />
+          <PrimeButton
+            :label="'Link ' + severity" 
+            :severity="severity" 
+            variant="link" 
+          />
       </div>
     </div>
 
@@ -37,35 +51,21 @@ const severities: ("primary" | "secondary" | "success" | "info" | "warn" | "dang
   padding: 2rem;
   background-color: var(--p-content-background);
   min-height: 100vh;
-
+  color: white;
 
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
-.card {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 1.5rem;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-
-  h3 {
-    text-transform: capitalize;
-    margin-bottom: 1rem;
-    color: #e0e0e0;
-  }
-}
-
-.button-group {
+.col {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  
-  // Align items to start
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+.flex {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }
 </style>

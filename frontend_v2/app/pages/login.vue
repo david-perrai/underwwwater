@@ -40,12 +40,12 @@ useHead({
     </div>
 
     <!-- Back to home link -->
-    <div class="auth-page__back">
+    <!-- <div class="auth-page__back">
       <NuxtLink to="/" class="auth-page__back-link">
         <i class="pi pi-arrow-left"></i>
         {{ $t('pages.login.backToHome') }}
       </NuxtLink>
-    </div>
+    </div> -->
   </div>
 </template>
 

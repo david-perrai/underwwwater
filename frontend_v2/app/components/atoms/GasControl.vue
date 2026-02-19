@@ -31,7 +31,7 @@ const onToggleLock = (value: boolean | undefined) => {
     </label>
 
     <div class="gas-control__inner">
-      <PVKnob 
+      <PrimeKnob 
         :model-value="modelValue" 
         :size="150" 
         :min="0"

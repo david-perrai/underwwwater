@@ -12,12 +12,12 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <PVDialog 
+  <PrimeDialog 
     :visible="visible" 
     @update:visible="emit('update:visible', $event)"
     modal 
     :header="header"
   >
     <slot />
-  </PVDialog>
+  </PrimeDialog>
 </template>

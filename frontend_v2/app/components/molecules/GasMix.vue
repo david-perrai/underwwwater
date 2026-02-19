@@ -86,7 +86,7 @@ const handleSubmit = () => {
     <div class="gas-mix__pressure">
       <div class="field">
         <label for="pressureStart">{{ $t('dive.gas.pressureStart') }}</label>
-        <PVInputNumber
+        <PrimeInputNumber
           id="pressureStart"
           v-model="pressureStart"
           suffix=" bar"
@@ -95,7 +95,7 @@ const handleSubmit = () => {
       </div>
       <div class="field">
         <label for="pressureEnd">{{ $t('dive.gas.pressureEnd') }}</label>
-        <PVInputNumber
+        <PrimeInputNumber
           id="pressureEnd"
           v-model="pressureEnd"
           suffix=" bar"

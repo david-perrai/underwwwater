@@ -143,7 +143,7 @@ defineExpose({
 
     <!-- Add Button (Split) -->
     <div v-if="!isAddingTank && !editingTankId" class="gas-tanks__actions">
-      <PVSplitButton 
+      <PrimeSplitButton 
         :label="$t('dive.gas.add')" 
         icon="pi pi-plus" 
         :model="addTankItems" 

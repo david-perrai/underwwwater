@@ -30,9 +30,9 @@ const onUpdate = (value: any) => {
 
 <template>
   <div class="field-text" :data-id="'field-text-' + id">
-    <PVFloatLabel>
+    <PrimeFloatLabel>
       <!-- Password field -->
-      <PVPassword
+      <PrimePassword
         v-if="type === 'password'"
         :inputId="'field-text-' + id"
         v-model="modelValue"
@@ -55,10 +55,10 @@ const onUpdate = (value: any) => {
             </template>
           </slot>
         </template>
-      </PVPassword>
+      </PrimePassword>
 
       <!-- Text field -->
-      <PVInputText
+      <PrimeInputText
         v-else
         :id="'field-text-' + id"
         v-model="modelValue"
@@ -69,7 +69,7 @@ const onUpdate = (value: any) => {
       />
 
       <label :for="'field-text-' + id">{{ label }}</label>
-    </PVFloatLabel>
+    </PrimeFloatLabel>
     
     <small v-if="error" class="p-error">{{ error }}</small>
   </div>

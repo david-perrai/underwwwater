@@ -69,7 +69,7 @@ const handleAddDive = async () => {
 s
 <template>
   <header :class="['header']" :data-id="'header'">
-    <PVMenubar :model="menuItems">
+    <PrimeMenubar :model="menuItems">
       <!-- Logo -->
       <template #start>
         <Logo :is-small="true" />
@@ -109,6 +109,6 @@ s
           <Button @click="handleClick" :label="t('common.actions.login')" />
         </div>
       </template>
-    </PVMenubar>
+    </PrimeMenubar>
   </header>
 </template>

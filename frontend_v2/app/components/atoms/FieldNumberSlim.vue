@@ -17,7 +17,7 @@ const modelValue = defineModel<number | null>();
 </script>
 
 <template>
-  <PVInputNumber 
+  <PrimeInputNumber 
     v-model="modelValue" 
     class="field-number-slim" 
     input-class="field-number-slim__inner"

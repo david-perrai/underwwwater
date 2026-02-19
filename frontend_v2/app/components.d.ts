@@ -8,7 +8,18 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    PrimeButton: typeof import('primevue/button')['default']
+    PrimeDatePicker: typeof import('primevue/datepicker')['default']
+    PrimeDialog: typeof import('primevue/dialog')['default']
+    PrimeDivider: typeof import('primevue/divider')['default']
+    PrimeFloatLabel: typeof import('primevue/floatlabel')['default']
+    PrimeInputNumber: typeof import('primevue/inputnumber')['default']
+    PrimeKnob: typeof import('primevue/knob')['default']
+    PrimeMenubar: typeof import('primevue/menubar')['default']
+    PrimeSplitButton: typeof import('primevue/splitbutton')['default']
+    PrimeToggleButton: typeof import('primevue/togglebutton')['default']
     PVButton: typeof import('primevue/button')['default']
+    PVCard: typeof import('primevue/card')['default']
     PVCheckbox: typeof import('primevue/checkbox')['default']
     PVDatePicker: typeof import('primevue/datepicker')['default']
     PVDialog: typeof import('primevue/dialog')['default']

@@ -30,11 +30,13 @@ const handleClick = (event: Event) => {
 </script>
 
 <template>
-  <PVButton
+  <PrimeButton
     :label="label"
     :icon="icon"
     :iconPos="iconPos"
     :loading="loading"
+    :severity="severity"
+    :variant="variant"
     :rounded="rounded"
     :disabled="disabled"
     :type="type"
@@ -45,31 +47,10 @@ const handleClick = (event: Event) => {
     :class="[
       'button', 
       { 'button--jumping': isJumping },
-      variant === 'outlined' ? 
-      'button--outlined' : 
-      variant === 'text' ?
-      'button--text' : 
-      variant === 'link' ?
-      'button--link' : 
-      'button--plain',
-      severity === 'primary' ? 
-      'button--primary' : 
-      severity === 'secondary' ?
-      'button--secondary' : 
-      severity === 'success' ?
-      'button--success' : 
-      severity === 'info' ?
-      'button--info' : 
-      severity === 'warn' ?
-      'button--warn' : 
-      severity === 'danger' ?
-      'button--danger' : 
-      'button--contrast',
     ]"
-    :unstyled="true"
     :data-id="'button'"
     @click="handleClick"
   >
     <slot />
-  </PVButton>
+  </PrimeButton>
 </template>

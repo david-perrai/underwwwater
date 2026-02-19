@@ -25,8 +25,8 @@ const onUpdate = (value: any) => {
 
 <template>
   <div :class="['field-number']" :data-id="'field-number-' + id">
-    <PVFloatLabel>
-      <PVInputNumber
+    <PrimeFloatLabel>
+      <PrimeInputNumber
         :inputId="'field-number-' + id"
         v-model="modelValue"
         :fluid="true"
@@ -40,7 +40,7 @@ const onUpdate = (value: any) => {
       />
 
       <label :for="'field-number-' + id">{{ label }}</label>
-    </PVFloatLabel>
+    </PrimeFloatLabel>
     
     <small v-if="error" class="p-error">{{ error }}</small>
   </div>

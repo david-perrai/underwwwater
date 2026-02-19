@@ -13,7 +13,7 @@ const modelValue = defineModel<boolean>();
 </script>
 
 <template>
-  <PVToggleButton 
+  <PrimeToggleButton 
     v-model="modelValue" 
     :onLabel="onLabel" 
     :offLabel="offLabel" 

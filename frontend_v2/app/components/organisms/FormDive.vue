@@ -124,7 +124,7 @@ const handleSubmitAndContinue = async () => {
       />
     </div>
 
-    <PVDivider />
+    <PrimeDivider />
 
     <GasTanks ref="gasTanksRef" />
 

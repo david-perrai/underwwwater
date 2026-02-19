@@ -30,8 +30,8 @@ const onUpdate = (value: any) => {
 
 <template>
   <div :class="['field-date']" :data-id="'field-date-' + id">
-    <PVFloatLabel>
-      <PVDatePicker
+    <PrimeFloatLabel>
+      <PrimeDatePicker
         :inputId="id"
         v-model="modelValue"
         :fluid="true"
@@ -43,7 +43,7 @@ const onUpdate = (value: any) => {
         @update:model-value="onUpdate"
       />
       <label :for="id">{{ label }}</label>
-    </PVFloatLabel>
+    </PrimeFloatLabel>
     
     <small v-if="error" class="p-error">{{ error }}</small>
   </div>
