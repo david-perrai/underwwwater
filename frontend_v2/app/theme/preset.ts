@@ -8,6 +8,7 @@ import inputnumber from "./components/inputnumber";
 import password from "./components/password";
 import datepicker from "./components/datepicker";
 import floatlabel from "./components/floatlabel";
+import splitbutton from "./components/splitbutton";
 
 // Custom preset with your brand colors
 export const CustomPreset = definePreset(Aura, {
@@ -100,5 +101,6 @@ export const CustomPreset = definePreset(Aura, {
         password,
         datepicker,
         floatlabel,
+        splitbutton,
     },
 });

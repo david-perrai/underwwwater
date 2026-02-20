@@ -81,6 +81,14 @@ const removeTank = (id: string) => {
   }
 };
 
+const getTankItems = (tank: TankData) => [
+  {
+    label: 'Remove',
+    icon: 'pi pi-trash',
+    command: () => removeTank(tank.id)
+  }
+];
+
 // Expose tanks to parent
 defineExpose({
   tanks
@@ -107,27 +115,25 @@ defineExpose({
         </div>
 
         <!-- Button Mode -->
-        <Button 
+        <PrimeSplitButton 
           v-else
           severity="secondary" 
           outlined 
-          class="p-button-sm flex items-center gap-2"
+          size="small"
+          class="flex items-center"
           @click="editTank(tank)"
+          :model="getTankItems(tank)"
         >
-          <i class="pi pi-eject rotate-90"></i>
-          <span>
-            {{ useGasMixName(tank.gasMix).title.value }}
-            <span v-if="useGasMixName(tank.gasMix).subtitle.value" class="opacity-70 ml-1">
-              {{ useGasMixName(tank.gasMix).subtitle.value }}
+          <div class="flex items-center gap-2">
+            <i class="pi pi-eject rotate-90"></i>
+            <span>
+              {{ useGasMixName(tank.gasMix).title.value }}
+              <span v-if="useGasMixName(tank.gasMix).subtitle.value" class="opacity-70 ml-1">
+                {{ useGasMixName(tank.gasMix).subtitle.value }}
+              </span>
             </span>
-          </span>
-          <span 
-            class="ml-2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-red-500/10 hover:text-red-500 transition-colors"
-            @click.stop="removeTank(tank.id)"
-          >
-            <i class="pi pi-times text-xs"></i>
-          </span>
-        </Button>
+          </div>
+        </PrimeSplitButton>
       </div>
     </div>
 
