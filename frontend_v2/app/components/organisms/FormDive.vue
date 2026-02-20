@@ -130,18 +130,21 @@ const handleSubmitAndContinue = async () => {
 
     <!-- Custom actions: two green buttons -->
     <template #actions>
-      <Button
+      <PrimeButton
         type="submit"
         :label="$t('dive.form.submit')"
-        size="large"
-        severity="success"
+        :severity="'success'" 
+        :size="'large'" 
+        icon="pi pi-plus"
+        variant="plain" 
       />
-      <Button
+      <PrimeButton
         type="button"
         :label="$t('dive.form.submitAndContinue')"
-        size="large"
-        severity="success"
-        :outlined="true"
+        :severity="'success'" 
+        :size="'large'" 
+        variant="outlined" 
+        icon="pi pi-plus-circle"
         @click="handleSubmitAndContinue"
       />
     </template>

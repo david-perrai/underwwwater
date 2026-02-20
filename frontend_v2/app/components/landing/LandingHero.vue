@@ -17,20 +17,24 @@
       </p>
       
       <div class="landing-hero__actions">
-        <Button 
-          :label="$t('landing.hero.startLogging')"
-          :size="'large'" 
-          :to="'/login'" 
-          :is-jumping="true"
+        <PrimeButton
           :severity="'primary'" 
-        />
-
-        <Button 
-          :label="$t('landing.hero.learnMore')" 
-          to="#features" 
           :size="'large'" 
+          variant="plain" 
+          asChild
+          v-slot="slotProps"
+        >
+          <RouterLink to="/login" v-bind="slotProps" class="p-button--jumping">
+            {{ $t('landing.hero.startLogging') }}
+          </RouterLink>
+        </PrimeButton>
+
+        <PrimeButton
+          :label="$t('landing.hero.learnMore')" 
           :severity="'contrast'" 
-          :is-jumping="true"
+          :size="'large'"
+          class="p-button--jumping" 
+          variant="plain" 
         />
       </div>
     </div>

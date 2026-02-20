@@ -63,9 +63,9 @@ export default {
                     activeColor: "#000000",
                 },
                 danger: {
-                    background: "{danger.500}",
+                    background: "{danger.400}",
                     color: "#000000",
-                    borderColor: "{danger.500}",
+                    borderColor: "{danger.400}",
                     hoverBackground: "{danger.200}",
                     hoverBorderColor: "{danger.200}",
                     hoverColor: "#000000",
@@ -78,32 +78,32 @@ export default {
                 primary: {
                     color: "{primary.500}",
                     borderColor: "{primary.500}",
-                    hoverBackground: "{primary.950}",
+                    hoverBackground: "{primary.900}",
                 },
                 secondary: {
-                    color: "{secondary.500}",
-                    borderColor: "{secondary.500}",
-                    hoverBackground: "{secondary.950}",
+                    color: "{secondary.400}",
+                    borderColor: "{secondary.400}",
+                    hoverBackground: "{secondary.900}",
                 },
                 success: {
-                    color: "{success.600}",
-                    borderColor: "{success.600}",
-                    hoverBackground: "{success.950}",
+                    color: "{success.500}",
+                    borderColor: "{success.500}",
+                    hoverBackground: "{success.900}",
                 },
                 info: {
                     color: "{info.500}",
                     borderColor: "{info.500}",
-                    hoverBackground: "{info.950}",
+                    hoverBackground: "{info.900}",
                 },
                 warn: {
                     color: "{warn.500}",
                     borderColor: "{warn.500}",
-                    hoverBackground: "{warn.950}",
+                    hoverBackground: "{warn.900}",
                 },
                 danger: {
-                    color: "{danger.500}",
-                    borderColor: "{danger.500}",
-                    hoverBackground: "{danger.950}",
+                    color: "{danger.400}",
+                    borderColor: "{danger.400}",
+                    hoverBackground: "{danger.900}",
                 },
             },
             text: {
@@ -112,8 +112,8 @@ export default {
                     hoverBackground: "{primary.900}",
                 },
                 secondary: {
-                    color: "{secondary.500}",
-                    hoverBackground: "{secondary.900}",
+                    color: "{secondary.400}",
+                    hoverBackground: "{secondary.800}",
                 },
                 success: {
                     color: "{success.500}",
@@ -128,7 +128,7 @@ export default {
                     hoverBackground: "{warn.900}",
                 },
                 danger: {
-                    color: "{danger.500}",
+                    color: "{danger.400}",
                     hoverBackground: "{danger.900}",
                 },
             },

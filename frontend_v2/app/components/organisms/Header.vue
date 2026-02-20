@@ -100,13 +100,21 @@ s
       <!-- Auth -->
       <template #end>
         <div class="flex items-center gap-2">
-          <Button 
-            @click="handleAddDive" 
+          <PrimeButton 
             :label="t('common.actions.add_dive', 'Add dive')" 
             severity="success" 
-            class="mr-2"
+            @click="handleAddDive" 
           />
-          <Button @click="handleClick" :label="t('common.actions.login')" />
+          <PrimeButton
+            :severity="'primary'" 
+            variant="plain" 
+            asChild
+            v-slot="slotProps"
+          >
+            <RouterLink to="/login" v-bind="slotProps">
+              {{ t('common.actions.login') }}
+            </RouterLink>
+          </PrimeButton>
         </div>
       </template>
     </PrimeMenubar>

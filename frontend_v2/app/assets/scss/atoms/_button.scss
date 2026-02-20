@@ -1,15 +1,13 @@
-@use '../variables' as *;
-@use '../base/typography' as *;
-
-.button {
-  @extend .typo-subtitle;
-  // color: $color-black;
-
+.p-button {
   &--jumping {
     transition: transform 0.15s ease;
 
     &:hover {
       transform: translateY(-2px);
     }
+  }
+
+  &:not(.p-button-link) {
+    text-decoration: none;
   }
 }

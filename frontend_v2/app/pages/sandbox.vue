@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-const severities: ("primary" | "secondary" | "success" | "info" | "warn" | "danger" | "contrast")[] = ["primary", "secondary", "success", "info", "warn", "danger", "contrast"];
+const severities: ("primary" | "secondary" | "info" | "success" | "warn" | "danger" | "contrast")[] = ["primary", "secondary", "success", "info", "warn", "danger", "contrast"];
 </script>
 
 <template>
@@ -33,12 +33,12 @@ const severities: ("primary" | "secondary" | "success" | "info" | "warn" | "dang
             :severity="severity" 
             variant="text" 
           />
+      </div>
+
           <PrimeButton
-            :label="'Link ' + severity" 
-            :severity="severity" 
+            :label="'Link'" 
             variant="link" 
           />
-      </div>
     </div>
 
         <FormDive />

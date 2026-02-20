@@ -110,7 +110,7 @@ const handleSubmit = () => {
 
     <!-- Submit Button -->
     <div class="gas-mix__actions mt-4 flex justify-end">
-      <Button
+      <PrimeButton
         :label="$t('dive.gas.submit')"
         severity="success"
         :disabled="!isValid"

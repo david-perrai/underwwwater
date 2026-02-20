@@ -34,13 +34,12 @@ const onSubmit = () => {
       <!-- Actions -->
       <div :class="['form__actions']">
         <slot name="actions">
-          <Button
+          <PrimeButton
             type="submit"
             :label="submitLabel"
-            size="large"
             :severity="submitSeverity ?? 'primary'"
-            :outlined="submitOutlined ?? false"
-            :translate="true"
+            :size="'large'"
+            :variant="submitOutlined ? 'outlined' : 'plain'"
           />
         </slot>
       </div>

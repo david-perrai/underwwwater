@@ -64,7 +64,7 @@ const handleSubmit = async () => {
     />
 
     <template #footer>
-      <Button 
+      <PrimeButton 
         :label="$t('auth.login.forgotPassword')" 
         href="#" 
         :severity="'primary'" 
