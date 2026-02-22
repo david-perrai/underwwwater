@@ -11,4 +11,9 @@ export default {
             },
         },
     },
+    css: `
+        .p-floatlabel label {
+            font-family: 'Inter Tight', sans-serif !important;
+        }
+    `,
 } as FloatLabelDesignTokens;

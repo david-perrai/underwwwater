@@ -64,45 +64,96 @@ const handleSubmit = async () => {
     name="signup"
     @submit="handleSubmit"
   >
-    <!-- Email -->
-    <FieldText
-      id="email"
-      v-model="emailField"
-      :label="$t('auth.signup.email')"
-      :error="errors.email"
-      @update:model-value="clearError('email')"
-    />
+    <!-- 1. Email -->
+    <div class="form__field">
+      <PrimeFloatLabel>
+        <PrimeInputText
+          id="email"
+          v-model="emailField"
+          :fluid="true"
+          :invalid="!!errors.email"
+          @update:model-value="clearError('email')"
+        />
+        <label for="email">{{ $t('auth.signup.email') }}</label>
+      </PrimeFloatLabel>
+      <PrimeMessage
+        v-if="errors.email"
+        size="small"
+        severity="error"
+        variant="simple"
+      >
+        {{ errors.email }}
+      </PrimeMessage>
+    </div>
 
-    <!-- Username -->
-    <FieldText
-      id="username"
-      v-model="username"
-      :label="$t('auth.signup.username')"
-      :error="errors.username"
-      @update:model-value="clearError('username')"
-    />
+    <!-- 2. Username -->
+    <div class="form__field">
+      <PrimeFloatLabel>
+        <PrimeInputText
+          id="username"
+          v-model="username"
+          :fluid="true"
+          :invalid="!!errors.username"
+          @update:model-value="clearError('username')"
+        />
+        <label for="username">{{ $t('auth.signup.username') }}</label>
+      </PrimeFloatLabel>
+      <PrimeMessage
+        v-if="errors.username"
+        size="small"
+        severity="error"
+        variant="simple"
+      >
+        {{ errors.username }}
+      </PrimeMessage>
+    </div>
 
-    <!-- Password -->
-    <FieldText
-      id="password"
-      v-model="password"
-      type="password"
-      :label="$t('auth.signup.password')"
-      :error="errors.password"
-      :toggle-mask="true"
-      :feedback="true"
-      @update:model-value="clearError('password')"
-    />
+    <!-- 3. Password -->
+    <div class="form__field">
+      <PrimeFloatLabel>
+        <PrimePassword
+          id="password"
+          v-model="password"
+          :fluid="true"
+          :invalid="!!errors.password"
+          :toggle-mask="true"
+          :feedback="true"
+          @update:model-value="clearError('password')"
+        />
+        <label for="password">{{ $t('auth.signup.password') }}</label>
+      </PrimeFloatLabel>
+      <PrimeMessage
+        v-if="errors.password"
+        size="small"
+        severity="error"
+        variant="simple"
+      >
+        {{ errors.password }}
+      </PrimeMessage>
+    </div>
 
-    <!-- Confirm Password -->
-    <FieldText
-      id="passwordConfirm"
-      v-model="passwordConfirm"
-      type="password"
-      :label="$t('auth.signup.confirmPassword')"
-      :error="errors.passwordConfirm"
-      :toggle-mask="true"
-      @update:model-value="clearError('passwordConfirm')"
-    />
+    <!-- 4. Confirm Password -->
+    <div class="form__field">
+      <PrimeFloatLabel>
+        <PrimePassword
+          id="passwordConfirm"
+          v-model="passwordConfirm"
+          :fluid="true"
+          :invalid="!!errors.passwordConfirm"
+          :toggle-mask="true"
+          :feedback="false"
+          @update:model-value="clearError('passwordConfirm')"
+        />
+        <label for="passwordConfirm">{{ $t('auth.signup.confirmPassword') }}</label>
+      </PrimeFloatLabel>
+      <PrimeMessage
+        v-if="errors.passwordConfirm"
+        size="small"
+        severity="error"
+        variant="simple"
+      >
+        {{ errors.passwordConfirm }}
+      </PrimeMessage>
+    </div>
   </Form>
 </template>

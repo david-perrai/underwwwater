@@ -5,10 +5,10 @@ export default {
         dark: {
             root: {
                 background: "rgba(5, 10, 32, 0.5)",
-                borderColor: "rgba(255, 255, 255, 0.2)",
+                borderColor: "rgba(255, 255, 255, 0.4)",
                 color: "#ffffff",
                 paddingX: "1rem",
-                paddingY: "1rem",
+                paddingY: "0.75rem",
                 borderRadius: "4px",
                 hoverBorderColor: "rgba(0, 255, 239, 0.5)",
                 focusBorderColor: "#00FFEF",
@@ -18,6 +18,8 @@ export default {
     },
     css: `
         .p-inputtext {
+            font-family: 'Inter Tight', sans-serif !important;
+            font-size: 16px !important;
             backdrop-filter: blur(10px);
         }
         .p-inputtext:enabled:focus {
