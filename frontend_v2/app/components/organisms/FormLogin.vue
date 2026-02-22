@@ -40,8 +40,7 @@ const handleSubmit = async () => {
     :title="$t('auth.login.title')"
     :subtitle="$t('auth.login.subtitle')"
     :submit-label="$t('auth.login.submit')"
-    submit-severity="primary"
-    :submit-outlined="true"
+    severity="primary"
     name="login"
     @submit="handleSubmit"
   >

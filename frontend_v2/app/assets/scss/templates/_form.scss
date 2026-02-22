@@ -1,25 +1,11 @@
 @use '../variables' as *;
-@use '../base/typography' as *;
 
 .form {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
 
-  /* Header */
-  &__header {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-
-  &__title {
-    @extend .typo-h1;
-  }
-
-  &__subtitle {
-    @extend .typo-subtitle;
-  }
-
+  /* Inner form layout */
   &__inner {
     display: flex;
     flex-direction: column;

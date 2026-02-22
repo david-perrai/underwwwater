@@ -10,6 +10,7 @@ import datepicker from "./components/datepicker";
 import floatlabel from "./components/floatlabel";
 import splitbutton from "./components/splitbutton";
 import message from "./components/message";
+import card from "./components/card";
 import { primitives } from "./primitives";
 
 // Custom preset with your brand colors
@@ -109,5 +110,6 @@ export const CustomPreset = definePreset(Aura, {
         floatlabel,
         splitbutton,
         message,
+        card,
     },
 });

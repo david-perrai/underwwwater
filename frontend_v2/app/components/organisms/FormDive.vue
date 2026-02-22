@@ -85,7 +85,7 @@ const handleSubmitAndContinue = async () => {
 <template>
   <Form
     :submit-label="$t('dive.form.submit')"
-    submit-severity="success"
+    severity="success"
     name="dive"
     @submit="handleSubmitAndClose"
   >
