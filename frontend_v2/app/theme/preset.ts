@@ -12,6 +12,7 @@ import splitbutton from "./components/splitbutton";
 import message from "./components/message";
 import card from "./components/card";
 import dialog from "./components/dialog";
+import fieldset from "./components/fieldset";
 import { primitives } from "./primitives";
 
 // Custom preset with your brand colors
@@ -113,5 +114,6 @@ export const CustomPreset = definePreset(Aura, {
         message,
         card,
         dialog,
+        fieldset,
     },
 });

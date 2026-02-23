@@ -22,29 +22,46 @@ export default {
                 color: "#ffffff",
                 padding: "0 1.5rem 1.5rem 1.5rem",
             },
+            closeButton: {
+                color: "#ffffff",
+                hoverColor: "rgba(255, 255, 255, 0.7)",
+                hoverBackground: "rgba(255, 255, 255, 0.1)",
+            },
         },
     },
     css: `
         .p-dialog {
             backdrop-filter: blur(20px);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            width: 70rem;
+            width: 750px;
             max-width: 90vw;
         }
         .p-dialog-content {
             overflow-y: auto;
         }
-        .p-dialog .p-dialog-header .p-dialog-title {
+        .p-dialog-header {
+            justify-content: center;
+            position: relative;
+        }
+        .p-dialog-title {
             font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
+            text-align: center;
+            width: 100%;
         }
-        .p-dialog .p-dialog-header .p-dialog-header-actions .p-dialog-header-action {
-            color: #ffffff;
-            transition: color 0.15s ease;
+        .p-dialog-header-actions {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
         }
-        .p-dialog .p-dialog-header .p-dialog-header-actions .p-dialog-header-action:hover {
-            color: rgba(255, 255, 255, 0.7);
-            background: rgba(255, 255, 255, 0.1);
+        .p-dialog-close-button {
+            color: #ffffff !important;
+            transition: color 0.15s ease, background-color 0.15s ease;
+        }
+        .p-dialog-close-button:hover {
+            color: rgba(255, 255, 255, 0.7) !important;
+            background: rgba(255, 255, 255, 0.1) !important;
         }
     `,
 };
