@@ -13,6 +13,7 @@ declare module 'vue' {
     PrimeDatePicker: typeof import('primevue/datepicker')['default']
     PrimeDialog: typeof import('primevue/dialog')['default']
     PrimeDivider: typeof import('primevue/divider')['default']
+    PrimeFieldset: typeof import('primevue/fieldset')['default']
     PrimeFloatLabel: typeof import('primevue/floatlabel')['default']
     PrimeForm: typeof import('@primevue/forms/form')['default']
     PrimeInputNumber: typeof import('primevue/inputnumber')['default']
