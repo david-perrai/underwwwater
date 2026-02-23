@@ -87,6 +87,7 @@ const handleSubmitAndContinue = async () => {
     :submit-label="$t('dive.form.submit')"
     severity="success"
     name="dive"
+    :modal="true"
     @submit="handleSubmitAndClose"
   >
     <!-- Context Fields Row -->

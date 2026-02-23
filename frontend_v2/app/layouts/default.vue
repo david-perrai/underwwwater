@@ -9,13 +9,13 @@ const navigationStore = useNavigationStore();
     <slot />
 
     <div id="modals" :class="['modals']" :data-id="'modals'">
-      <Modal 
-        :visible="navigationStore.isModalDiveVisible"
-        :header="'Add Dive'"
-        @update:visible="navigationStore.toggleModalDive"
-      >
+      <!-- <PrimeDialog
+        v-model:visible="navigationStore.isModalDiveVisible"
+        :header="$t('dive.form.title')"
+        modal
+      > -->
         <FormDive />
-      </Modal>
+      <!-- </PrimeDialog> -->
     </div>
   </div>
 </template>

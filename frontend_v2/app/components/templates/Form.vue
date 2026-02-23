@@ -6,7 +6,12 @@ const props = defineProps<{
   submitLabel: string;
   severity?: string;
   name?: string;
+  /** Quand true, rendu sans Card (à utiliser dans un PrimeDialog) */
+  modal?: boolean;
 }>();
+
+/** Stores and Composables */
+const navigationStore = useNavigationStore();
 
 /** Emits */
 const emit = defineEmits<{
@@ -30,7 +35,9 @@ const severityBorderVar = computed(() => {
 </script>
 
 <template>
+  <!-- ── Mode Card (défaut) ─────────────────────────────────── -->
   <PrimeCard
+    v-if="!modal"
     :class="['form', name ? `form-${name}` : '']"
     :data-id="name ? `form-${name}` : 'form'"
     :style="{ '--form-severity-color': severityBorderVar }"
@@ -43,13 +50,9 @@ const severityBorderVar = computed(() => {
       </div>
     </template>
 
-    <!-- Fields (default slot) -->
     <template #content>
       <PrimeForm @submit="onSubmit" class="form__inner">
-        <!-- Fields -->
         <slot />
-
-        <!-- Actions -->
         <div class="form__actions">
           <slot name="actions">
             <PrimeButton
@@ -61,14 +64,43 @@ const severityBorderVar = computed(() => {
             />
           </slot>
         </div>
-
-        <!-- Footer (optional) -->
         <div v-if="$slots.footer" class="form__footer">
           <slot name="footer" />
         </div>
       </PrimeForm>
     </template>
   </PrimeCard>
+
+  <!-- ── Mode Modal (sans Card wrapper) ────────────────────── -->
+   <PrimeDialog
+    v-else
+    v-model:visible="navigationStore.isModalDiveVisible"
+    :header="$t('dive.form.title')"
+    modal
+  >
+    <PrimeForm
+      :class="['form', name ? `form-${name}` : '']"
+      :data-id="name ? `form-${name}` : 'form'"
+      :style="{ '--form-severity-color': severityBorderVar }"
+      @submit="onSubmit"
+    >
+      <slot />
+      <div class="form__actions">
+        <slot name="actions">
+          <PrimeButton
+            type="submit"
+            :label="submitLabel"
+            :severity="severity ?? 'primary'"
+            size="large"
+            variant="plain"
+          />
+        </slot>
+      </div>
+      <div v-if="$slots.footer" class="form__footer">
+        <slot name="footer" />
+      </div>
+    </PrimeForm>
+  </PrimeDialog>
 </template>
 
 <style lang="scss" scoped>
