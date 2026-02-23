@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const navigationStore = useNavigationStore();
+
 </script>
 
 <template>
