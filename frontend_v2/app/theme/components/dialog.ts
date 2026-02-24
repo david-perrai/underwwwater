@@ -56,12 +56,11 @@ export default {
             transform: translateY(-50%);
         }
         .p-dialog-close-button {
-            color: #ffffff !important;
             transition: color 0.15s ease, background-color 0.15s ease;
         }
         .p-dialog-close-button:hover {
-            color: rgba(255, 255, 255, 0.7) !important;
-            background: rgba(255, 255, 255, 0.1) !important;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.1);
         }
     `,
 };

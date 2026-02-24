@@ -76,6 +76,7 @@ const severityBorderVar = computed(() => {
     v-else
     v-model:visible="navigationStore.isModalDiveVisible"
     :header="$t('dive.form.title')"
+    :closeButtonProps="{ severity: 'contrast', variant: 'text' }"
     modal
   >
     <PrimeForm
