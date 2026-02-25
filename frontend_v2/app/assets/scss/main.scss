@@ -6,14 +6,9 @@
 
 /* Atoms */
 @use './atoms/button-toggle-icon';
-@use './atoms/field-date';
-@use './atoms/field-number';
 @use './atoms/field-number-slim';
 @use './atoms/gas-control';
 @use './atoms/logo';
-
-/* Molecules */
-@use './molecules/gas-mix';
 
 /* Organisms */
 @use './organisms/header';

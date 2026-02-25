@@ -90,10 +90,10 @@ const handleSubmitAndContinue = async () => {
     :modal="true"
     @submit="handleSubmitAndClose"
   >
-    <!-- Fieldset -->
-    <PrimeFieldset :legend="'Globals'" class="">
+    <!-- Champs Datetime - Depth - Duration -->
+    <PrimeFieldset :legend="'Globals'" :class="['form__fieldset--flex']">
       <!-- Date & Time -->
-      <div class="form__field flex-1">
+      <div class="form__field">
         <PrimeFloatLabel>
           <PrimeDatePicker
             id="date"
@@ -101,6 +101,7 @@ const handleSubmitAndContinue = async () => {
             showTime
             hour-format="24"
             :invalid="!!errors.date"
+            :style="{ width: '306px' }"
             @update:model-value="clearError('date')"
           />
           <label for="date">{{ $t('dive.form.date') }}</label>
@@ -116,7 +117,7 @@ const handleSubmitAndContinue = async () => {
       </div>
 
       <!-- Max Depth -->
-      <div class="form__field flex-1">
+      <div class="form__field">
         <PrimeFloatLabel>
           <PrimeInputNumber
             id="maxDepth"
@@ -139,7 +140,7 @@ const handleSubmitAndContinue = async () => {
       </div>
 
       <!-- Total Time -->
-      <div class="form__field flex-1">
+      <div class="form__field">
         <PrimeFloatLabel>
           <PrimeInputNumber
             id="totalTime"
@@ -162,6 +163,7 @@ const handleSubmitAndContinue = async () => {
       </div>
     </PrimeFieldset>
 
+    <!-- Tanks -->
     <GasTanks ref="gasTanksRef" />
 
     <!-- Custom actions: two green buttons -->

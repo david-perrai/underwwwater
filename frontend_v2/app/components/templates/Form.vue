@@ -104,7 +104,7 @@ const severityBorderVar = computed(() => {
   </PrimeDialog>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @use '@/assets/scss/variables' as *;
 
 .form {
@@ -145,6 +145,21 @@ const severityBorderVar = computed(() => {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+  }
+
+  &__fieldset {
+    &--flex {
+      .p-fieldset-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  }
+
+  &__field {
+    width: fit-content;
   }
 
   &__actions {

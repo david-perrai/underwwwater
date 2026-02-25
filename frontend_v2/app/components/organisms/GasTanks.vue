@@ -3,184 +3,135 @@ import type { GasMix } from '~/types/GasMix';
 
 /** Types */
 interface TankData {
-  id: string; // unique ID for UI tracking
+  id: string;
   pressureStart: number;
   pressureEnd: number;
   gasMix: GasMix;
+  presetVersion: number;
 }
 
-/** State */
-const tanks = ref<TankData[]>([]);
-const isAddingTank = ref(true);
-const editingTankId = ref<string | null>(null);
-
-/** SplitButton Items */
-const addTankItems = [
-  {
-    label: 'Air',
-    command: () => {
-      addPresetTank({ oxygen: 21, nitrogen: 79, helium: 0 });
-    }
-  },
-  {
-    label: 'Nitrox 32',
-    command: () => {
-      addPresetTank({ oxygen: 32, nitrogen: 68, helium: 0 });
-    }
-  },
-  {
-    label: 'Nitrox 36',
-    command: () => {
-      addPresetTank({ oxygen: 36, nitrogen: 64, helium: 0 });
-    }
-  },
+/** Presets */
+const PRESETS: { label: string; mix: GasMix }[] = [
+  { label: 'Air',       mix: { oxygen: 21, nitrogen: 79, helium: 0 } },
+  { label: 'Nitrox 32', mix: { oxygen: 32, nitrogen: 68, helium: 0 } },
+  { label: 'Nitrox 36', mix: { oxygen: 36, nitrogen: 64, helium: 0 } },
 ];
 
-/** Functions */
-const addPresetTank = (mix: GasMix) => {
-  tanks.value.push({
+
+function createTank(mix: GasMix): TankData {
+  return {
     id: crypto.randomUUID(),
     pressureStart: 200,
     pressureEnd: 50,
-    gasMix: mix
-  });
+    gasMix: { ...mix },
+    presetVersion: 0,
+  };
+}
+
+/** Datas */
+const tanks = ref<TankData[]>([createTank(PRESETS[0]!.mix)]);
+const activeTankId = ref<string | null>(tanks.value[0]?.id ?? null);
+const menuRefs = ref<Record<string, InstanceType<typeof import('primevue/menu').default> | null>>({});
+
+/** Functions */
+const toggleMenu = (event: Event, tankId: string) => {
+  menuRefs.value[tankId]?.toggle(event);
 };
 
-const openAddTankForm = () => {
-  isAddingTank.value = true;
-  editingTankId.value = null;
+const togglePanel = (tankId: string) => {
+  activeTankId.value = activeTankId.value === tankId ? null : tankId;
 };
 
-const handleSaveTank = (data: { pressureStart: number; pressureEnd: number; gasMix: GasMix }) => {
-  if (editingTankId.value) {
-    // Update existing
-    const idx = tanks.value.findIndex(t => t.id === editingTankId.value);
-    if (idx !== -1) {
-      tanks.value[idx] = { ...tanks.value[idx], ...data, id: editingTankId.value };
-    }
-    editingTankId.value = null;
-  } else {
-    // Add new
-    tanks.value.push({
-      id: crypto.randomUUID(),
-      ...data
-    });
-    isAddingTank.value = false;
+const getPresetItems = (tank: TankData) =>
+  PRESETS.map(preset => ({
+    label: preset.label,
+    command: () => {
+      tank.gasMix = { ...preset.mix };
+      tank.presetVersion++;
+    },
+  }));
+
+const addTank = () => {
+  if (tanks.value.length < 4) {
+    const newTank = createTank(PRESETS[0]!.mix);
+    tanks.value.push(newTank);
+    activeTankId.value = newTank.id; // ← ouvre le nouveau, ferme les autres
   }
-};
-
-const editTank = (tank: TankData) => {
-  editingTankId.value = tank.id;
-  isAddingTank.value = false; // Ensure we're not in add mode
 };
 
 const removeTank = (id: string) => {
-  tanks.value = tanks.value.filter(t => t.id !== id);
-  if (editingTankId.value === id) {
-    editingTankId.value = null;
+  if (tanks.value.length > 1) {
+    tanks.value = tanks.value.filter(t => t.id !== id);
   }
 };
 
-const getTankItems = (tank: TankData) => [
-  {
-    label: 'Remove',
-    icon: 'pi pi-trash',
-    command: () => removeTank(tank.id)
-  }
-];
-
-// Expose tanks to parent
-defineExpose({
-  tanks
-});
+/** Expose tanks to parent (FormDive.vue) */
+defineExpose({ tanks });
 </script>
 
 <template>
-  <div :class="['gas-tanks']" :data-id="'gas-tanks'">
-    <!-- List of Tanks -->
-    <div v-if="tanks.length > 0" class="gas-tanks__list mb-4 flex flex-wrap gap-2">
-      <div 
-        v-for="tank in tanks" 
-        :key="tank.id" 
-        class="gas-tanks__item"
-      >
-        <!-- Editor Mode for this tank -->
-        <div v-if="editingTankId === tank.id" class="w-full">
-          <GasMix
-            :initial-pressure-start="tank.pressureStart"
-            :initial-pressure-end="tank.pressureEnd"
-            :initial-mix="tank.gasMix"
-            @save="handleSaveTank"
-          />
-        </div>
+  <PrimeFieldset legend="Tanks" data-id="gas-tanks">
 
-        <!-- Button Mode -->
-        <PrimeSplitButton 
-          v-else
-          severity="secondary" 
-          outlined 
-          size="small"
-          class="flex items-center"
-          @click="editTank(tank)"
-          :model="getTankItems(tank)"
-        >
-          <div class="flex items-center gap-2">
-            <i class="pi pi-eject rotate-90"></i>
-            <span>
-              {{ useGasMixName(tank.gasMix).title.value }}
-              <span v-if="useGasMixName(tank.gasMix).subtitle.value" class="opacity-70 ml-1">
-                {{ useGasMixName(tank.gasMix).subtitle.value }}
-              </span>
-            </span>
-          </div>
-        </PrimeSplitButton>
-      </div>
-    </div>
+    <PrimePanel
+      v-for="(tank, index) in tanks"
+      :key="tank.id"
+      toggleable
+      :collapsed="activeTankId !== tank.id"
+      @toggle="togglePanel(tank.id)"
+    >
+      <!-- Header: gas name -->
+      <template #header>
+        <span class="font-semibold">
+          {{ useGasMixName(tank.gasMix).title.value }}
+          <span v-if="useGasMixName(tank.gasMix).subtitle.value" class="opacity-60 ml-1 font-normal text-sm">
+            {{ useGasMixName(tank.gasMix).subtitle.value }}
+          </span>
+        </span>
+      </template>
 
-    <!-- Add Tank Section -->
-    <Transition name="form-add">
-      <div v-if="isAddingTank" class="gas-tanks__form mb-4 p-4 border border-white/10 rounded-xl bg-white/[0.02]">
-        <GasMix
-            :initial-pressure-start="200"
-            :initial-pressure-end="50"
-            :initial-mix="{ oxygen: 21, nitrogen: 79, helium: 0 }"
-            closable
-            @save="handleSaveTank"
-            @close="isAddingTank = false"
-          />
-      </div>
-    </Transition>
+      <!-- Icons: preset switcher + delete -->
+      <template #icons>
+        <!-- Delete (disabled if only one tank remains) -->
+        <PrimeButton
+          icon="pi pi-trash"
+          severity="danger"
+          rounded
+          text
+          :disabled="tanks.length === 1"
+          @click="removeTank(tank.id)"
+        />
+        <!-- Preset quick-switch -->
+        <PrimeButton
+          icon="pi pi-cog"
+          severity="contrast"
+          rounded
+          text
+          @click="toggleMenu($event, tank.id)"
+        />
+        <PrimeMenu
+          :ref="el => menuRefs[tank.id] = el"
+          :model="getPresetItems(tank)"
+          popup
+        />
+      </template>
 
-    <!-- Add Button (Split) -->
-    <div v-if="!isAddingTank && !editingTankId" class="gas-tanks__actions">
-      <PrimeSplitButton 
-        :label="$t('dive.gas.add')" 
-        icon="pi pi-plus" 
-        :model="addTankItems" 
-        @click="openAddTankForm"
+      <!-- Body: GasMix form -->
+      <GasMix
+        :key="`${tank.id}-${tank.presetVersion}`"
+        v-model="tanks[index]!"
+      />
+    </PrimePanel>
+
+    <!-- Add tank button (hidden when 4 tanks reached) -->
+    <div class="flex justify-end">
+      <PrimeButton
+        v-if="tanks.length < 4"
+        :label="$t('dive.gas.add')"
+        icon="pi pi-plus"
         severity="secondary"
         outlined
-      />
+      @click="addTank"
+    />
     </div>
-  </div>
+  </PrimeFieldset>
 </template>
-
-<style lang="scss" scoped>
-.form-add-enter-active,
-.form-add-leave-active {
-  transition: all 0.3s ease;
-  max-height: 500px;
-  opacity: 1;
-  overflow: hidden;
-}
-
-.form-add-enter-from,
-.form-add-leave-to {
-  opacity: 0;
-  max-height: 0;
-  margin-bottom: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  transform: translateY(-10px);
-}
-</style>

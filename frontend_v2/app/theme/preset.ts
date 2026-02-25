@@ -13,6 +13,8 @@ import message from "./components/message";
 import card from "./components/card";
 import dialog from "./components/dialog";
 import fieldset from "./components/fieldset";
+import menu from "./components/menu";
+import panel from "./components/panel";
 import { primitives } from "./primitives";
 
 export const CustomPreset = definePreset(Aura, {
@@ -166,28 +168,28 @@ export const CustomPreset = definePreset(Aura, {
 
 				overlay: {
 					select: {
-						background: "rgba(3, 8, 28, 0.97)",
+						background: "rgba(3, 8, 28, 1)",
 						borderColor: "rgba(0, 196, 180, 0.18)",
 						borderRadius: "10px",
 						color: "{surface.100}",
 						shadow: "0 12px 40px rgba(0, 0, 0, 0.6)",
 					},
 					popover: {
-						background: "rgba(3, 8, 28, 0.97)",
+						background: "rgba(3, 8, 28, 1)",
 						borderColor: "rgba(0, 196, 180, 0.18)",
 						borderRadius: "10px",
 						color: "{surface.100}",
 						shadow: "0 12px 40px rgba(0, 0, 0, 0.6)",
 					},
 					modal: {
-						background: "rgba(3, 8, 28, 0.97)",
+						background: "rgba(3, 8, 28, 1)",
 						borderColor: "rgba(0, 196, 180, 0.18)",
 						borderRadius: "16px",
 						color: "{surface.50}",
 						shadow: "0 24px 80px rgba(0, 0, 0, 0.7)",
 					},
 					navigation: {
-						background: "rgba(3, 8, 28, 0.97)",
+						background: "rgba(3, 8, 28, 1)",
 						borderColor: "rgba(0, 196, 180, 0.18)",
 						color: "{surface.100}",
 						shadow: "0 8px 32px rgba(0, 0, 0, 0.5)",
@@ -280,5 +282,7 @@ export const CustomPreset = definePreset(Aura, {
 		card,
 		dialog,
 		fieldset,
+		menu,
+		panel,
 	},
 });
