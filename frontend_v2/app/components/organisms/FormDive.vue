@@ -85,46 +85,82 @@ const handleSubmitAndContinue = async () => {
 <template>
   <Form
     :submit-label="$t('dive.form.submit')"
-    submit-severity="success"
+    severity="success"
     name="dive"
+    :modal="true"
     @submit="handleSubmitAndClose"
   >
-    <!-- Context Fields Row -->
-    <div class="form-dive__row gap-4 mb-4">
+    <!-- Fieldset -->
+    <PrimeFieldset :legend="'Globals'" class="">
       <!-- Date & Time -->
-      <FieldDate
-        id="date"
-        v-model="date"
-        :label="$t('dive.form.date')"
-        showTime
-        :error="errors.date"
-        @update:model-value="clearError('date')"
-      />
+      <div class="form__field flex-1">
+        <PrimeFloatLabel>
+          <PrimeDatePicker
+            id="date"
+            v-model="date"
+            showTime
+            hour-format="24"
+            :invalid="!!errors.date"
+            @update:model-value="clearError('date')"
+          />
+          <label for="date">{{ $t('dive.form.date') }}</label>
+        </PrimeFloatLabel>
+        <PrimeMessage 
+          v-if="errors.date"
+          size="small" 
+          severity="error"
+          variant="simple"
+        >
+          {{ errors.date }}
+        </PrimeMessage>
+      </div>
 
       <!-- Max Depth -->
-      <FieldNumber
-        :id="'maxDepth'"
-        v-model="maxDepth"
-        :label="$t('dive.form.maxDepth')"
-        :min="1"
-        :maxFractionDigits="1"
-        :error="errors.maxDepth"
-        @update:model-value="clearError('maxDepth')"
-      />
+      <div class="form__field flex-1">
+        <PrimeFloatLabel>
+          <PrimeInputNumber
+            id="maxDepth"
+            v-model="maxDepth"
+            :min="1"
+            :max-fraction-digits="1"
+            :invalid="!!errors.maxDepth"
+            @update:model-value="clearError('maxDepth')"
+          />
+          <label for="maxDepth">{{ $t('dive.form.maxDepth') }}</label>
+        </PrimeFloatLabel>
+        <PrimeMessage 
+          v-if="errors.maxDepth"
+          size="small" 
+          severity="error"
+          variant="simple"
+        >
+          {{ errors.maxDepth }}
+        </PrimeMessage>
+      </div>
 
       <!-- Total Time -->
-      <FieldNumber
-        id="totalTime"
-        v-model="totalTime"
-        :label="$t('dive.form.totalTime')"
-        :min="1"
-        :maxFractionDigits="1"
-        :error="errors.totalTime"
-        @update:model-value="clearError('totalTime')"
-      />
-    </div>
-
-    <PrimeDivider />
+      <div class="form__field flex-1">
+        <PrimeFloatLabel>
+          <PrimeInputNumber
+            id="totalTime"
+            v-model="totalTime"
+            :min="1"
+            :max-fraction-digits="1"
+            :invalid="!!errors.totalTime"
+            @update:model-value="clearError('totalTime')"
+          />
+          <label for="totalTime">{{ $t('dive.form.totalTime') }}</label>
+        </PrimeFloatLabel>
+        <PrimeMessage 
+          v-if="errors.totalTime"
+          size="small" 
+          severity="error"
+          variant="simple"
+        >
+          {{ errors.totalTime }}
+        </PrimeMessage>
+      </div>
+    </PrimeFieldset>
 
     <GasTanks ref="gasTanksRef" />
 

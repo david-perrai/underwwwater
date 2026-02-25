@@ -11,7 +11,7 @@ interface TankData {
 
 /** State */
 const tanks = ref<TankData[]>([]);
-const isAddingTank = ref(false);
+const isAddingTank = ref(true);
 const editingTankId = ref<string | null>(null);
 
 /** SplitButton Items */
@@ -56,7 +56,7 @@ const handleSaveTank = (data: { pressureStart: number; pressureEnd: number; gasM
     // Update existing
     const idx = tanks.value.findIndex(t => t.id === editingTankId.value);
     if (idx !== -1) {
-      tanks.value[idx] = { ...tanks.value[idx], ...data };
+      tanks.value[idx] = { ...tanks.value[idx], ...data, id: editingTankId.value };
     }
     editingTankId.value = null;
   } else {
@@ -138,14 +138,18 @@ defineExpose({
     </div>
 
     <!-- Add Tank Section -->
-    <div v-if="isAddingTank" class="gas-tanks__form mb-4">
-       <GasMix
-          :initial-pressure-start="200"
-          :initial-pressure-end="50"
-          :initial-mix="{ oxygen: 21, nitrogen: 79, helium: 0 }"
-          @save="handleSaveTank"
-        />
-    </div>
+    <Transition name="form-add">
+      <div v-if="isAddingTank" class="gas-tanks__form mb-4 p-4 border border-white/10 rounded-xl bg-white/[0.02]">
+        <GasMix
+            :initial-pressure-start="200"
+            :initial-pressure-end="50"
+            :initial-mix="{ oxygen: 21, nitrogen: 79, helium: 0 }"
+            closable
+            @save="handleSaveTank"
+            @close="isAddingTank = false"
+          />
+      </div>
+    </Transition>
 
     <!-- Add Button (Split) -->
     <div v-if="!isAddingTank && !editingTankId" class="gas-tanks__actions">
@@ -160,3 +164,23 @@ defineExpose({
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.form-add-enter-active,
+.form-add-leave-active {
+  transition: all 0.3s ease;
+  max-height: 500px;
+  opacity: 1;
+  overflow: hidden;
+}
+
+.form-add-enter-from,
+.form-add-leave-to {
+  opacity: 0;
+  max-height: 0;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  transform: translateY(-10px);
+}
+</style>

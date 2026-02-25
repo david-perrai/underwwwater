@@ -10,7 +10,6 @@
 @use './atoms/field-date';
 @use './atoms/field-number';
 @use './atoms/field-number-slim';
-@use './atoms/field-text';
 @use './atoms/gas-control';
 @use './atoms/logo';
 
@@ -24,7 +23,6 @@
 /* Templates */
 @use './templates/card';
 @use './templates/form';
-@use './templates/modal';
 
 /* Pages */
 @use './pages/index';

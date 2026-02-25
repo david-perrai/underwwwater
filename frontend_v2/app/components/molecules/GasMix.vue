@@ -5,10 +5,12 @@ const props = defineProps<{
   initialPressureStart?: number;
   initialPressureEnd?: number;
   initialMix?: Partial<GasMix>;
+  closable?: boolean;
 }>();
 
 const emit = defineEmits<{
   save: [data: { pressureStart: number; pressureEnd: number; gasMix: GasMix }];
+  close: [];
 }>();
 
 const { 
@@ -46,11 +48,21 @@ const handleSubmit = () => {
 
 <template>
   <div :class="['gas-mix']">
-    <div class="gas-mix__header">
+    <div class="gas-mix__header flex justify-between items-center mb-4">
       <strong class="gas-mix__title">
         {{ title }} 
-        <span v-if="subtitle">{{ subtitle }}</span>
+        <span v-if="subtitle" class="opacity-70 ml-1">{{ subtitle }}</span>
       </strong>
+      <PrimeButton
+        v-if="closable"
+        icon="pi pi-times"
+        severity="contrast"
+        variant="text"
+        rounded
+        size="small"
+        @click="emit('close')"
+        aria-label="Close"
+      />
     </div>
     
     <div class="gas-mix__grid">

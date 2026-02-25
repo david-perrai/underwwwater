@@ -43,12 +43,15 @@ const onToggleLock = (value: boolean | undefined) => {
         @update:model-value="onUpdateValue"
       />
 
-      <FieldNumberSlim 
+      <PrimeInputNumber 
         :model-value="modelValue" 
+        class="field-number-slim" 
+        input-class="field-number-slim__inner"
         :min="0" 
         :max="100"
         :disabled="locked"
-        :suffix="'%'"
+        suffix="%"
+        :data-id="'field-number-slim'"
         @update:model-value="onUpdateValue"
       />
 

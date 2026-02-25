@@ -21,9 +21,7 @@ useHead({
 
       <!-- Login Section -->
       <section class="auth-page__section auth-page__section--login">
-        <div class="auth-page__card">
-          <FormLogin />
-        </div>
+        <FormLogin />
       </section>
       <!-- Divider -->
       <div class="auth-page__divider">
@@ -32,9 +30,7 @@ useHead({
 
       <!-- Signup Section -->
       <section class="auth-page__section auth-page__section--signup">
-        <div class="auth-page__card">
-          <FormSignup />
-        </div>
+        <FormSignup />
       </section>
      
     </div>
@@ -91,21 +87,6 @@ useHead({
 
   &__section {
     margin-bottom: 2rem;
-  }
-
-  &__card {
-    background: rgba($color-marine, 0.6);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba($color-turquoise, 0.2);
-    border-radius: 12px;
-    padding-bottom: 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    transition: all 0.15s ease;
-
-    &:hover {
-      border-color: rgba($color-turquoise, 0.4);
-      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
-    }
   }
 
   &__divider {

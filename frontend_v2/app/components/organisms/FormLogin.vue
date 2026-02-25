@@ -40,29 +40,63 @@ const handleSubmit = async () => {
     :title="$t('auth.login.title')"
     :subtitle="$t('auth.login.subtitle')"
     :submit-label="$t('auth.login.submit')"
-    submit-severity="primary"
-    :submit-outlined="true"
+    severity="primary"
     name="login"
     @submit="handleSubmit"
   >
-    <FieldText
-      id="identifier"
-      v-model="identifier"
-      :label="$t('auth.login.emailOrUsername')"
-      :error="errors.identifier"
-      @update:model-value="clearError('identifier')"
-    />
+    <!-- 1. Identifier -->
+    <div :class="['form__field']">
+      <PrimeFloatLabel>
+        <PrimeInputText
+          :id="'form-login__field-identifier'"
+          v-model="identifier"
+          :type="'text'"
+          :fluid="true"
+          :invalid="!!errors.identifier"
+          @update:model-value="clearError('identifier')"
+        />
+        <label :for="'form-login__field-identifier'">
+          {{ $t('auth.login.emailOrUsername') }}
+        </label>
+      </PrimeFloatLabel>
+      <PrimeMessage 
+        v-if="errors.identifier"
+        size="small" 
+        severity="error"
+        variant="simple"
+      >
+        {{ errors.identifier }}
+      </PrimeMessage>
+    </div>
 
-    <FieldText
-      id="password"
-      v-model="password"
-      type="password"
-      :label="$t('auth.login.password')"
-      :error="errors.password"
-      :toggle-mask="true"
-      @update:model-value="clearError('password')"
-    />
+    <!-- 2. Password -->
+    <div :class="['form__field']">
+      <PrimeFloatLabel>
+        <PrimePassword
+          :id="'form-login__field-password'"
+          v-model="password"
+          :type="'text'"
+          :fluid="true"
+          :invalid="!!errors.password"
+          :toggle-mask="true"
+          :feedback="false"
+          @update:model-value="clearError('password')"
+        />
+        <label :for="'form-login__field-password'">
+          {{ $t('auth.login.password') }}
+        </label>
+      </PrimeFloatLabel>
+      <PrimeMessage 
+        v-if="errors.password"
+        size="small" 
+        severity="error"
+        variant="simple"
+      >
+        {{ errors.password }}
+      </PrimeMessage>
+    </div>
 
+    <!-- 3. Footer - Forgot Password -->
     <template #footer>
       <PrimeButton 
         :label="$t('auth.login.forgotPassword')" 
