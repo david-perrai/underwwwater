@@ -1,30 +1,42 @@
 export default {
     colorScheme: {
         dark: {
+            root: {
+                background: "rgba(3, 8, 28, 0.4)",
+                borderColor: "rgba(0, 196, 180, 0.15)",
+                borderRadius: "12px",
+                color: "#c5d0f7",
+                padding: "1.25rem",
+            },
             legend: {
                 background: "transparent",
-                color: "#ffffff",
-                borderWidth: "0",
-                padding: "0 0.5rem",
-            },
-            root: {
-                borderColor: "rgba(255, 255, 255, 0.1)",
-                borderRadius: "12px",
+                color: "{teal.400}",
+                borderColor: "transparent",
+                padding: "0.2rem 0.6rem",
+                borderRadius: "6px",
             },
         },
     },
     css: `
         .p-fieldset {
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            background: rgba(255, 255, 255, 0.02);
+            transition: border-color 0.25s ease;
+            backdrop-filter: blur(8px);
         }
-        .p-fieldset .p-fieldset-legend {
+        .p-fieldset:focus-within {
+            border-color: rgba(0, 196, 180, 0.3);
+        }
+        .p-fieldset-legend {
             font-family: 'Inter Tight', sans-serif;
+            font-size: 0.78rem;
             font-weight: 600;
-            font-size: 0.875rem;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: rgba(255, 255, 255, 0.6) !important;
+        }
+        .p-fieldset-legend-label {
+            color: var(--p-teal-400, #00c4b4);
+        }
+        .p-fieldset-content {
+            padding-top: 1rem;
         }
     `,
 };

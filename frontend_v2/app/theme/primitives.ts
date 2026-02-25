@@ -1,4 +1,8 @@
 export const primitives = {
+    // ── Palettes BOUTONS (originales) ─────────────────────
+    // Référencées par les tokens sémantiques primary/success/etc.
+    // utilisés dans button.ts
+
     turquoise: {
         50: "#e6fffd",
         100: "#ccfffb",
@@ -76,5 +80,108 @@ export const primitives = {
         800: "#0e1e66",
         900: "#070f33",
         950: "#040819",
+    },
+
+    // ── Palettes OCEAN THEME ──────────────────────────────
+    // Référencées par les tokens surface, overlay, content, etc.
+    // dans colorScheme.dark du preset.
+
+    // Abyssal navy — échelle de surface (backgrounds, panels, overlays)
+    abyss: {
+        50: "#e8ecff",
+        100: "#c5d0f7",
+        200: "#8f9fd9",
+        300: "#5a71bc",
+        400: "#334fa6",
+        500: "#1a3491",
+        600: "#122570",
+        700: "#0c1a54",
+        800: "#07103a",
+        900: "#030820",
+        950: "#010410",
+    },
+    // Bioluminescent teal — accents, highlights, focus
+    teal: {
+        50: "#e0fffe",
+        100: "#b3fffc",
+        200: "#66fff8",
+        300: "#1afff4",
+        400: "#00e5d4",
+        500: "#00c4b4",
+        600: "#009e91",
+        700: "#00786d",
+        800: "#005249",
+        900: "#002b25",
+        950: "#001512",
+    },
+    // Slate — secondary surfaces / navigation
+    slate: {
+        50: "#f0f4ff",
+        100: "#d6defa",
+        200: "#aab8f0",
+        300: "#7e93e0",
+        400: "#5a72cc",
+        500: "#3d57b2",
+        600: "#2c4090",
+        700: "#1e2e6b",
+        800: "#121d48",
+        900: "#080e26",
+        950: "#040712",
+    },
+    // Seafoam — success overlays / data table highlights
+    seafoam: {
+        50: "#e8fff5",
+        100: "#b8fce1",
+        200: "#72f9c4",
+        300: "#2ef0a6",
+        400: "#00d98a",
+        500: "#00b873",
+        600: "#009460",
+        700: "#006e47",
+        800: "#00482f",
+        900: "#002418",
+        950: "#001209",
+    },
+    // Coral — danger overlays
+    coral: {
+        50: "#fff0ee",
+        100: "#ffd8d3",
+        200: "#ffada5",
+        300: "#ff7a6e",
+        400: "#ff5245",
+        500: "#f03125",
+        600: "#c4251b",
+        700: "#961b13",
+        800: "#68120d",
+        900: "#3b0906",
+        950: "#1e0403",
+    },
+    // Amber — warn overlays
+    amber: {
+        50: "#fff8e6",
+        100: "#ffedb8",
+        200: "#ffd96e",
+        300: "#ffc020",
+        400: "#e6a800",
+        500: "#c48f00",
+        600: "#9e7200",
+        700: "#775600",
+        800: "#503900",
+        900: "#2a1d00",
+        950: "#150e00",
+    },
+    // Electric — info overlays
+    electric: {
+        50: "#e6f4ff",
+        100: "#b8e0ff",
+        200: "#6ec0ff",
+        300: "#2aa1ff",
+        400: "#0084f0",
+        500: "#006ac4",
+        600: "#00529e",
+        700: "#003c77",
+        800: "#002750",
+        900: "#001428",
+        950: "#000a14",
     },
 };

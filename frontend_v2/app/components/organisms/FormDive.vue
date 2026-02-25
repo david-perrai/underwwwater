@@ -162,8 +162,6 @@ const handleSubmitAndContinue = async () => {
       </div>
     </PrimeFieldset>
 
-    <PrimeDivider />
-
     <GasTanks ref="gasTanksRef" />
 
     <!-- Custom actions: two green buttons -->

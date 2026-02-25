@@ -105,6 +105,11 @@ export default {
                     borderColor: "{danger.400}",
                     hoverBackground: "{danger.900}",
                 },
+                contrast: {
+                    color: "#ffffff",
+                    borderColor: "#ffffff",
+                    hoverBackground: "#272727",
+                },
             },
             text: {
                 primary: {
@@ -130,6 +135,10 @@ export default {
                 danger: {
                     color: "{danger.400}",
                     hoverBackground: "{danger.900}",
+                },
+                contrast: {
+                    color: "#ffffff",
+                    hoverBackground: "#272727",
                 },
             },
             link: {
