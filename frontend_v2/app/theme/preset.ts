@@ -15,6 +15,7 @@ import dialog from "./components/dialog";
 import fieldset from "./components/fieldset";
 import menu from "./components/menu";
 import panel from "./components/panel";
+import chip from "./components/chip";
 import { primitives } from "./primitives";
 
 export const CustomPreset = definePreset(Aura, {
@@ -284,5 +285,6 @@ export const CustomPreset = definePreset(Aura, {
 		fieldset,
 		menu,
 		panel,
+		chip,
 	},
 });

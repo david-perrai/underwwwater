@@ -3,11 +3,14 @@ import { useDivesControllerCreate } from '~/composables/api/generated/dives/dive
 import { required, minValue } from '~/composables/useFormValidator';
 
 import GasTanks from '~/components/organisms/GasTanks.vue';
+import DivingTypes from '~/components/molecules/DivingTypes.vue';
+import { DIVING_TYPES } from '~/types/DivingType';
 
 /** Datas */
 const date = ref<Date | null>(null);
 const maxDepth = ref<number | null>(null);
 const totalTime = ref<number | null>(null);
+const selectedTypeTokens = ref<string[]>([]);
 
 /** Stores and Composables */
 const { t } = useI18n();
@@ -56,7 +59,12 @@ const saveDive = async () => {
       maxDepth: maxDepth.value!,
       totalTime: totalTime.value!,
       gasTanks: formattedTanks,
-      divingTypeIds: [],
+      divingTypeIds: selectedTypeTokens.value.map(token => {
+        // Mapping tokens to IDs based on their index in the seeder/constant list for now
+        // This should ideally be handled by fetching actual IDs from the API
+        const typeIndex = DIVING_TYPES.findIndex(t => t.token === token);
+        return typeIndex !== -1 ? typeIndex + 1 : 0;
+      }).filter(id => id > 0),
       divingEnvironmentId: 1,
       diverRole: 'diver' as any,
     },
@@ -161,6 +169,11 @@ const handleSubmitAndContinue = async () => {
           {{ errors.totalTime }}
         </PrimeMessage>
       </div>
+    </PrimeFieldset>
+
+    <!-- Dive Types Selection -->
+    <PrimeFieldset :legend="'Dive Types'" data-id="diving-types-fieldset">
+      <DivingTypes v-model="selectedTypeTokens" />
     </PrimeFieldset>
 
     <!-- Tanks -->
