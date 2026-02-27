@@ -158,10 +158,6 @@ const severityBorderVar = computed(() => {
     }
   }
 
-  &__field {
-    width: fit-content;
-  }
-
   &__actions {
     margin-top: 1rem;
     display: flex;
