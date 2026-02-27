@@ -1,135 +1,114 @@
 <script setup lang="ts">
 import type { GasMix } from '~/types/GasMix';
 
+interface TankModel {
+  pressureStart: number;
+  pressureEnd: number;
+  gasMix: GasMix;
+}
+
 const props = defineProps<{
-  initialPressureStart?: number;
-  initialPressureEnd?: number;
-  initialMix?: Partial<GasMix>;
   closable?: boolean;
 }>();
 
-const emit = defineEmits<{
-  save: [data: { pressureStart: number; pressureEnd: number; gasMix: GasMix }];
-  close: [];
-}>();
+const emit = defineEmits<{ close: [] }>();
 
-const { 
-  gasMix, 
-  isOxygenDisabled, 
-  isNitrogenDisabled, 
-  isHeliumDisabled, 
-  updateGas 
-} = useGasMixBalance(props.initialMix);
+const model = defineModel<TankModel>({ required: true });
 
-const { title, subtitle, isBreathable } = useGasMixName(gasMix);
+const { gasMix, isOxygenDisabled, isNitrogenDisabled, isHeliumDisabled, updateGas } = useGasMixBalance(model.value.gasMix);
+const { title, subtitle } = useGasMixName(gasMix);
 
-const pressureStart = ref(props.initialPressureStart ?? 200);
-const pressureEnd = ref(props.initialPressureEnd ?? 50);
-
-const { t } = useI18n();
-
-const isValid = computed(() => {
-  return (
-    pressureStart.value > 0 &&
-    pressureEnd.value <= pressureStart.value
-  );
+// Computed avec setter pour les pressions → pas de watch, mise à jour directe
+const pressureStart = computed({
+  get: () => model.value.pressureStart,
+  set: (v) => model.value = { ...model.value, pressureStart: v },
 });
 
-const handleSubmit = () => {
-  if (isValid.value) {
-    emit('save', {
-      pressureStart: pressureStart.value,
-      pressureEnd: pressureEnd.value,
-      gasMix: { ...gasMix },
-    });
-  }
+const pressureEnd = computed({
+  get: () => model.value.pressureEnd,
+  set: (v) => model.value = { ...model.value, pressureEnd: v },
+});
+
+// On sync le gasMix vers le parent uniquement après chaque updateGas
+const handleUpdateGas = (key: keyof GasMix, value: number) => {
+  updateGas(key, value);
+  model.value = { ...model.value, gasMix: { ...gasMix } };
 };
 </script>
 
 <template>
-  <div :class="['gas-mix']">
-    <div class="gas-mix__header flex justify-between items-center mb-4">
-      <strong class="gas-mix__title">
-        {{ title }} 
-        <span v-if="subtitle" class="opacity-70 ml-1">{{ subtitle }}</span>
-      </strong>
-      <PrimeButton
-        v-if="closable"
-        icon="pi pi-times"
-        severity="contrast"
-        variant="text"
-        rounded
-        size="small"
-        @click="emit('close')"
-        aria-label="Close"
-      />
-    </div>
-    
-    <div class="gas-mix__grid">
+  <div class="gas-mix">
+    <div class="gas-mix__balance">
       <GasControl
         id="o2"
         label="Oxygen (O2)"
         :model-value="gasMix.oxygen"
         v-model:locked="isOxygenDisabled"
         color="primary"
-        @update:model-value="(v) => updateGas('oxygen', v)"
+        @update:model-value="(v) => handleUpdateGas('oxygen', v)"
       />
-
       <GasControl
         id="n2"
         label="Nitrogen (N2)"
         :model-value="gasMix.nitrogen"
         v-model:locked="isNitrogenDisabled"
         color="secondary"
-        @update:model-value="(v) => updateGas('nitrogen', v)"
+        @update:model-value="(v) => handleUpdateGas('nitrogen', v)"
       />
-
       <GasControl
         id="he"
         label="Helium (He)"
         :model-value="gasMix.helium"
         v-model:locked="isHeliumDisabled"
         color="warn"
-        @update:model-value="(v) => updateGas('helium', v)"
+        @update:model-value="(v) => handleUpdateGas('helium', v)"
       />
     </div>
 
-    <!-- Pressure Fields -->
-    <div class="gas-mix__pressure">
-      <div class="field">
-        <label for="pressureStart">{{ $t('dive.gas.pressureStart') }}</label>
-        <PrimeInputNumber
-          id="pressureStart"
-          v-model="pressureStart"
-          suffix=" bar"
-          :min="1"
-        />
+    <PrimeFieldset legend="Tank Pressure" class="form__fieldset--flex">
+      <div class="form__field">
+        <PrimeFloatLabel>
+          <PrimeInputNumber
+            id="pressureStart"
+            v-model="pressureStart"
+            suffix=" bar"
+            :invalid="pressureEnd > pressureStart"
+            :min="1"
+          />
+          <label for="pressureStart">Start Tank Pressure</label>
+        </PrimeFloatLabel>
+        <PrimeMessage
+          v-if="pressureEnd > pressureStart"
+          size="small"
+          severity="error"
+          variant="simple"
+        >
+          La pression de début est inférieure à la pression de fin
+        </PrimeMessage>
       </div>
-      <div class="field">
-        <label for="pressureEnd">{{ $t('dive.gas.pressureEnd') }}</label>
-        <PrimeInputNumber
-          id="pressureEnd"
-          v-model="pressureEnd"
-          suffix=" bar"
-          :min="0"
-          :max="pressureStart"
-        />
+      <div class="form__field">
+        <PrimeFloatLabel>
+          <PrimeInputNumber
+            id="pressureEnd"
+            v-model="pressureEnd"
+            suffix=" bar"
+            :min="0"
+            :max="pressureStart"
+          />
+          <label for="pressureEnd">End Tank Pressure</label>
+        </PrimeFloatLabel>
       </div>
-    </div>
-    <div v-if="pressureEnd > pressureStart" class="text-error text-sm mt-1">
-      {{ $t('dive.gas.pressureError') }}
-    </div>
-
-    <!-- Submit Button -->
-    <div class="gas-mix__actions mt-4 flex justify-end">
-      <PrimeButton
-        :label="$t('dive.gas.submit')"
-        severity="success"
-        :disabled="!isValid"
-        @click="handleSubmit"
-      />
-    </div>
+    </PrimeFieldset>
   </div>
 </template>
 
+<style scoped lang="scss">
+.gas-mix {
 
+  &__balance {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  }
+}
+</style>
