@@ -6,7 +6,7 @@ const severities: ("primary" | "secondary" | "info" | "success" | "warn" | "dang
 <template>
 
   <div class="sandbox-page">
-    <h1 class="typo-h1">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
+    <!-- <h1 class="typo-h1">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
     <h1 class="typo-h2">Curabitur vel felis rhoncus, tincidunt diam vel.</h1>
     <h1 class="typo-h3">Fusce vel luctus dolor, vel vulputate velit.</h1>
     <h1 class="typo-h4">Proin blandit efficitur ultricies. Nullam eget pretium enim.</h1>
@@ -14,7 +14,7 @@ const severities: ("primary" | "secondary" | "info" | "success" | "warn" | "dang
     <h1 class="typo-h1--secondary">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
     <h1 class="typo-h2--secondary">Curabitur vel felis rhoncus, tincidunt diam vel.</h1>
     <h1 class="typo-h3--secondary">Fusce vel luctus dolor, vel vulputate velit.</h1>
-    <h1 class="typo-h4--secondary">Proin blandit efficitur ultricies. Nullam eget pretium enim.</h1>
+    <h1 class="typo-h4--secondary">Proin blandit efficitur ultricies. Nullam eget pretium enim.</h1> -->
 
     <div class="col">
       <div v-for="severity in severities" :key="severity" class="flex">
