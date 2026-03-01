@@ -26,12 +26,12 @@ const filters = ref({
 <template>
   <div class="dives-page">
     <!-- ── Heatmap ────────────────────────────────────────────────────────── -->
-    <section class="dives-section">
+    <PrimeFieldset :legend="'Heatmap'" :class="['form__fieldset--flex']">
       <Heatmap
         tooltip-unit="plongées"
         @day-click="(v) => filters.global.value = v.date.toISOString().slice(0, 10)"
       />
-    </section>
+    </PrimeFieldset>
 
    
   </div>
