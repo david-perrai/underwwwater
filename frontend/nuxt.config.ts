@@ -61,7 +61,8 @@ export default defineNuxtConfig({
   },
 
   /*********** CSS ***********/
-  css: ["~/assets/scss/main.scss"], // Import global du fichier SCSS principal
+  css: ["~/theme/styles.scss"], // Import global du fichier SCSS principal
+
 
   /*********** Vite ***********/
   vite: {
@@ -75,14 +76,6 @@ export default defineNuxtConfig({
         usePolling: true,
         interval: 1000,
       },
-    },
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: '@use "~/assets/scss/_variables.scss" as *;',
-        },
-      },
-      devSourcemap: true,
     },
   },
 
