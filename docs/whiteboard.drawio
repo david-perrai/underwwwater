@@ -1,0 +1,172 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="26.2.14">
+  <diagram name="Page-1" id="Z_GjHhb5G5WLLNi3GD6a">
+    <mxGraphModel dx="1845" dy="1784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="harROuHgYq3qSpQXegAx-1" value="Calendar Heatmap (style github heatmap pour voir le nombre de plongées sur l&#39;année.&lt;br&gt;Bouton Previous / Next sur les côtés pour gérer pagination des années?&lt;div&gt;https://razorness.github.io/vue3-calendar-heatmap/ ? (peut être autre chose ou custom via claude)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="114" y="200" width="600" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-2" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="50" y="220" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-3" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="730" y="220" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-4" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="60" y="40" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-5" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="40" y="160" as="sourcePoint" />
+            <mxPoint x="770" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-6" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.6;dx=40;notch=0;" vertex="1" parent="1">
+          <mxGeometry x="740" y="225" width="20" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-7" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.6;dx=40;notch=0;rotation=-170;" vertex="1" parent="1">
+          <mxGeometry x="60" y="225" width="20" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-8" value="Avatar" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="70" y="65" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-9" value="Pseudo" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="160" y="40" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-10" value="Total dives: 48" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="155" y="77.5" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-11" value="Certification: AOW (PADI)" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="140" y="102.5" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-12" value="Deepest Dives:&amp;nbsp;&lt;div&gt;***: 56m , **: 48m, *: 45m&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="300" y="50" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-13" value="Profondeur moyenne: 24m" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="305" y="90" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-14" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="110" as="sourcePoint" />
+            <mxPoint x="300" y="50" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-15" value="Longest Dive: 102mn" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="475" y="40" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-16" value="Total time underwater: 200h" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="475" y="90" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-17" value="Shortest Dive: 11mn" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="475" y="65" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-18" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="475" y="110" as="sourcePoint" />
+            <mxPoint x="475" y="50" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-19" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="40" y="320" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-20" value="" style="ellipse;shape=doubleEllipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="75" y="355" width="130" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-21" value="Diving Types Chart" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="320" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-22" value="" style="endArrow=none;html=1;rounded=0;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.731;entryY=0.115;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="harROuHgYq3qSpQXegAx-20" target="harROuHgYq3qSpQXegAx-20">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="140" y="420" />
+            </Array>
+            <mxPoint x="390" y="430" as="sourcePoint" />
+            <mxPoint x="440" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-23" value="" style="line;strokeWidth=2;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="415" width="120" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-24" value="Tech" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="125" y="440" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-25" value="Night" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="415" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-26" value="Drift" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="95" y="380" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-27" value="Wreck" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="145" y="385" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-28" value="Nationality (flag?)" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="155" y="60" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-29" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="314" y="320" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-30" value="" style="ellipse;shape=doubleEllipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="349" y="355" width="130" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-31" value="Diving Environments Chart" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="314" y="320" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-32" value="" style="line;strokeWidth=2;html=1;" vertex="1" parent="1">
+          <mxGeometry x="354" y="415" width="120" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-33" value="Pool" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="399" y="440" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-34" value="Sea" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="374" y="380" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-35" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="560" y="320" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-36" value="" style="ellipse;shape=doubleEllipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="595" y="355" width="130" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-37" value="Diving Roles Chart" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="560" y="320" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-38" value="" style="endArrow=none;html=1;rounded=0;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.731;entryY=0.115;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="harROuHgYq3qSpQXegAx-36" target="harROuHgYq3qSpQXegAx-36">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="660" y="420" />
+            </Array>
+            <mxPoint x="910" y="430" as="sourcePoint" />
+            <mxPoint x="960" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-39" value="Normal" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="640" y="440" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-40" value="Divemaster" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="600" y="380" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-41" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="639.5" y="102.5" as="sourcePoint" />
+            <mxPoint x="639.5" y="42.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-42" value="Most Dived Countries: (flag? v2 spots&lt;div&gt;&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;)&lt;/span&gt;&lt;div&gt;&lt;div&gt;- France (54plongées)&lt;/div&gt;&lt;div&gt;- Japon: 20plongées&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="620" y="10" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-43" value="Dives mates: (v2 Social)&lt;div&gt;-dede ( 10plongées)&lt;/div&gt;&lt;div&gt;-toto (4plongées)&lt;/div&gt;&lt;div&gt;etc&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="640" y="95" width="150" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-44" value="Shortest Dive: 11mn" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="645" y="70" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-45" value="La page des graphiques geeks&lt;div&gt;Ici on va voir l&#39;aperçu de la carrière du plongeur sous forme dhighlights et de graphs&lt;/div&gt;&lt;div&gt;On ne va pas mettre la liste des plongées qui fera office d&#39;une page a part pour voir le detail de chaque plongée.&lt;br&gt;&lt;br&gt;Les calculs des moyennes seraient fait sur toute les plongées renseignées par un user. Peut être donc qu&#39;il est judicieux de prévoir un appel api spécifique pour cette page (ou plusieurs appels, un pour chaque graph ? Le but sera d&#39;éviter de faire les calculs en front. Donc peut être un super objet dashboard pouvant nourrir tous les graphs.&amp;nbsp;&lt;br&gt;&lt;br&gt;Stocker dans le store ? Tant que il n&#39;y a pas de nouvelles plongées ajoutées =&amp;gt; les résultats ne changent pas. Un système de cron côté server pour computes les datas de chaque user ? Ou un appel à chaque fois que nouvelle plongée =&amp;gt; request api =&amp;gt; store mis à jour&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" vertex="1" parent="1">
+          <mxGeometry x="-390" y="-250" width="1830" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="harROuHgYq3qSpQXegAx-46" value="DASHBOARD&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="570" y="-60" width="100" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

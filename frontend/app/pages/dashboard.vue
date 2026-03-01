@@ -8,6 +8,12 @@ useHead({ title: 'Dashboard — DiveLog' })
 // ─── Store ────────────────────────────────────────────────────────────────────
 const diveStore = useDiveStore()
 const year      = new Date().getFullYear()
+const userStore = useUserStore()
+
+//TODO Existe t'il un autre moyen de faire ça plutôt que que sur chaque page ?
+if(!userStore.isLoggedIn) {
+  navigateTo('/login');
+}
 
 /**
  * callOnce : s'exécute une seule fois par session (SSR + hydratation inclus).
@@ -26,6 +32,7 @@ await callOnce(CALL_ONCE_STATS,              () => diveStore.fetchStats())
 <template>
   <div class="dashboard-page">
     <h1>Dashboard</h1>
+    <h2>{{ userStore.user?.username }}</h2>
     <p>List of dives will go here.</p>
     https://app.diagrams.net/?src=about#G1HlZAEeKFjx8ZRrJ3cQEFvqyG1FqJ4-vz#%7B%22pageId%22%3A%22Xp9XIThnklZw_WTEFrcx%22%7D
 

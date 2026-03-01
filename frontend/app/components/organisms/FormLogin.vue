@@ -7,6 +7,8 @@ const password = ref('');
 
 /** Composables */
 const login = useAuthControllerLogin();
+const userStore = useUserStore();
+
 const { t } = useI18n();
 
 const { errors, validateForm, clearError } = useFormValidator(
@@ -28,8 +30,8 @@ const handleSubmit = async () => {
     });
 
     if(response.status === 200) {
-      //todo à remplacer par une navigation vers le dashboard
-      alert('User logged successfully')
+      userStore.loadFromToken(response.data.accessToken);      
+      navigateTo('/dashboard');
     }
   }
 };
