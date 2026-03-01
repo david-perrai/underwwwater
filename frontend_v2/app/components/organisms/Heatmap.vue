@@ -1,45 +1,11 @@
 <script setup lang="ts">
-/**
- * CalendarHeatmap.vue
- *
- * Composant "smart" : lit ses données directement depuis useDiveStore.
- * Toujours en dark mode — palette GitHub dark fixe.
- *
- * Props :
- *   tooltipUnit   string       — unité affichée dans le tooltip (défaut : 'plongées')
- *   round         number       — border-radius des cellules     (défaut : 2)
- *   noDataText    string|false — texte si count = 0             (défaut : 'Aucune plongée')
- *
- * Events :
- *   @day-click({ date: Date, count: number })
- */
 
-import { useDiveStore } from '~/stores/dive'
-
-interface Props {
-  tooltipUnit?: string
-  round?:       number
-  noDataText?:  string | false
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  tooltipUnit: 'plongées',
-  round:       2,
-  noDataText:  'Aucune plongée',
-})
-
-const emit = defineEmits<{
-  'day-click': [value: { date: Date; count: number }]
-}>()
-
-// ─── Palette dark fixe (style GitHub dark) ────────────────────────────────────
-const COLORS      = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'] as const
-const LABEL_COLOR = '#8b949e'
-
-// ─── Store ────────────────────────────────────────────────────────────────────
+/** ─── Store ────────────────────────────────────────────────────────────────────*/
 const diveStore = useDiveStore()
 
-// ─── Navigation par année ─────────────────────────────────────────────────────
+/** ─── Datas ──────────────────────────────────────────────────────────────────*/
+const COLORS      = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'] as const
+const LABEL_COLOR = '#8b949e'
 const TODAY         = new Date()
 const currentYear   = ref(TODAY.getFullYear())
 const isCurrentYear = computed(() => currentYear.value === TODAY.getFullYear())
@@ -82,7 +48,7 @@ const values = computed(() => [
   ...diveStore.getHeatmapYear(currentYear.value),
 ])
 
-// ─── Constants ────────────────────────────────────────────────────────────────
+/** ─── Constants ────────────────────────────────────────────────────────────────*/
 const SQUARE_SIZE        = 11
 const SQUARE_GAP         = 2
 const CELL               = SQUARE_SIZE + SQUARE_GAP
@@ -93,7 +59,7 @@ const DAY_LABEL_WIDTH    = 28
 const MONTHS = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc']
 const DAYS   = ['', 'Lun', '', 'Mer', '', 'Ven', '']
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+/** ─── Helpers ──────────────────────────────────────────────────────────────────*/
 function toKey(d: Date): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
@@ -104,7 +70,7 @@ function addDays(d: Date, n: number): Date {
   return r
 }
 
-// ─── Dates de début / fin ─────────────────────────────────────────────────────
+/** ─── Dates de début / fin ─────────────────────────────────────────────────────*/
 const endDate = computed(() =>
   isCurrentYear.value
     ? new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate())
@@ -117,7 +83,7 @@ const startDate = computed(() => {
   return addDays(d, -dow)
 })
 
-// ─── Map date→count & max ─────────────────────────────────────────────────────
+/** ─── Map date→count & max ─────────────────────────────────────────────────────*/
 const valueMap = computed(() => {
   const m = new Map<string, number>()
   for (const v of values.value) m.set(v.date, v.count)
@@ -130,7 +96,7 @@ const maxValue = computed(() => {
   return max || 1
 })
 
-// ─── Grille de semaines ───────────────────────────────────────────────────────
+/** ─── Grille de semaines ───────────────────────────────────────────────────────*/
 interface Cell {
   date:  Date
   count: number
@@ -160,7 +126,7 @@ const weeks = computed(() => {
   return result
 })
 
-// ─── Labels des mois ──────────────────────────────────────────────────────────
+/** ─── Labels des mois ──────────────────────────────────────────────────────────*/
 const monthLabels = computed(() => {
   const labels: Array<{ text: string; x: number }> = []
   let lastMonth = -1
@@ -176,22 +142,22 @@ const monthLabels = computed(() => {
   return labels
 })
 
-// ─── SVG dimensions ───────────────────────────────────────────────────────────
+/** ─── SVG dimensions ───────────────────────────────────────────────────────────*/
 const svgWidth  = computed(() => DAY_LABEL_WIDTH + weeks.value.length * CELL)
 const svgHeight = computed(() => MONTH_LABEL_HEIGHT + 7 * CELL)
 
-// ─── Couleur d'une cellule ────────────────────────────────────────────────────
+/** ─── Couleur d'une cellule ────────────────────────────────────────────────────*/
 // Pendant la transition : niveau 0 pour tout (fond sombre), puis fade CSS
 function cellColor(level: number): string {
   if (level === -1) return 'transparent'
   return isTransitioning.value ? COLORS[0] : COLORS[level]
 }
 
-// ─── Positions ────────────────────────────────────────────────────────────────
+/** ─── Positions ────────────────────────────────────────────────────────────────*/
 function cellX(wi: number): number { return DAY_LABEL_WIDTH + wi * CELL }
 function cellY(di: number): number { return MONTH_LABEL_HEIGHT + di * CELL }
 
-// ─── Tooltip ──────────────────────────────────────────────────────────────────
+/** ─── Tooltip ──────────────────────────────────────────────────────────────────*/
 const svgRef  = ref<SVGSVGElement | null>(null)
 const tooltip = ref({ visible: false, x: 0, y: 0, text: '' })
 
@@ -200,9 +166,9 @@ function formatTooltip(cell: Cell): string {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
   })
   if (cell.count === 0) {
-    return props.noDataText === false ? '' : `${props.noDataText} — ${dateStr}`
+    return `Aucune plongée — ${dateStr}`
   }
-  return `${cell.count} ${props.tooltipUnit} — ${dateStr}`
+  return `${cell.count} plongée${cell.count > 1 ? 's' : ''} — ${dateStr}`
 }
 
 function onMouseEnter(event: MouseEvent, cell: Cell) {
@@ -220,11 +186,6 @@ function onMouseEnter(event: MouseEvent, cell: Cell) {
 }
 
 function onMouseLeave() { tooltip.value.visible = false }
-
-function onDayClick(cell: Cell) {
-  if (cell.level === -1) return
-  emit('day-click', { date: cell.date, count: cell.count })
-}
 </script>
 
 <template>
@@ -258,7 +219,7 @@ function onDayClick(cell: Cell) {
       <span class="heatmap-total">
         <template v-if="!diveStore.heatmapLoading">
           {{ values.reduce((sum, v) => sum + v.count, 0) }}
-          {{ tooltipUnit }} en {{ currentYear }}
+          plongées en {{ currentYear }}
         </template>
       </span>
     </div>
@@ -316,8 +277,8 @@ function onDayClick(cell: Cell) {
             :y="cellY(di)"
             :width="SQUARE_SIZE"
             :height="SQUARE_SIZE"
-            :rx="round"
-            :ry="round"
+            :rx="3"
+            :ry="3"
             :fill="cellColor(cell.level)"
             class="day-cell"
             :class="{ 'day-cell--active': cell.level >= 0 }"
