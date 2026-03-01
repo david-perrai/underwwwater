@@ -1,26 +1,32 @@
 <script setup lang="ts">
-import { translations } from "@/i18n/index";
+definePageMeta({
+  layout: "landing",
+});
 
-const { SUBTITLE, DIVE_LOGGING, GET_STARTED } = translations.en.HOME;
-const { TITLE } = translations.en.GENERAL;
+const { t } = useI18n();
+
+useHead({
+  title: t('pages.home.title'),
+  meta: [
+    { name: 'description', content: t('pages.home.description') }
+  ]
+});
 </script>
 
-<template>
-  <BaseTemplate>
-    <template #parallax>
-      <ParallaxHeading
-        :title="TITLE"
-        :subtitle="SUBTITLE"
-        :image="'/bg.jpg'"
-      />
-    </template>
-    <template #main>
-      <HomeParagraph :title="DIVE_LOGGING.TITLE" :texts="[DIVE_LOGGING.TEXT]" />
-      <br />
-      <HomeParagraph
-        :title="GET_STARTED.TITLE"
-        :texts="[GET_STARTED.TEXT, GET_STARTED.MORE]"
-      />
-    </template>
-  </BaseTemplate>
+<template>  
+  <div class="landing-page">
+    <LandingHero />
+    <LandingFeatures />
+    <LandingFooter />
+  </div>
 </template>
+
+<style lang="scss">
+// Global overrides for landing page specific needs if any
+.landing-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: $color-navy;
+}
+html { scroll-behavior: smooth; }
+</style>

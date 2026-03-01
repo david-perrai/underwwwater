@@ -1,237 +1,218 @@
 <script setup lang="ts">
-import { defineAsyncComponent, ref, reactive, watch } from "vue";
-import { FormActions } from "@/types/models/form";
-import type { DiveInterface } from "@/types/global/dive";
-import type {
-  DivingThemeEdgeInterface,
-  DivingThemeInterface,
-} from "@/types/global/divingTheme";
-import type { GasMix } from "@/types/global/gas";
-import { formatISO } from "date-fns";
-import { useDiveInitializer } from "@/composables/diveInitializer";
-import { useAlertFactory } from "@/composables/alertFactory";
-import { useFormFactory } from "@/composables/formFactory";
-// import { MUTATION_CREATE_DIVE } from "@/graphql/mutations/createDive";
-// import { MUTATION_UPDATE_DIVE } from "@/graphql/mutations/updateDive";
-// import { useMutation } from "@vue/apollo-composable";
-import { translations } from "@/i18n/index";
+import { useDivesControllerCreate } from '~/composables/api/generated/dives/dives';
+import { required, minValue } from '~/composables/useFormValidator';
 
-const FormControlDate = defineAsyncComponent(
-  () => import("@/components/molecules/FormControlDate.vue")
-);
-const FormControlSelect = defineAsyncComponent(
-  () => import("@/components/molecules/FormControlSelect.vue")
-);
-const FormControlComboBox = defineAsyncComponent(
-  () => import("@/components/molecules/FormControlComboBox.vue")
-);
-const FormControlNumber = defineAsyncComponent(
-  () => import("@/components/molecules/FormControlNumber.vue")
-);
-const FormControlGasGroup = defineAsyncComponent(
-  () => import("@/components/molecules/FormControlGasGroup.vue")
-);
+import GasTanks from '~/components/organisms/GasTanks.vue';
+import DivingTypes from '~/components/molecules/DivingTypes.vue';
+import { DIVING_TYPES } from '~/types/DivingType';
 
-const isUpdating = !!window.history.state.dive;
-const valid = ref(false);
-const loading = ref(false);
-const formTemplate = ref();
-const { NEW_DIVE, UPDATE_DIVE } = translations.en.ALERTS;
-const { BUTTON_ADD, BUTTON_UPDATE } = translations.en.FORM_DIVING;
+/** Datas */
+const date = ref<Date | null>(null);
+const maxDepth = ref<number | null>(null);
+const totalTime = ref<number | null>(null);
+const selectedTypeTokens = ref<string[]>([]);
 
-const dive: DiveInterface = isUpdating
-  ? reactive({
-      ...JSON.parse(window.history.state.dive),
-      date: new Date(Date.parse(JSON.parse(window.history.state.dive).date)),
-    })
-  : reactive(useDiveInitializer());
+/** Stores and Composables */
+const { t } = useI18n();
+const navigationStore = useNavigationStore();
+const createDive = useDivesControllerCreate();
 
-const form = useFormFactory(
-  isUpdating ? FormActions.DIVE_UPDATE : FormActions.DIVE_CREATE,
-  dive
+const gasTanksRef = ref<InstanceType<typeof GasTanks> | null>(null);
+
+const { errors, validateForm, clearError } = useFormValidator(
+  { date, maxDepth, totalTime },
+  {
+    date: [
+      required(t('validation.dateRequired')),
+    ],
+    maxDepth: [
+      required(),
+      minValue(0),
+    ],
+    totalTime: [
+      required(),
+      minValue(1),
+    ],
+  },
 );
 
-const handleChange = (
-  id: string,
-  value:
-    | Date
-    | DivingThemeInterface
-    | DivingThemeInterface[]
-    | GasMix
-    | number
-    | null,
-  index: number,
-  subId: string
-) => {
-  switch (id) {
-    case "date":
-      dive[id] = value as Date;
-      break;
-    case "maxDepth":
-    case "totalTime":
-      dive[id] = value as number;
-      break;
-    case "divingRole":
-    case "divingEnvironment":
-      dive[id] = value as DivingThemeInterface | null;
-      break;
-    case "divingType":
-      dive[id] = value as {
-        edges: DivingThemeEdgeInterface[];
-      };
-      break;
-    case "gasTanks":
-      switch (subId) {
-        case "pressureStart":
-        case "pressureEnd":
-          dive.gasTanks[index as number][subId] = value as number;
-          break;
-        case "gasMix":
-          dive.gasTanks[index as number][subId] = value as GasMix;
-          break;
-        default:
-          break;
-      }
-      break;
-    default:
-      break;
-  }
-};
+/** Functions */
+const saveDive = async () => {
+  const tanksData = gasTanksRef.value?.tanks || [];
+  
+  const formattedTanks = tanksData.map((tank) => {
+    const mixes = [];
+    if (tank.gasMix.oxygen > 0) mixes.push({ type: 'oxygen', percentage: tank.gasMix.oxygen });
+    if (tank.gasMix.nitrogen > 0) mixes.push({ type: 'nitrogen', percentage: tank.gasMix.nitrogen });
+    if (tank.gasMix.helium > 0) mixes.push({ type: 'helium', percentage: tank.gasMix.helium });
 
-const load = () => {
-  loading.value = true;
-  setTimeout(() => (loading.value = false), 5000);
-};
-
-const payload = reactive({
-  ...(isUpdating && { id: dive.id }),
-  date: formatISO(new Date(dive.date), {
-    representation: "complete",
-  }),
-  totalTime: dive.totalTime,
-  maxDepth: dive.maxDepth,
-  gasTanks: dive.gasTanks,
-  divingType: Array.isArray(dive.divingType)
-    ? dive.divingType
-    : Array.isArray(dive.divingType.edges) && dive.divingType.edges.length
-    ? dive.divingType.edges.map((type) => type.node.id)
-    : dive.divingType.edges,
-  divingEnvironment:
-    dive.divingEnvironment !== null ? dive.divingEnvironment.id : null,
-  divingRole: dive.divingRole !== null ? dive.divingRole.id : null,
-});
-
-// const { mutate, onDone, onError } = useMutation(
-//   isUpdating ? MUTATION_UPDATE_DIVE : MUTATION_CREATE_DIVE,
-//   {
-//     variables: {
-//       input: payload,
-//     },
-//   }
-// );
-
-// onError((error) => {
-//   useAlertFactory("error", error.toString());
-// });
-
-// onDone(() => {
-//   useAlertFactory("success", isUpdating ? UPDATE_DIVE : NEW_DIVE);
-//   navigateTo({ name: "diveForm" });
-// });
-
-const onSubmit = async () => {
-  const { valid } = await formTemplate.value.validate();
-
-  if (valid) {
-    // mutate();
-    load();
-  }
-};
-
-watch(dive, async () => {
-  payload.date = formatISO(new Date(dive.date), {
-    representation: "complete",
+    return {
+      pressureStart: tank.pressureStart,
+      pressureEnd: tank.pressureEnd,
+      gasMixes: mixes as any // Cast to any to avoid strict enum matching issues for now, or match GasMixDto
+    };
   });
-  payload.totalTime = dive.totalTime;
-  payload.maxDepth = dive.maxDepth;
-  payload.gasTanks = dive.gasTanks;
-  (payload.divingType = Array.isArray(dive.divingType)
-    ? dive.divingType
-    : Array.isArray(dive.divingType.edges) && dive.divingType.edges.length
-    ? dive.divingType.edges.map((type) => type.node.id)
-    : dive.divingType.edges),
-    (payload.divingEnvironment =
-      dive.divingEnvironment !== null ? dive.divingEnvironment.id : null);
-  payload.divingRole = dive.divingRole !== null ? dive.divingRole.id : null;
-});
+
+  const response = await createDive.mutateAsync({
+    data: {
+      date: date.value!,
+      maxDepth: maxDepth.value!,
+      totalTime: totalTime.value!,
+      gasTanks: formattedTanks,
+      divingTypeIds: selectedTypeTokens.value.map(token => {
+        // Mapping tokens to IDs based on their index in the seeder/constant list for now
+        // This should ideally be handled by fetching actual IDs from the API
+        const typeIndex = DIVING_TYPES.findIndex(t => t.token === token);
+        return typeIndex !== -1 ? typeIndex + 1 : 0;
+      }).filter(id => id > 0),
+      divingEnvironmentId: 1,
+      diverRole: 'diver' as any,
+    },
+  });
+
+  return response.status === 201;
+};
+
+const handleSubmitAndClose = async () => {
+  if (validateForm()) {
+    const success = await saveDive();
+    if (success) {
+      navigationStore.toggleModalDive();
+    }
+  }
+};
+
+const handleSubmitAndContinue = async () => {
+  if (validateForm()) {
+    await saveDive();
+    // Keep modal open, values stay for quick re-entry
+  }
+};
 </script>
 
 <template>
-  <Suspense>
-    <v-form v-model="valid" ref="formTemplate" lazy-validation action="#">
-      <PageTitle :label="form.title" />
-      <v-card-text>
-        <v-row>
-          <template v-for="component in form.controls" :key="component">
-            <v-col
-              v-if="component.props?.name"
-              :order="
-                component.props?.name === 'FormControlDate'
-                  ? 1
-                  : component.props?.name === 'FormControlNumber'
-                  ? 2
-                  : component.props?.name === 'FormControlSelect'
-                  ? 3
-                  : component.props?.name === 'FormControlComboBox'
-                  ? 4
-                  : component.props?.name === 'FormControlGasGroup'
-                  ? 5
-                  : 10
-              "
-              :cols="12"
-              :md="component.props?.name !== 'FormControlGasGroup' ? 4 : 12"
-            >
-              <component
-                :is="
-                  component.props?.name === 'FormControlDate'
-                    ? FormControlDate
-                    : component.props?.name === 'FormControlNumber'
-                    ? FormControlNumber
-                    : component.props?.name === 'FormControlSelect'
-                    ? FormControlSelect
-                    : component.props?.name === 'FormControlComboBox'
-                    ? FormControlComboBox
-                    : FormControlGasGroup
-                "
-                :id="component.id"
-                :value="dive[component.id as keyof typeof dive]"
-                :label="component.props?.label"
-                :query="component.props?.query"
-                :type="component.props?.type"
-                :rules="component.props?.rules"
-                :icon="component.props?.icon"
-                :subtitle="component.props?.subtitle"
-                :action="component.props?.query"
-                @form-input-change="handleChange"
-              ></component>
-            </v-col>
-          </template>
-        </v-row>
-      </v-card-text>
-      <v-card-actions>
-        <v-container>
-          <v-btn
-            variant="flat"
-            color="success"
-            :size="'x-large'"
-            :loading="loading"
-            :disabled="loading"
-            @click="onSubmit"
-          >
-            {{ isUpdating ? BUTTON_UPDATE : BUTTON_ADD }}
-          </v-btn>
-        </v-container>
-      </v-card-actions>
-    </v-form>
-  </Suspense>
+  <Form
+    :submit-label="$t('dive.form.submit')"
+    severity="success"
+    name="dive"
+    :modal="true"
+    @submit="handleSubmitAndClose"
+  >
+    <!-- Champs Datetime - Depth - Duration -->
+    <PrimeFieldset :legend="'Globals'" :class="['form__fieldset--flex']">
+      <!-- Date & Time -->
+      <div class="form__field">
+        <PrimeFloatLabel>
+          <PrimeDatePicker
+            id="date"
+            v-model="date"
+            showTime
+            hour-format="24"
+            :invalid="!!errors.date"
+            :style="{ width: '306px' }"
+            @update:model-value="clearError('date')"
+          />
+          <label for="date">{{ $t('dive.form.date') }}</label>
+        </PrimeFloatLabel>
+        <PrimeMessage 
+          v-if="errors.date"
+          size="small" 
+          severity="error"
+          variant="simple"
+        >
+          {{ errors.date }}
+        </PrimeMessage>
+      </div>
+
+      <!-- Max Depth -->
+      <div class="form__field">
+        <PrimeFloatLabel>
+          <PrimeInputNumber
+            id="maxDepth"
+            v-model="maxDepth"
+            :min="1"
+            :max-fraction-digits="1"
+            :invalid="!!errors.maxDepth"
+            @update:model-value="clearError('maxDepth')"
+          />
+          <label for="maxDepth">{{ $t('dive.form.maxDepth') }}</label>
+        </PrimeFloatLabel>
+        <PrimeMessage 
+          v-if="errors.maxDepth"
+          size="small" 
+          severity="error"
+          variant="simple"
+        >
+          {{ errors.maxDepth }}
+        </PrimeMessage>
+      </div>
+
+      <!-- Total Time -->
+      <div class="form__field">
+        <PrimeFloatLabel>
+          <PrimeInputNumber
+            id="totalTime"
+            v-model="totalTime"
+            :min="1"
+            :max-fraction-digits="1"
+            :invalid="!!errors.totalTime"
+            @update:model-value="clearError('totalTime')"
+          />
+          <label for="totalTime">{{ $t('dive.form.totalTime') }}</label>
+        </PrimeFloatLabel>
+        <PrimeMessage 
+          v-if="errors.totalTime"
+          size="small" 
+          severity="error"
+          variant="simple"
+        >
+          {{ errors.totalTime }}
+        </PrimeMessage>
+      </div>
+    </PrimeFieldset>
+
+    <!-- Dive Types Selection -->
+    <PrimeFieldset :legend="'Dive Types'" data-id="diving-types-fieldset">
+      <DivingTypes v-model="selectedTypeTokens" />
+    </PrimeFieldset>
+
+    <!-- Tanks -->
+    <GasTanks ref="gasTanksRef" />
+
+    <!-- Custom actions: two green buttons -->
+    <template #actions>
+      <PrimeButton
+        type="submit"
+        :label="$t('dive.form.submit')"
+        :severity="'success'" 
+        :size="'large'" 
+        icon="pi pi-plus"
+        variant="plain" 
+      />
+      <PrimeButton
+        type="button"
+        :label="$t('dive.form.submitAndContinue')"
+        :severity="'success'" 
+        :size="'large'" 
+        variant="outlined" 
+        icon="pi pi-plus-circle"
+        @click="handleSubmitAndContinue"
+      />
+    </template>
+  </Form>
 </template>
+
+<style lang="scss" scoped>
+.form-dive {
+  &__row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+    .field {
+      flex: 1;
+      margin-bottom: 0; // Override default field margin if any
+    }
+  }
+}
+</style>
