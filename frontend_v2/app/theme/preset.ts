@@ -16,6 +16,8 @@ import fieldset from "./components/fieldset";
 import menu from "./components/menu";
 import panel from "./components/panel";
 import chip from "./components/chip";
+import togglebutton from "./components/togglebutton";
+import knob from "./components/knob";
 import { primitives } from "./primitives";
 
 export const CustomPreset = definePreset(Aura, {
@@ -286,5 +288,7 @@ export const CustomPreset = definePreset(Aura, {
 		menu,
 		panel,
 		chip,
+		togglebutton,
+		knob,
 	},
 });
