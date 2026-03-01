@@ -31,8 +31,8 @@ await callOnce(CALL_ONCE_STATS,              () => diveStore.fetchStats())
 
 
     <!-- ── Heatmap ────────────────────────────────────────────────────────── -->
-    <section class="dashboard-section">
+    <PrimeFieldset :legend="'Globals'" :class="['form__fieldset--flex']">
       <Heatmap />
-    </section>
+    </PrimeFieldset>
   </div>
 </template>
