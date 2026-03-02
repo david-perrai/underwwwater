@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { DIVING_ENVIRONMENTS } from '~/types/DivingType';
 
-/** Props */
+/** Datas */
 const modelValue = defineModel<string | null>({ default: null });
 
-/** Functions */
+/** Actions */
 const selectEnvironment = (token: string) => {
   modelValue.value = modelValue.value === token ? null : token;
 };

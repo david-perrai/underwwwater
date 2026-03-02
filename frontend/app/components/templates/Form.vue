@@ -6,7 +6,6 @@ const props = defineProps<{
   submitLabel: string;
   severity?: string;
   name?: string;
-  /** Quand true, rendu sans Card (à utiliser dans un PrimeDialog) */
   modal?: boolean;
 }>();
 

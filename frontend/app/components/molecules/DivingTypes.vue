@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { DIVING_TYPES } from '~/types/DivingType';
 
-/** Props */
+/** Datas */
 const modelValue = defineModel<string[]>({ default: () => [] });
 
-/** Functions */
+/** Actions */
 const toggleType = (token: string) => {
   if (modelValue.value.includes(token)) {
     modelValue.value = modelValue.value.filter(t => t !== token);

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/** Datas */
 const currentYear = new Date().getFullYear();
 </script>
 

@@ -8,9 +8,7 @@ const password = ref('');
 /** Composables */
 const login = useAuthControllerLogin();
 const userStore = useUserStore();
-
 const { t } = useI18n();
-
 const { errors, validateForm, clearError } = useFormValidator(
   { identifier, password },
   {

@@ -1,6 +1,8 @@
 <script setup lang="ts">
+/** Composables */
 const { t } = useI18n();
 
+/** Computeds */
 const features = computed(() => [
   {
     title: t('landing.features.detailedLogs.title'),

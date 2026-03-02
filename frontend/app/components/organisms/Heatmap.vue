@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/** Composables */
 const {
   diveStore,
   currentYear, isCurrentYear,
@@ -12,7 +13,6 @@ const {
 
 <template>
   <div class="heatmap">
-    <!-- ── En-tête ──────────────────────────────────────────────────────── -->
     <div class="heatmap__header">
       <div class="heatmap__nav">
         <PrimeButton
@@ -45,7 +45,6 @@ const {
       </span>
     </div>
 
-    <!-- ── Erreur ────────────────────────────────────────────────────────── -->
     <PrimeMessage
       v-if="diveStore.heatmapError"
       severity="error"

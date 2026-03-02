@@ -6,16 +6,6 @@ const props = defineProps({
     default: false,
   },
 });
-
-/** Datas */
-
-/** Stores and Composables */
-
-/** Computeds */
-
-/** Functions */
-
-/** Lifecyle Hooks */
 </script>
 
 <template>

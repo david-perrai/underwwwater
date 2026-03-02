@@ -1,24 +1,28 @@
 <script setup lang="ts">
 import type { GasMix } from '~/types/GasMix';
 
+/** Types */
 interface TankModel {
   pressureStart: number;
   pressureEnd: number;
   gasMix: GasMix;
 }
 
+/** Props */
 const props = defineProps<{
   closable?: boolean;
 }>();
 
+/** Emits */
 const emit = defineEmits<{ close: [] }>();
 
+/** Datas */
 const model = defineModel<TankModel>({ required: true });
 
+/** Composables */
 const { gasMix, isOxygenDisabled, isNitrogenDisabled, isHeliumDisabled, updateGas } = useGasMixBalance(model.value.gasMix);
-const { title, subtitle } = useGasMixName(gasMix);
 
-// Computed avec setter pour les pressions → pas de watch, mise à jour directe
+/** Computeds */
 const pressureStart = computed({
   get: () => model.value.pressureStart,
   set: (v) => model.value = { ...model.value, pressureStart: v },
@@ -29,7 +33,7 @@ const pressureEnd = computed({
   set: (v) => model.value = { ...model.value, pressureEnd: v },
 });
 
-// On sync le gasMix vers le parent uniquement après chaque updateGas
+/** Actions */
 const handleUpdateGas = (key: keyof GasMix, value: number) => {
   updateGas(key, value);
   model.value = { ...model.value, gasMix: { ...gasMix } };

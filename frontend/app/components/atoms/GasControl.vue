@@ -14,7 +14,7 @@ const emit = defineEmits<{
   'update:locked': [value: boolean];
 }>();
 
-/** Methods */
+/** Actions */
 const onUpdateValue = (value: number | null | undefined) => {
   emit('update:modelValue', value || 0);
 };
