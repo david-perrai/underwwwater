@@ -28,9 +28,30 @@ const pressureStart = computed({
   set: (v) => model.value = { ...model.value, pressureStart: v },
 });
 
-const pressureEnd = computed({
-  get: () => model.value.pressureEnd,
-  set: (v) => model.value = { ...model.value, pressureEnd: v },
+const pressureRange = computed({
+  get: () => [model.value.pressureEnd, model.value.pressureStart],
+  set: (v) => {
+    if (Array.isArray(v)) {
+      let end = v[0] ?? model.value.pressureEnd;
+      let start = v[1] ?? model.value.pressureStart;
+
+      // Enforce start > end
+      if (start <= end) {
+        if (start < 300) {
+          start = end + 1;
+        } else {
+          end = 299;
+          start = 300;
+        }
+      }
+
+      model.value = {
+        ...model.value,
+        pressureEnd: end,
+        pressureStart: start,
+      };
+    }
+  },
 });
 
 /** Actions */
@@ -69,40 +90,26 @@ const handleUpdateGas = (key: keyof GasMix, value: number) => {
       />
     </div>
 
-    <PrimeFieldset legend="Tank Pressure" class="form__fieldset--flex">
-      <div class="form__field">
-        <PrimeFloatLabel>
-          <PrimeInputNumber
-            id="pressureStart"
-            v-model="pressureStart"
-            suffix=" bar"
-            :invalid="pressureEnd > pressureStart"
-            :min="1"
-          />
-          <label for="pressureStart">Start Tank Pressure</label>
-        </PrimeFloatLabel>
-        <PrimeMessage
-          v-if="pressureEnd > pressureStart"
-          size="small"
-          severity="error"
-          variant="simple"
-        >
-          La pression de début est inférieure à la pression de fin
-        </PrimeMessage>
+    <div class="gas-mix__pressure">
+      <div class="gas-mix__pressure-labels">
+        <div class="pressure-label">
+          <span class="pressure-label__title">End Pressure</span>
+          <span class="pressure-label__value">{{ model.pressureEnd }} bar</span>
+        </div>
+        <div class="pressure-label pressure-label--end text-right">
+          <span class="pressure-label__title">Start Pressure</span>
+          <span class="pressure-label__value">{{ model.pressureStart }} bar</span>
+        </div>
       </div>
-      <div class="form__field">
-        <PrimeFloatLabel>
-          <PrimeInputNumber
-            id="pressureEnd"
-            v-model="pressureEnd"
-            suffix=" bar"
-            :min="0"
-            :max="pressureStart"
-          />
-          <label for="pressureEnd">End Tank Pressure</label>
-        </PrimeFloatLabel>
-      </div>
-    </PrimeFieldset>
+
+      <PrimeSlider
+        v-model="pressureRange"
+        range
+        :min="0"
+        :max="300"
+        class="gas-mix__slider"
+      />
+    </div>
   </div>
 </template>
 
@@ -110,9 +117,51 @@ const handleUpdateGas = (key: keyof GasMix, value: number) => {
 .gas-mix {
 
   &__balance {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
   }
+
+  &__pressure {
+    width: 100%;
+    padding: 0.5rem 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &__pressure-labels {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__slider {
+    margin: 0 0.5rem;
+  }
+}
+
+.pressure-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+
+  &__title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ocean-text-muted);
+    font-weight: 600;
+  }
+
+  &__value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ocean-accent);
+    font-family: 'Inter Tight', sans-serif;
+  }
+}
+
+.text-right {
+  text-align: right;
 }
 </style>

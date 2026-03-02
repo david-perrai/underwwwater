@@ -25,6 +25,7 @@ declare module 'vue' {
     PrimeMessage: typeof import('primevue/message')['default']
     PrimePanel: typeof import('primevue/panel')['default']
     PrimePassword: typeof import('primevue/password')['default']
+    PrimeSlider: typeof import('primevue/slider')['default']
     PrimeSplitButton: typeof import('primevue/splitbutton')['default']
     PrimeToggleButton: typeof import('primevue/togglebutton')['default']
     PVButton: typeof import('primevue/button')['default']
