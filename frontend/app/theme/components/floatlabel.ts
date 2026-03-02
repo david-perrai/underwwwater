@@ -24,5 +24,9 @@ export default {
 			font-size: 0.75rem;
 			font-weight: 500;
 		}
+		.p-floatlabel > .p-component,
+		.p-floatlabel > .p-inputwrapper {
+			width: 100%;
+		}
 	`,
-};
+} as any; // Using any as I don't have the exact type for FloatLabel tokens easily accessible or it might be easier

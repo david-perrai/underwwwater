@@ -8,4 +8,10 @@ export default {
 			},
 		},
 	},
+	css: `
+		.p-inputnumber,
+		.p-inputnumber-input {
+			width: 100%;
+		}
+	`,
 } as InputNumberDesignTokens;

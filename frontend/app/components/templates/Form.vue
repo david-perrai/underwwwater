@@ -6,7 +6,6 @@ const props = defineProps<{
   submitLabel: string;
   severity?: string;
   name?: string;
-  /** Quand true, rendu sans Card (à utiliser dans un PrimeDialog) */
   modal?: boolean;
 }>();
 
@@ -105,8 +104,6 @@ const severityBorderVar = computed(() => {
 </template>
 
 <style lang="scss">
-@use '@/assets/scss/variables' as *;
-
 .form {
   width: 100%;
   max-width: 500px;
@@ -126,7 +123,7 @@ const severityBorderVar = computed(() => {
   }
 
   &__title {
-    font-family: $font-playfair;
+    font-family: 'Playfair Display', serif;
     font-size: 42px;
     line-height: 1.15;
     margin: 0 0 0.5rem;
@@ -134,7 +131,7 @@ const severityBorderVar = computed(() => {
   }
 
   &__subtitle {
-    font-family: $font-inter;
+    font-family: 'Inter Tight', sans-serif;
     font-size: 16px;
     line-height: 1.5;
     margin: 0;

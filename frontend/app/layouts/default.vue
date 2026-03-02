@@ -56,10 +56,10 @@
     box-sizing: border-box;
 }
 
-html {
-    color-scheme: dark;
-    font-size: 16px;
-}
+// html {
+//     color-scheme: dark;
+//     font-size: 16px;
+// }
 
 /* ── Body — deep ocean background ──────────────────── */
 body {
@@ -108,24 +108,24 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: rgba(0, 196, 180, 0.5); }
 
 /* ── Typography applicative (hors PrimeVue) ─────────── */
-h1, h2, h3, h4 {
-    font-family: 'Playfair Display', serif;
-    color: var(--ocean-text);
-    margin: 0;
-    line-height: 1.25;
-}
+// h1, h2, h3, h4 {
+//     font-family: 'Playfair Display', serif;
+//     color: var(--ocean-text);
+//     margin: 0;
+//     line-height: 1.25;
+// }
 
-h1 {
-    font-size: 2.25rem;
-    font-weight: 700;
-    text-shadow: 0 0 40px var(--ocean-accent-glow);
-}
+// h1 {
+//     font-size: 2.25rem;
+//     font-weight: 700;
+//     text-shadow: 0 0 40px var(--ocean-accent-glow);
+// }
 
-h2 { font-size: 1.6rem;  font-weight: 600; }
-h3 { font-size: 1.25rem; font-weight: 600; }
-h4 { font-size: 1rem;    font-weight: 600; }
+// h2 { font-size: 1.6rem;  font-weight: 600; }
+// h3 { font-size: 1.25rem; font-weight: 600; }
+// h4 { font-size: 1rem;    font-weight: 600; }
 
-p  { font-family: 'Inter Tight', sans-serif; color: rgba(197, 208, 247, 0.85); line-height: 1.65; }
+// p  { font-family: 'Inter Tight', sans-serif; color: rgba(197, 208, 247, 0.85); line-height: 1.65; }
 
 /* ── Layout ─────────────────────────────────────────── */
 .layout--default {
@@ -166,69 +166,45 @@ p  { font-family: 'Inter Tight', sans-serif; color: rgba(197, 208, 247, 0.85); l
 }
 
 /* ── Utility: chip badges ───────────────────────────── */
-.chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.2rem 0.7rem;
-    border-radius: 100px;
-    font-family: 'Inter Tight', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.025em;
-    border: 1px solid;
+// .chip {
+//     display: inline-flex;
+//     align-items: center;
+//     gap: 0.35rem;
+//     padding: 0.2rem 0.7rem;
+//     border-radius: 100px;
+//     font-family: 'Inter Tight', sans-serif;
+//     font-size: 0.78rem;
+//     font-weight: 500;
+//     letter-spacing: 0.025em;
+//     border: 1px solid;
 
-    &--teal {
-        background:   rgba(0, 196, 180, 0.08);
-        border-color: rgba(0, 196, 180, 0.3);
-        color:        var(--ocean-accent);
-    }
+//     &--teal {
+//         background:   rgba(0, 196, 180, 0.08);
+//         border-color: rgba(0, 196, 180, 0.3);
+//         color:        var(--ocean-accent);
+//     }
 
-    &--navy {
-        background:   rgba(61, 87, 178, 0.1);
-        border-color: rgba(61, 87, 178, 0.3);
-        color:        #a3b3d9;
-    }
-}
+//     &--navy {
+//         background:   rgba(61, 87, 178, 0.1);
+//         border-color: rgba(61, 87, 178, 0.3);
+//         color:        #a3b3d9;
+//     }
+// }
 
 /* ── PrimeVue — overrides minimes qui ne peuvent pas
       être exprimés en design token ─────────────────── */
 
-/* Divider horizontal */
-.p-divider-horizontal::before {
-    border-color: var(--ocean-border) !important;
-}
-
-/* InputNumber: l'input doit prendre toute la largeur du wrapper */
-.p-inputnumber,
-.p-inputnumber-input {
-    width: 100%;
-}
-
-/* FloatLabel: le composant enfant doit prendre toute la largeur */
-.p-floatlabel > .p-component,
-.p-floatlabel > .p-inputwrapper {
-    width: 100%;
-}
-
-/* Fieldset content: colonnes de champs */
-.p-fieldset-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-}
-
 /* Form field helper */
-.form__field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    flex: 1;
-}
+// .form__field {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 0.4rem;
+//     flex: 1;
+// }
 
-.form__row {
-    display: flex;
-    gap: 1.25rem;
-    flex-wrap: wrap;
-}
+// .form__row {
+//     display: flex;
+//     gap: 1.25rem;
+//     flex-wrap: wrap;
+// }
 </style>

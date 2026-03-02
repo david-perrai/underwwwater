@@ -46,8 +46,6 @@ useHead({
 </template>
 
 <style lang="scss">
-@use '@/assets/scss/variables' as *;
-
 .auth-page {
   position: relative;
   min-height: 100vh;
@@ -70,9 +68,9 @@ useHead({
     height: 100%;
     background: linear-gradient(
       to bottom,
-      rgba($color-marine, 0.85) 0%,
-      rgba($color-marine, 0.9) 50%,
-      rgba($color-marine, 0.95) 100%
+      rgba(#050a20, 0.85) 0%,
+      rgba(#050a20, 0.9) 50%,
+      rgba(#050a20, 0.95) 100%
     );
     z-index: 1;
   }
@@ -104,8 +102,8 @@ useHead({
       background: linear-gradient(
         to right,
         transparent,
-        rgba($color-white, 0.2) 20%,
-        rgba($color-white, 0.2) 80%,
+        rgba(#ffffff, 0.2) 20%,
+        rgba(#ffffff, 0.2) 80%,
         transparent
       );
     }
@@ -114,11 +112,10 @@ useHead({
       position: relative;
       display: inline-block;
       padding: 0 1.5rem;
-      background: rgba($color-marine, 0.8);
-      font-family: $font-barlow;
+      background: rgba(#050a20, 0.8);
       font-size: 0.875rem;
       font-weight: 600;
-      color: rgba($color-white, 0.6);
+      color: rgba(#ffffff, 0.6);
       text-transform: uppercase;
       letter-spacing: 1px;
     }
@@ -140,23 +137,22 @@ useHead({
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-family: $font-barlow;
     font-size: 0.875rem;
     font-weight: 600;
-    color: rgba($color-white, 0.8);
+    color: rgba(#ffffff, 0.8);
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: all 0.15s ease;
     padding: 0.75rem 1.25rem;
-    background: rgba($color-marine, 0.5);
+    background: rgba(#050a20, 0.5);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba($color-white, 0.1);
+    border: 1px solid rgba(#ffffff, 0.1);
     border-radius: 4px;
 
     &:hover {
-      color: $color-turquoise;
-      border-color: rgba($color-turquoise, 0.3);
+      color: #00FFEF;
+      border-color: rgba(#00FFEF, 0.3);
       transform: translateX(-4px);
     }
 

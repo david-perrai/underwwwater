@@ -14,7 +14,7 @@ const emit = defineEmits<{
   'update:locked': [value: boolean];
 }>();
 
-/** Methods */
+/** Actions */
 const onUpdateValue = (value: number | null | undefined) => {
   emit('update:modelValue', value || 0);
 };
@@ -40,6 +40,7 @@ const onToggleLock = (value: boolean | undefined) => {
         :value-color="color === 'primary' ? '#00FFEF' : color === 'secondary' ? '#244cff' : '#FFD600'"
         :range-color="color === 'primary' ? 'rgba(0, 255, 239, 0.1)' : color === 'secondary' ? 'rgba(36, 76, 255, 0.1)' : 'rgba(255, 214, 0, 0.1)'"
         :readonly="locked"
+        :class="[locked ? 'p-knob-read-only' : '']"
         @update:model-value="onUpdateValue"
       />
 
@@ -57,14 +58,13 @@ const onToggleLock = (value: boolean | undefined) => {
       />
 
       <div class="gas-control__lock">
-        <ButtonToggleIcon 
+        <PrimeToggleButton 
           :model-value="locked"
-          :onLabel="'Locked'" 
-          :offLabel="'Unlocked'" 
-          :onIcon="'pi pi-lock'" 
-          :offIcon="'pi pi-lock-open'" 
-          :ariaLabel="'Lock or Unlock Gas'" 
-          unstyled
+          onLabel="Locked" 
+          offLabel="Unlocked" 
+          onIcon="pi pi-lock" 
+          offIcon="pi pi-lock-open" 
+          aria-label="Lock or Unlock Gas" 
           @update:model-value="onToggleLock"
         />  
       </div>
@@ -125,9 +125,9 @@ const onToggleLock = (value: boolean | undefined) => {
   }
 
   &__label {
-    font-family: $font-inter;
+    font-family: 'Inter Tight', sans-serif;
     font-size: 1rem;
-    color: $color-white;
+    color: #ffffff;
   }
 
   &__inner {
@@ -159,7 +159,7 @@ const onToggleLock = (value: boolean | undefined) => {
   &__inner {
     width: -webkit-fill-available;
     max-width: 60px;
-    font-family: $font-inter;
+    font-family: 'Inter Tight', sans-serif;
     font-size: 1rem;
     padding: 0.5rem;
     text-align: center;

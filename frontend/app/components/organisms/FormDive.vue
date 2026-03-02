@@ -17,8 +17,10 @@ const { t } = useI18n();
 const navigationStore = useNavigationStore();
 const createDive = useDivesControllerCreate();
 
+/** Refs */
 const gasTanksRef = ref<InstanceType<typeof GasTanks> | null>(null);
 
+/** Composables */
 const { errors, validateForm, clearError } = useFormValidator(
   { date, maxDepth, totalTime },
   {
@@ -85,7 +87,6 @@ const handleSubmitAndClose = async () => {
 const handleSubmitAndContinue = async () => {
   if (validateForm()) {
     await saveDive();
-    // Keep modal open, values stay for quick re-entry
   }
 };
 </script>

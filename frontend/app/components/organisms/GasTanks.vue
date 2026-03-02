@@ -17,7 +17,7 @@ const PRESETS: { label: string; mix: GasMix }[] = [
   { label: 'Nitrox 36', mix: { oxygen: 36, nitrogen: 64, helium: 0 } },
 ];
 
-
+/** Functions */
 function createTank(mix: GasMix): TankData {
   return {
     id: crypto.randomUUID(),
@@ -33,7 +33,7 @@ const tanks = ref<TankData[]>([createTank(PRESETS[0]!.mix)]);
 const activeTankId = ref<string | null>(tanks.value[0]?.id ?? null);
 const menuRefs = ref<Record<string, InstanceType<typeof import('primevue/menu').default> | null>>({});
 
-/** Functions */
+/** Actions */
 const toggleMenu = (event: Event, tankId: string) => {
   menuRefs.value[tankId]?.toggle(event);
 };
@@ -65,7 +65,6 @@ const removeTank = (id: string) => {
   }
 };
 
-/** Expose tanks to parent (FormDive.vue) */
 defineExpose({ tanks });
 </script>
 

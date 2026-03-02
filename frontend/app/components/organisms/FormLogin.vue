@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import { useAuthControllerLogin } from '~/composables/api/generated/auth/auth';
 
 /** Datas */
 const identifier = ref('');
 const password = ref('');
 
 /** Composables */
-const userStore = useUserStore();
 const auth = useAuth();
 
 const { t } = useI18n();
-
 const { errors, validateForm, clearError } = useFormValidator(
   { identifier, password },
   {

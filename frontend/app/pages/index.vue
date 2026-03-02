@@ -26,7 +26,7 @@ useHead({
 .landing-page {
   width: 100%;
   min-height: 100vh;
-  background-color: $color-navy;
+  background-color: #244cff;
 }
 html { scroll-behavior: smooth; }
 </style>
