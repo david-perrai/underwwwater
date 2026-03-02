@@ -6,8 +6,8 @@ const identifier = ref('');
 const password = ref('');
 
 /** Composables */
-const login = useAuthControllerLogin();
 const userStore = useUserStore();
+const auth = useAuth();
 
 const { t } = useI18n();
 
@@ -21,16 +21,10 @@ const { errors, validateForm, clearError } = useFormValidator(
 
 /** Functions */
 const handleSubmit = async () => {
-  if (validateForm()) {
-     const response = await login.mutateAsync({
-     data: {    
-      email: identifier.value,
-      password: password.value,
-     }
-    });
-
-    if(response.status === 200) {
-      userStore.loadFromToken(response.data.accessToken);      
+  if (validateForm()) {     
+    const response = await auth.login(identifier.value, password.value);    
+    if(response.success) { 
+      console.log('test');
       navigateTo('/dashboard');
     }
   }

@@ -7,9 +7,11 @@
       "password": "Mot de passe",
       "submit": "Se connecter",
       "forgotPassword": "Mot de passe oublié ?",
+      "success": "Connexion réussie",
       "errors": {
         "identifierRequired": "L'email ou nom d'utilisateur est requis",
-        "passwordRequired": "Le mot de passe est requis"
+        "passwordRequired": "Le mot de passe est requis",
+        "loginFail": "Email ou mot de passe incorrect"
       }
     },
     "signup": {

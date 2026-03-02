@@ -2,7 +2,7 @@
 import { useDiveStore, CALL_ONCE_HEATMAP, CALL_ONCE_STATS } from '~/stores/dive'
 
 // ─── Meta ─────────────────────────────────────────────────────────────────────
-// definePageMeta({ middleware: 'auth' })
+definePageMeta({ middleware: 'auth' })
 useHead({ title: 'Dashboard — DiveLog' })
 
 // ─── Store ────────────────────────────────────────────────────────────────────
@@ -10,10 +10,6 @@ const diveStore = useDiveStore()
 const year      = new Date().getFullYear()
 const userStore = useUserStore()
 
-//TODO Existe t'il un autre moyen de faire ça plutôt que que sur chaque page ?
-if(!userStore.isLoggedIn) {
-  navigateTo('/login');
-}
 
 /**
  * callOnce : s'exécute une seule fois par session (SSR + hydratation inclus).

@@ -1,19 +1,9 @@
 import { defineStore } from 'pinia';
-import { useCookie } from '#imports';
 
 /**
  * Authentication Store
  */
 export const useAuthStore = defineStore('auth', () => {
-  const accessToken = useCookie<string | null>('access_token', {
-    maxAge: 60 * 60 * 24, // 1 jour par défaut, sera écrasé par le token réel
-    watch: true,
-  });
-
-  const setAccessToken = (token: string | null) => {
-    accessToken.value = token;
-  };
-
   const isTokenExpired = (token: string | null): boolean => {
     if (!token) return true;
     try {
@@ -25,9 +15,40 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
+  const refreshToken = async (): Promise<boolean> => {
+    const config = useRuntimeConfig();
+    const userStore = useUserStore();
+    const baseUrl = config.public.apiBase;
+    const refreshTokenCookie = useCookie("refreshToken");
+
+    // Forward cookies if on server
+    const headers: Record<string, string> = {};
+    if (import.meta.server) {
+      const requestHeaders = useRequestHeaders(['cookie']);
+      if (requestHeaders.cookie) {
+        headers.cookie = requestHeaders.cookie;
+      }
+    }
+
+    try {
+      const response = await fetch(`${baseUrl}/auth/refresh`, {
+        method: "POST",
+        credentials: "include",
+        headers,
+      });
+
+      if(response.ok) {
+        const data = await response.json();
+        userStore.loadFromToken(data.accessToken);
+      }
+      return response.ok;
+    } catch (error) {             
+      return false;
+    }
+  };
+
   return {
-    accessToken,
-    setAccessToken,
     isTokenExpired,
+    refreshToken,
   };
 });
