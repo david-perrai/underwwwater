@@ -2,6 +2,7 @@
 /**
  * TODO: Roadmap des fonctionnalités de la page Compte
  * - [ ] Formulaire de changement de mot de passe
+ * - [ ] Un uploader d'avatar ?
  * - [ ] Formulaire de modification du profil (Username, Email, Avatar)
  * - [ ] Paramètres de confidentialité (Compte privé/public)
  * - [ ] Suppression définitive du compte
