@@ -21,18 +21,47 @@ await callOnce(CALL_ONCE_LIST,               () => diveStore.fetchList())
 const filters = ref({
   global: { value: null, matchMode: 'contains' },
 })
+
+/**
+ * TODO: Roadmap des fonctionnalités de la page Plongées
+ * - [ ] Titre de page centré "Divelog" / "Liste des plongées"
+ * - [x] Calendar heatmap (déjà en place)
+ * - [ ] Card: Top 5 des pays dans lequel l'user a le plus plongé
+ * - [ ] Card: Top 5 des buddys avec lequel l'user a le plus plongé
+ * - [ ] Liste des plongées (DataTable PrimeVue)
+ *     - [ ] Tri
+ *     - [ ] Scroll infini ou pagination
+ *     - [ ] Groupement par pays
+ *     - [ ] Recherche globale
+ */
 </script>
 
 <template>
-  <div class="dives-page">
-    <!-- ── Heatmap ────────────────────────────────────────────────────────── -->
-    <PrimeFieldset :legend="'Heatmap'" :class="['form__fieldset--flex']">
-      <Heatmap
-        tooltip-unit="plongées"
-        @day-click="(v) => filters.global.value = v.date.toISOString().slice(0, 10)"
-      />
-    </PrimeFieldset>
+  <div class="page-dives">
+    <header class="page-dives__header">
+      <!-- TODO: Titre de page centré "Divelog" / "Liste des plongées" -->
 
-   
+      <!-- ── Heatmap ────────────────────────────────────────────────────────── -->
+      <PrimeFieldset :legend="'Heatmap'" :class="['form__fieldset--flex']">
+        <Heatmap
+          tooltip-unit="plongées"
+          @day-click="(v) => filters.global.value = v.date.toISOString().slice(0, 10)"
+        />
+      </PrimeFieldset>
+
+      <div class="page-dives__stats">
+        <!-- TODO: Card Top 5 pays -->
+        <!-- TODO: Card Top 5 buddys -->
+      </div>
+    </header>
+
+    <main class="page-dives__body">
+      <!-- TODO: Liste des plongée (DataTable PrimeVue)
+           Features: tri, scroll infini / pagination, groupement par pays, recherche globale -->
+    </main>
   </div>
 </template>
+
+<style scoped lang="scss">
+.page-dives {}
+</style>
