@@ -27,8 +27,9 @@ const filters = ref({
  * - [ ] Titre de page centré "Divelog" / "Liste des plongées"
  * - [x] Calendar heatmap (déjà en place)
  * - [ ] Card: Top 5 des pays dans lequel l'user a le plus plongé
+ * - [ ] Card: Année la plus active en nombre de plongées en top 3 (ex 2018: 20 plongées, 2016: 15 plongées, 2011: 10 plongées), Mois le plus actif en nombre de plongées (ex Mai 2018)
  * - [ ] Card: Top 5 des buddys avec lequel l'user a le plus plongé
- * - [ ] Liste des plongées (DataTable PrimeVue)
+ * - [ ] Liste des plongées (DataTable PrimeVue) https://primevue.org/datatable/
  *     - [ ] Tri
  *     - [ ] Scroll infini ou pagination
  *     - [ ] Groupement par pays
