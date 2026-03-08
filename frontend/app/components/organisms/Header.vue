@@ -72,7 +72,15 @@ s
     <PrimeMenubar :model="menuItems">
       <!-- Logo -->
       <template #start>
-        <Logo :is-small="true" />
+        <div class="flex items-center gap-4">
+          <PrimeButton 
+            icon="pi pi-bars" 
+            variant="text" 
+            severity="secondary"
+            @click="navigationStore.toggleMenu()" 
+          />
+          <Logo :is-small="true" />
+        </div>
       </template>
       <!-- <template #item="{ item, props, hasSubmenu, root }">
         <a v-ripple class="flex items-center" v-bind="props.action">

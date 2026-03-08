@@ -7,6 +7,7 @@ import { defineStore } from 'pinia';
 export const useNavigationStore = defineStore('navigation', () => {
   /** State */
   const isModalDiveVisible = ref(false);
+  const isMenuOpened = ref(false);
 
   /** Getters */
 
@@ -15,8 +16,14 @@ export const useNavigationStore = defineStore('navigation', () => {
     isModalDiveVisible.value = !isModalDiveVisible.value;
   };
 
+  const toggleMenu = () => {
+    isMenuOpened.value = !isMenuOpened.value;
+  };
+
   return {
     isModalDiveVisible,
+    isMenuOpened,
     toggleModalDive,
+    toggleMenu,
   };
 });

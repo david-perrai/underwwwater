@@ -3,6 +3,7 @@
 
 <template>
   <div class="layout layout--default">
+    <MenuDrawer />
     <Header />
 
     <slot />
