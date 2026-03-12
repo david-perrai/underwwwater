@@ -1,29 +1,33 @@
 <script setup lang="ts">
-import { DIVING_TYPES } from '~/types/DivingType';
+import type { DivingType } from '~/composables/api/generated/model';
 
 /** Datas */
-const modelValue = defineModel<string[]>({ default: () => [] });
+const props = defineProps<{
+  items: DivingType[];
+}>();
+
+const modelValue = defineModel<number[]>({ default: () => [] });
 
 /** Actions */
-const toggleType = (token: string) => {
-  if (modelValue.value.includes(token)) {
-    modelValue.value = modelValue.value.filter(t => t !== token);
+const toggleType = (id: number) => {
+  if (modelValue.value.includes(id)) {
+    modelValue.value = modelValue.value.filter(t => t !== id);
   } else {
-    modelValue.value.push(token);
+    modelValue.value.push(id);
   }
 };
 
-const isSelected = (token: string) => modelValue.value.includes(token);
+const isSelected = (id: number) => modelValue.value.includes(id);
 </script>
 
 <template>
   <div :class="['diving-types']" :data-id="'diving-types'">
     <PrimeChip
-      v-for="type in DIVING_TYPES"
-      :key="type.token"
+      v-for="type in props.items"
+      :key="type.id"
       :label="type.label"
-      :class="['diving-types__chip', { 'is-selected': isSelected(type.token) }]"
-      @click="toggleType(type.token)"
+      :class="['diving-types__chip', { 'is-selected': isSelected(type.id) }]"
+      @click="toggleType(type.id)"
     />
   </div>
 </template>
