@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { Dive } from './dive.entity';
+import { Dive } from '@/domain/dives/entities/dive.entity';
 
 @Entity('diving_types')
 export class DivingType {

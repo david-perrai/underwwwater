@@ -46,6 +46,17 @@ const authStore = useAuth();
               to="/globals-stats"
               @click="navigationStore.isMenuOpened = false"
             />
+
+            <PrimeButton 
+              variant="text" 
+              severity="secondary" 
+              class="w-full !justify-start" 
+              icon="pi pi-compass" 
+              label="Dives" 
+              as="router-link" 
+              to="/dives"
+              @click="navigationStore.isMenuOpened = false"
+            />
       
             <PrimeButton 
               variant="text" 

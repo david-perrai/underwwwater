@@ -4,8 +4,8 @@ import { Repository, In } from 'typeorm';
 import { CreateDiveDto } from './dto/create-dive.dto';
 import { UpdateDiveDto } from './dto/update-dive.dto';
 import { Dive } from './entities/dive.entity';
-import { DivingType } from './entities/diving-type.entity';
 import { DivingEnvironment } from './entities/diving-environment.entity';
+import { DivingType } from '@/domain/diving-types/entities/diving-type.entity';
 
 @Injectable()
 export class DivesService {
