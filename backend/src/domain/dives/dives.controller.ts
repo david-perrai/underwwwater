@@ -49,7 +49,7 @@ export class DivesController {
   }
 
   @Get()
-  @Roles(Role.ADMIN)
+  @Roles(Role.USER)
   @ApiOperation({ summary: 'Get all dives' })
   @ApiQuery({
     name: 'userId',

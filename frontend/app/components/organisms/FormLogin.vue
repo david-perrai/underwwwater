@@ -3,17 +3,18 @@
 
 
 /** Datas */
-const identifier = ref('');
+const email = ref('');
 const password = ref('');
+const loginError = ref('');
 
 /** Composables */
 const auth = useAuth();
 
 const { t } = useI18n();
 const { errors, validateForm, clearError } = useFormValidator(
-  { identifier, password },
+  { email, password },
   {
-    identifier: [required(t('validation.identifierRequired'))],
+    email: [required(t('validation.emailRequired'))],
     password: [required(t('validation.passwordRequired'))],
   },
 );
@@ -21,12 +22,18 @@ const { errors, validateForm, clearError } = useFormValidator(
 /** Functions */
 const handleSubmit = async () => {
   if (validateForm()) {     
-    const response = await auth.login(identifier.value, password.value);    
-    if(response.success) { 
-      console.log('test');
+    const response = await auth.login(email.value, password.value);    
+    if(response.success) {
       navigateTo('/dashboard');
+    } else {
+      loginError.value = response.message;
     }
   }
+};
+
+const handleInput = (field: 'email' | 'password') => {
+  clearError(field);
+  loginError.value = '';
 };
 </script>
 
@@ -39,28 +46,35 @@ const handleSubmit = async () => {
     name="login"
     @submit="handleSubmit"
   >
-    <!-- 1. Identifier -->
+    <PrimeMessage 
+      v-if="loginError"
+      severity="error"
+      style="margin-bottom: 1em;"
+    >
+      {{ loginError }}
+    </PrimeMessage>
+    
     <div :class="['form__field']">
       <PrimeFloatLabel>
         <PrimeInputText
           :id="'form-login__field-identifier'"
-          v-model="identifier"
+          v-model="email"
           :type="'text'"
           :fluid="true"
-          :invalid="!!errors.identifier"
-          @update:model-value="clearError('identifier')"
+          :invalid="!!errors.email"
+          @update:model-value="handleInput('email')"
         />
         <label :for="'form-login__field-identifier'">
-          {{ $t('auth.login.emailOrUsername') }}
+          {{ $t('auth.login.email') }}
         </label>
       </PrimeFloatLabel>
       <PrimeMessage 
-        v-if="errors.identifier"
+        v-if="errors.email"
         size="small" 
         severity="error"
         variant="simple"
       >
-        {{ errors.identifier }}
+        {{ errors.email }}
       </PrimeMessage>
     </div>
 
@@ -75,7 +89,7 @@ const handleSubmit = async () => {
           :invalid="!!errors.password"
           :toggle-mask="true"
           :feedback="false"
-          @update:model-value="clearError('password')"
+          @update:model-value="handleInput('password')"
         />
         <label :for="'form-login__field-password'">
           {{ $t('auth.login.password') }}
@@ -91,8 +105,7 @@ const handleSubmit = async () => {
       </PrimeMessage>
     </div>
 
-    <!-- 3. Footer - Forgot Password -->
-    <template #footer>
+    <template>
       <PrimeButton 
         :label="$t('auth.login.forgotPassword')" 
         href="#" 

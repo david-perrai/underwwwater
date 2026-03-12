@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/stores/auth';
+
 
 export const authFetch = async <T>(
   url: string,
@@ -6,16 +6,16 @@ export const authFetch = async <T>(
 ): Promise<T> => {
   const config = useRuntimeConfig();
   const baseUrl = config.public.apiBase;
-  const authStore = useAuthStore();
+  const auth = useAuthToken();
   const accessToken = useCookie('accessToken');
 
   // Ne pas intercepter les appels d'auth pour éviter les boucles infinies
   const isAuthPath = url.includes('/auth/login') || url.includes('/auth/refresh');
   
   if (!isAuthPath && accessToken.value) {
-    if (authStore.isTokenExpired(accessToken.value)) {
+    if (auth.isTokenExpired(accessToken.value)) {
       // Tentative de refresh
-      await authStore.refreshToken();
+      await auth.refreshToken();
     }
   }
 
@@ -44,10 +44,6 @@ export const authFetch = async <T>(
   }
 
   const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || 'Network response was not ok');
-  }
 
   return {
     data,

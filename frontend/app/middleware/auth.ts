@@ -8,12 +8,11 @@
 export default defineNuxtRouteMiddleware(async (to) => {
   const accessToken = useCookie("accessToken");
   const userStore = useUserStore();
-  const authStore = useAuthStore();
+  const auth = useAuthToken();
   const toRedirectPath = ['/login'];
 
 
-  // 1. If we have a valid (non-expired) token
-  if (accessToken.value && !authStore.isTokenExpired(accessToken.value)) {
+  if (accessToken.value && !auth.isTokenExpired(accessToken.value)) {
     if (!userStore.isLoggedIn) {
       userStore.loadFromToken(accessToken.value);
       if(toRedirectPath.includes(to.path)) {        
@@ -23,10 +22,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return;
   }
 
-  // 2. If token is missing or expired, try to refresh
-  const isRefreshSuccess = await authStore.refreshToken();
+  const isRefreshSuccess = await auth.refreshToken();
+  
   if (isRefreshSuccess) return;
+  if(to.path === '/login') return;
 
-  // 3. No valid token and refresh failed → redirect to login
   return navigateTo("/login");
 });

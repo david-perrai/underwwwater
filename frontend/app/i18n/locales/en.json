@@ -3,12 +3,12 @@
     "login": {
       "title": "Sign In",
       "subtitle": "Access your dive logbook",
-      "emailOrUsername": "Email or username",
+      "email": "Email",
       "password": "Password",
       "submit": "Sign In",
       "forgotPassword": "Forgot password?",
       "errors": {
-        "identifierRequired": "Email or username is required",
+        "emailRequired": "Email is required",
         "passwordRequired": "Password is required"
       }
     },

@@ -7,6 +7,7 @@ const props = defineProps<{
 
 /** Stores and Composables */
 const navigationStore = useNavigationStore();
+const authStore = useAuth();
 
 /** Computeds */
 
@@ -31,7 +32,7 @@ const navigationStore = useNavigationStore();
               icon="pi pi-home" 
               label="Home" 
               as="router-link" 
-              to="/"
+              to="/dashboard"
               @click="navigationStore.isMenuOpened = false"
             />
     
@@ -67,6 +68,7 @@ const navigationStore = useNavigationStore();
             class="flex-auto" 
             severity="danger" 
             variant="text" 
+            @click="authStore.logout()"
           />
         </div>
       </div>

@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UsersService } from '@/domain/users/users.service';
+import { FastifyRequest } from 'fastify';
 
 export type Payload = {
   id: number;
@@ -14,7 +15,15 @@ export type Payload = {
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private usersService: UsersService) {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        (request: FastifyRequest) => {
+          return (
+            request?.cookies?.accessToken ??
+            request.headers.authorization?.split(' ')[1] ??
+            null
+          );
+        },
+      ]),
       ignoreExpiration: false,
       secretOrKey: process.env.JWT_SECRET || 'votre_secret_key',
     });

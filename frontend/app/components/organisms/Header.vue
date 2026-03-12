@@ -18,7 +18,6 @@ const menuItems = computed(() => [
 
 /** Stores and Composables */
 const navigationStore = useNavigationStore();
-const authControllerLogin = useAuthControllerLogin();
 
 /** Computeds */
 
@@ -29,39 +28,8 @@ const authControllerLogin = useAuthControllerLogin();
 // }>();
 
 /** Functions */
-const handleClick = async (event: Event) => {
-  console.log(event);
-  // if (!props.disabled && !props.loading) {
-  //   emit("click", event);
-  // }
 
-
-  // exemple de login avec l'api
-  const res = await authControllerLogin.mutateAsync({
-    data: {
-      email: "user@undewwwater.com",
-      password: "password123",
-    },
-  });
-
-
-  const authStore = useAuthStore();
-  if (res.status === 200) {
-    authStore.setAccessToken(res.data.accessToken);
-  }
-
-  //exemple de récupération des données de l'utilisateur via api authentifié
-  const myDives = await usersControllerFindMe();
-  console.log(myDives);
-
-  //exemple de récupération des données statistiques globales via api authentifié
-  const globalStats = await statsControllerGetGlobalStats();
-  console.log(globalStats);
-
-};
-
-const handleAddDive = async () => {
-  await navigateTo('/dives');
+const handleAddDive = async () => {  
   navigationStore.toggleModalDive();
 };
 /** Lifecyle Hooks */
@@ -109,20 +77,10 @@ s
       <template #end>
         <div class="flex items-center gap-2">
           <PrimeButton 
-            :label="t('common.actions.add_dive', 'Add dive')" 
+            :label="t('dive.form.submit')" 
             severity="success" 
             @click="handleAddDive" 
-          />
-          <PrimeButton
-            :severity="'primary'" 
-            variant="plain" 
-            asChild
-            v-slot="slotProps"
-          >
-            <RouterLink to="/login" v-bind="slotProps">
-              {{ t('common.actions.login') }}
-            </RouterLink>
-          </PrimeButton>
+          />          
         </div>
       </template>
     </PrimeMenubar>
