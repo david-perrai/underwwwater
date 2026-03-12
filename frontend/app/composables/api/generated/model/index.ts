@@ -9,6 +9,7 @@
 export * from './averageDepthPerMonth';
 export * from './createDiveDto';
 export * from './createDiveDtoDiverRole';
+export * from './createDivingTypeDto';
 export * from './createUserDto';
 export * from './dive';
 export * from './diveDiverRole';
@@ -34,6 +35,7 @@ export * from './iAuthResponse';
 export * from './loginDto';
 export * from './resetPasswordDto';
 export * from './updateDiveDto';
+export * from './updateDivingTypeDto';
 export * from './updateUserDto';
 export * from './user';
 export * from './userAvatar';

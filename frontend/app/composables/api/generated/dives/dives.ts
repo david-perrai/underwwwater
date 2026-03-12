@@ -34,7 +34,7 @@ import type {
   Dive,
   DivesControllerFindAllParams,
   UpdateDiveDto
-} from '../model';
+} from '.././model';
 
 import { authFetch } from '../../fetch-instance';
 

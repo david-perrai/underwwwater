@@ -35,7 +35,7 @@ import type {
   UpdateUserDto,
   User,
   UsersControllerFindDivesParams
-} from '../model';
+} from '.././model';
 
 import { authFetch } from '../../fetch-instance';
 
