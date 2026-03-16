@@ -10,5 +10,13 @@ export type DivesControllerFindAllParams = {
 /**
  * Filter dives by user ID
  */
-userId?: string;
+userId: string;
+/**
+ * Limit the number of dives returned
+ */
+limit?: number;
+/**
+ * Offset the number of dives returned
+ */
+offset?: number;
 };

@@ -3,7 +3,7 @@ import { useDiveStore, CALL_ONCE_HEATMAP, CALL_ONCE_LIST } from '~/stores/dive'
 
 // ─── Meta ─────────────────────────────────────────────────────────────────────
 useHead({ title: 'Mes plongées — DiveLog' })
-
+definePageMeta({ middleware: 'auth' })
 // ─── Store ────────────────────────────────────────────────────────────────────
 const diveStore = useDiveStore()
 const year      = new Date().getFullYear()
@@ -20,6 +20,50 @@ await callOnce(CALL_ONCE_LIST,               () => diveStore.fetchList())
 // ─── DataTable ────────────────────────────────────────────────────────────────
 const filters = ref({
   global: { value: null, matchMode: 'contains' },
+})
+
+const loadMoreDives = () => {  
+  diveStore.fetchList()
+}
+
+const groupedDives = computed(() => {
+  const groups: Record<string, typeof diveStore.list> = {}
+  
+  for (const dive of diveStore.list) {
+    if (!dive.date) continue
+    const dateObj = new Date(dive.date)
+    // Create a key like "2026-03" for grouping
+    const monthKey = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}`
+    
+    if (!groups[monthKey]) {
+      groups[monthKey] = []
+    }
+    groups[monthKey].push(dive)
+  }
+
+  // Sort groups by month descending (most recent first)
+  const sortedMonths = Object.keys(groups).sort((a, b) => b.localeCompare(a))
+  
+  // Format into text, e.g. "Mars 2026", and sort dives within each month
+  return sortedMonths.map(monthKey => {
+    const parts = monthKey.split('-')
+    const year = parts[0] || ''
+    const month = parts[1] || ''
+    const dateObj = new Date(parseInt(year), parseInt(month) - 1, 1)
+    const monthName = dateObj.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })
+    const capitalizedMonthName = monthName.charAt(0).toUpperCase() + monthName.slice(1)
+
+    const dives = (groups[monthKey] || []).sort((a, b) => {
+      const timeA = a?.date ? new Date(a.date).getTime() : 0;
+      const timeB = b?.date ? new Date(b.date).getTime() : 0;
+      return timeB - timeA;
+    })
+
+    return {
+      title: capitalizedMonthName,
+      dives
+    }
+  })
 })
 
 /**
@@ -46,7 +90,7 @@ const filters = ref({
       <PrimeFieldset :legend="'Heatmap'" :class="['form__fieldset--flex']">
         <Heatmap
           tooltip-unit="plongées"
-          @day-click="(v) => filters.global.value = v.date.toISOString().slice(0, 10)"
+          @day-click="(v: any) => filters.global.value = v.date.toISOString().slice(0, 10)"
         />
       </PrimeFieldset>
 
@@ -59,10 +103,60 @@ const filters = ref({
     <main class="page-dives__body">
       <!-- TODO: Liste des plongée (DataTable PrimeVue)
            Features: tri, scroll infini / pagination, groupement par pays, recherche globale -->
+      <h2 class="page-dives__title text-center my-4 font-semibold text-2xl">My dives list</h2>
+
+      <PrimeDataTable
+        :value="diveStore.list"
+        :scrollable="true"
+        scrollHeight="400px"
+        :virtualScrollerOptions="{ lazy: true, onLazyLoad: loadMoreDives, itemSize: 46 }"
+        :filters="filters"
+        :globalFilterFields="['divingEnvironment.label']"
+      >
+        <template #header>
+          <div class="flex justify-content-end">
+            <PrimeInputText v-model="filters.global.value" placeholder="Global Search" />
+          </div>
+        </template>
+        <PrimeColumn field="divingEnvironment.label" header="Environment" :sortable="true"></PrimeColumn>
+        <PrimeColumn field="date" header="Date" :sortable="true">
+          <template #body="{ data }">
+            {{ data.date ? new Date(data.date).toLocaleDateString() : 'N/A' }}
+          </template>
+        </PrimeColumn>
+        <PrimeColumn field="maxDepth" header="Depth" :sortable="true">
+          <template #body="{ data }">
+            {{ data.maxDepth !== undefined ? `${data.maxDepth} meters` : 'N/A' }}
+          </template>
+        </PrimeColumn>
+        <PrimeColumn field="totalTime" header="Duration" :sortable="true">
+          <template #body="{ data }">
+            {{ data.totalTime !== undefined ? `${data.totalTime} minutes` : 'N/A' }}
+          </template>
+        </PrimeColumn>
+      </PrimeDataTable>
     </main>
   </div>
 </template>
 
 <style scoped lang="scss">
-.page-dives {}
+.dives-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

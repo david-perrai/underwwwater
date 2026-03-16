@@ -12,6 +12,7 @@ export * from './createDiveDtoDiverRole';
 export * from './createDivingTypeDto';
 export * from './createUserDto';
 export * from './dive';
+export * from './diveCountDto';
 export * from './diveDiverRole';
 export * from './divesControllerFindAllParams';
 export * from './divingEnvironment';

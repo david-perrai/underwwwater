@@ -1,8 +1,9 @@
-import type { Dive, DiveCreate, DiveUpdate, DashboardStats, HeatmapValue } from '~/types/dive'
+import type { Dive, CreateDiveDto, UpdateDiveDto } from '~/composables/api/generated/model'
+import type { HeatmapValue } from '~/types/components/HeatmapValue'
 
 // ─── 🔀 Swap mock → vraie API ici quand l'API sera prête ─────────────────────
-// import * as diveApi from '~/api/dive'
-import * as diveApi from '~/mocks/diveApi'
+import * as diveApi from '~/composables/api/dive'
+// import * as diveApi from '~/mocks/diveApi'
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ─── Clés callOnce ────────────────────────────────────────────────────────────
@@ -48,15 +49,23 @@ export const useDiveStore = defineStore('dive', () => {
   const listFetched  = ref(false)
   const listLoading  = ref(false)
   const listError    = ref<string | null>(null)
+  const offset       = ref(0)
+  const limit        = ref(10)
+  const hasMore      = ref(true)
 
   async function fetchList(): Promise<void> {
-    if (listFetched.value) return
+    if (!hasMore.value || listLoading.value) return
 
     listLoading.value = true
     listError.value   = null
 
     try {
-      list.value        = await diveApi.fetchList()
+      const newDives = await diveApi.fetchList(limit.value, offset.value)
+      if (newDives.length < limit.value) {
+        hasMore.value = false
+      }
+      list.value.push(...newDives)
+      offset.value++
       listFetched.value = true
     }
     catch (err: any) {
@@ -68,7 +77,7 @@ export const useDiveStore = defineStore('dive', () => {
   }
 
   // ── Stats ────────────────────────────────────────────────────────────────────
-  const stats         = ref<DashboardStats | null>(null)
+  const stats         = ref<any | null>(null)
   const statsFetched  = ref(false)
   const statsLoading  = ref(false)
   const statsError    = ref<string | null>(null)
@@ -92,13 +101,13 @@ export const useDiveStore = defineStore('dive', () => {
   }
 
   // ── Mutations ────────────────────────────────────────────────────────────────
-  async function addDive(payload: DiveCreate): Promise<Dive> {
+  async function addDive(payload: CreateDiveDto): Promise<Dive> {
     const created = await diveApi.addDive(payload)
     invalidate()
     return created
   }
 
-  async function updateDive(id: string, payload: DiveUpdate): Promise<Dive> {
+  async function updateDive(id: string, payload: UpdateDiveDto): Promise<Dive> {
     const updated = await diveApi.updateDive(id, payload)
     invalidate()
     return updated
@@ -116,6 +125,8 @@ export const useDiveStore = defineStore('dive', () => {
     list.value          = []
     listFetched.value   = false
     listError.value     = null
+    offset.value        = 0
+    hasMore.value       = true
     stats.value         = null
     statsFetched.value  = false
     statsError.value    = null

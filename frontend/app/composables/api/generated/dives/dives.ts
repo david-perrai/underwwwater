@@ -32,6 +32,7 @@ import type {
 import type {
   CreateDiveDto,
   Dive,
+  DiveCountDto,
   DivesControllerFindAllParams,
   UpdateDiveDto
 } from '.././model';
@@ -136,7 +137,7 @@ export const useDivesControllerCreate = <TError = void,
  * @summary Get all dives
  */
 export type divesControllerFindAllResponse200 = {
-  data: Dive[]
+  data: DiveCountDto
   status: 200
 }
 
@@ -147,7 +148,7 @@ export type divesControllerFindAllResponseSuccess = (divesControllerFindAllRespo
 
 export type divesControllerFindAllResponse = (divesControllerFindAllResponseSuccess)
 
-export const getDivesControllerFindAllUrl = (params?: DivesControllerFindAllParams,) => {
+export const getDivesControllerFindAllUrl = (params: DivesControllerFindAllParams,) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
@@ -162,7 +163,7 @@ export const getDivesControllerFindAllUrl = (params?: DivesControllerFindAllPara
   return stringifiedParams.length > 0 ? `/dives?${stringifiedParams}` : `/dives`
 }
 
-export const divesControllerFindAll = async (params?: DivesControllerFindAllParams, options?: RequestInit): Promise<divesControllerFindAllResponse> => {
+export const divesControllerFindAll = async (params: DivesControllerFindAllParams, options?: RequestInit): Promise<divesControllerFindAllResponse> => {
   
   return authFetch<divesControllerFindAllResponse>(getDivesControllerFindAllUrl(params),
   {      
@@ -184,7 +185,7 @@ export const getDivesControllerFindAllQueryKey = (params?: MaybeRef<DivesControl
     }
 
     
-export const getDivesControllerFindAllQueryOptions = <TData = Awaited<ReturnType<typeof divesControllerFindAll>>, TError = unknown>(params?: MaybeRef<DivesControllerFindAllParams>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof authFetch>}
+export const getDivesControllerFindAllQueryOptions = <TData = Awaited<ReturnType<typeof divesControllerFindAll>>, TError = unknown>(params: MaybeRef<DivesControllerFindAllParams>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof authFetch>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -211,7 +212,7 @@ export type DivesControllerFindAllQueryError = unknown
  */
 
 export function useDivesControllerFindAll<TData = Awaited<ReturnType<typeof divesControllerFindAll>>, TError = unknown>(
- params?: MaybeRef<DivesControllerFindAllParams>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof authFetch>}
+ params: MaybeRef<DivesControllerFindAllParams>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof divesControllerFindAll>>, TError, TData>>, request?: SecondParameter<typeof authFetch>}
  , queryClient?: QueryClient 
  ): UseQueryReturnType<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 

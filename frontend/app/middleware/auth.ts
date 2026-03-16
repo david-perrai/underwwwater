@@ -11,7 +11,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const auth = useAuthToken();
   const toRedirectPath = ['/login'];
 
-
   if (accessToken.value && !auth.isTokenExpired(accessToken.value)) {
     if (!userStore.isLoggedIn) {
       userStore.loadFromToken(accessToken.value);

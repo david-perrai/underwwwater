@@ -64,7 +64,7 @@ export class DivesService {
       .leftJoinAndSelect('dive.divingEnvironment', 'divingEnvironment')
       .where('dive.owner.id = :userId', { userId })
       .take(limit)
-      .skip(offset);
+      .skip(offset * limit);
 
     const [dives, count] = await queryBuilder.getManyAndCount();
     return { count, dives };

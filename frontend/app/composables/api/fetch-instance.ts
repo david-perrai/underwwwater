@@ -45,9 +45,14 @@ export const authFetch = async <T>(
 
   const data = await response.json();
 
+  const plainHeaders: Record<string, string> = {};
+  response.headers.forEach((value, key) => {
+    plainHeaders[key] = value;
+  });
+
   return {
     data,
     status: response.status,
-    headers: response.headers,
+    headers: plainHeaders as unknown as Headers,
   } as T;
 };
