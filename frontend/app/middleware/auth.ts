@@ -5,11 +5,12 @@
  * Lit l'accessToken depuis le cookie (accessible en SSR via useCookie).
  * Redirige vers /login si aucune session valide n'est trouvée.
  */
-export default defineNuxtRouteMiddleware(async (to) => {
+export default defineNuxtRouteMiddleware(async (to, from) => {
   const accessToken = useCookie("accessToken");
   const userStore = useUserStore();
   const auth = useAuthToken();
   const toRedirectPath = ['/login'];
+
 
   if (accessToken.value && !auth.isTokenExpired(accessToken.value)) {
     if (!userStore.isLoggedIn) {
@@ -22,9 +23,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   const isRefreshSuccess = await auth.refreshToken();
+
+  if(to.path === '/login' && isRefreshSuccess) return navigateTo('/dashboard'); 
   
-  if (isRefreshSuccess) return;
-  if(to.path === '/login') return;
+   if (isRefreshSuccess) return;
+ 
 
   return navigateTo("/login");
 });

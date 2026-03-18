@@ -8,9 +8,21 @@
 
 export type DivesControllerFindAllParams = {
 /**
- * Filter dives by user ID
+ * Filter by date
  */
-userId: string;
+date?: string;
+/**
+ * Filter by max depth
+ */
+maxDepth?: number;
+/**
+ * Filter by total time (duration)
+ */
+totalTime?: number;
+/**
+ * Filter by diving environment label
+ */
+divingEnvironment?: string;
 /**
  * Limit the number of dives returned
  */
@@ -19,4 +31,8 @@ limit?: number;
  * Offset the number of dives returned
  */
 offset?: number;
+/**
+ * Filter dives by user ID
+ */
+userId: string;
 };

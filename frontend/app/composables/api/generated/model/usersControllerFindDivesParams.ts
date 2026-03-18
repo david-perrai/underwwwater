@@ -7,6 +7,28 @@
  */
 
 export type UsersControllerFindDivesParams = {
-offset?: number;
+/**
+ * Filter by date
+ */
+date?: string;
+/**
+ * Filter by max depth
+ */
+maxDepth?: number;
+/**
+ * Filter by total time (duration)
+ */
+totalTime?: number;
+/**
+ * Filter by diving environment label
+ */
+divingEnvironment?: string;
+/**
+ * Limit the number of dives returned
+ */
 limit?: number;
+/**
+ * Offset the number of dives returned
+ */
+offset?: number;
 };

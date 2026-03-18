@@ -14,12 +14,12 @@ import {
   ApiOperation,
   ApiResponse,
   ApiParam,
-  ApiQuery,
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { DivesService } from './dives.service';
 import { CreateDiveDto } from './dto/create-dive.dto';
 import { UpdateDiveDto } from './dto/update-dive.dto';
+import { FindAllDivesDto } from './dto/find-all-dives.dto';
 import { Dive } from './entities/dive.entity';
 import { AuthenticatedUser } from '@/auth/decorators/authenticated-user.decorator';
 import type { IAuthenticatedUser } from '@/auth/types/authenticated-user';
@@ -52,32 +52,13 @@ export class DivesController {
   @Get()
   @Roles(Role.USER)
   @ApiOperation({ summary: 'Get all dives' })
-  @ApiQuery({
-    name: 'userId',
-    required: true,
-    description: 'Filter dives by user ID',
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-    description: 'Limit the number of dives returned',
-  })
-  @ApiQuery({
-    name: 'offset',
-    required: false,
-    description: 'Offset the number of dives returned',
-  })
   @ApiResponse({
     status: 200,
     description: 'Return all dives.',
     type: DiveCountDto,
   })
-  findAll(
-    @Query('userId') userId: string,
-    @Query('limit') limit?: number,
-    @Query('offset') offset?: number,
-  ) {
-    return this.divesService.findAll(+userId, limit, offset);
+  findAll(@Query() query: FindAllDivesDto) {
+    return this.divesService.findAll(query);
   }
 
   @Get(':id')

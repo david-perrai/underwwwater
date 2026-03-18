@@ -31,7 +31,7 @@ import type {
 
 import type {
   CreateUserDto,
-  Dive,
+  DiveCountDto,
   UpdateUserDto,
   User,
   UsersControllerFindDivesParams
@@ -303,10 +303,10 @@ export function useUsersControllerFindMe<TData = Awaited<ReturnType<typeof users
 
 
 /**
- * @summary Get all dive for connected user
+ * @summary Get all dives for connected user
  */
 export type usersControllerFindDivesResponse200 = {
-  data: Dive[]
+  data: DiveCountDto[]
   status: 200
 }
 
@@ -384,7 +384,7 @@ export type UsersControllerFindDivesQueryError = void
 
 
 /**
- * @summary Get all dive for connected user
+ * @summary Get all dives for connected user
  */
 
 export function useUsersControllerFindDives<TData = Awaited<ReturnType<typeof usersControllerFindDives>>, TError = void>(

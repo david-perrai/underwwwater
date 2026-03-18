@@ -30,12 +30,19 @@ export async function fetchHeatmapYear(year: number): Promise<HeatmapValue[]> {
   return [...map.entries()].map(([date, count]) => ({ date, count }))
 }
 
-export async function fetchList(limit: number = 10, offset: number = 0): Promise<Dive[]> {
+export interface ListFilters {
+  date?: string
+  maxDepth?: number
+  totalTime?: number
+  divingEnvironment?: string
+}
+
+export async function fetchList(limit: number = 10, offset: number = 0, filters: ListFilters = {}): Promise<Dive[]> {
   const userStore = useUserStore()
   const userId = userStore.user?.id?.toString()
   if(!userId) return [];
 
-  const response = await divesControllerFindAll({ userId, limit, offset })
+  const response = await divesControllerFindAll({ userId, limit, offset, ...filters })
  
   return response?.data?.dives || []  
 }

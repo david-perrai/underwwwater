@@ -134,7 +134,7 @@ export class AuthController {
   @ApiResponse({
     status: 200,
     description: 'Successfully logged out',
-  })  
+  })
   @UseGuards(JwtAuthGuard)
   @Post('logout')
   @HttpCode(HttpStatus.OK)

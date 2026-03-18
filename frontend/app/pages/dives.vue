@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { event } from '@primeuix/themes/aura/timeline'
 import { useDiveStore, CALL_ONCE_HEATMAP, CALL_ONCE_LIST } from '~/stores/dive'
 
 // ─── Meta ─────────────────────────────────────────────────────────────────────
 useHead({ title: 'Mes plongées — DiveLog' })
 definePageMeta({ middleware: 'auth' })
+
 // ─── Store ────────────────────────────────────────────────────────────────────
 const diveStore = useDiveStore()
 const year      = new Date().getFullYear()
@@ -17,11 +19,45 @@ await callOnce(CALL_ONCE_HEATMAP(year),      () => diveStore.fetchHeatmapYear(ye
 await callOnce(CALL_ONCE_HEATMAP(year - 1),  () => diveStore.fetchHeatmapYear(year - 1))
 await callOnce(CALL_ONCE_LIST,               () => diveStore.fetchList())
 
-// ─── DataTable ────────────────────────────────────────────────────────────────
-const filters = ref({
-  global: { value: null, matchMode: 'contains' },
-})
+// ─── Filtres colonnes ─────────────────────────────────────────────────────────
+const filterDate        = ref('')
+const filterDepth       = ref<number | null>(null)
+const filterDuration    = ref<number | null>(null)
+const filterEnvironment = ref('')
 
+let debounceTimer: ReturnType<typeof setTimeout> | null = null
+
+function debounce(callback: () => void){
+ if (debounceTimer) clearTimeout(debounceTimer)
+  debounceTimer = setTimeout(callback, 400);
+}
+
+function onFilterChange() {  
+  debounce(() => {
+    diveStore.applyFilters({
+      ...(filterDate.value        ? { date: filterDate.value }                         : {}),
+      ...(filterDepth.value       ? { maxDepth: filterDepth.value }                    : {}),
+      ...(filterDuration.value    ? { totalTime: filterDuration.value }                : {}),
+      ...(filterEnvironment.value ? { divingEnvironment: filterEnvironment.value }     : {}),
+    });
+  })
+}
+
+function onDepthChange(event: any) {
+ debounce(()=>{
+  filterDepth.value = event.value
+  onFilterChange()
+ })
+}
+
+function onDurationChange(event: any) {
+  debounce(()=>{
+    filterDuration.value = event.value
+    onFilterChange()
+  })
+}
+
+// ─── Scroll infini ────────────────────────────────────────────────────────────
 const loadMoreDives = () => {  
   diveStore.fetchList()
 }
@@ -34,7 +70,8 @@ const loadMoreDives = () => {
  * - [ ] Card: Année la plus active en nombre de plongées en top 3 (ex 2018: 20 plongées, 2016: 15 plongées, 2011: 10 plongées), Mois le plus actif en nombre de plongées (ex Mai 2018)
  * - [ ] Card: Top 5 des buddys avec lequel l'user a le plus plongé
  * - [ ] Liste des plongées (DataTable PrimeVue) https://primevue.org/datatable/
- *     - [ ] Tri
+ *     - [x] Filtres backend (date, profondeur, durée, environnement)
+ *     - [x] Tri client (PrimeVue natif)
  *     - [ ] Scroll infini ou pagination
  *     - [ ] Groupement par pays
  *     - [ ] Recherche globale
@@ -50,7 +87,7 @@ const loadMoreDives = () => {
       <PrimeFieldset :legend="'Heatmap'" :class="['form__fieldset--flex']">
         <Heatmap
           tooltip-unit="plongées"
-          @day-click="(v: any) => filters.global.value = v.date.toISOString().slice(0, 10)"
+          @day-click="(v: any) => { filterDate = v.date.toISOString().slice(0, 10); onFilterChange() }"
         />
       </PrimeFieldset>
 
@@ -61,25 +98,56 @@ const loadMoreDives = () => {
     </header>
 
     <main class="page-dives__body">
-      <!-- TODO: Liste des plongée (DataTable PrimeVue)
-           Features: tri, scroll infini / pagination, groupement par pays, recherche globale -->
       <h2 class="page-dives__title text-center my-4 font-semibold text-2xl">My dives list</h2>
 
       <PrimeDataTable
+        :key="diveStore.filterKey"
         :value="diveStore.list"
         :scrollable="true"
-        scrollHeight="400px"
-        :virtualScrollerOptions="{ lazy: true, onLazyLoad: loadMoreDives, itemSize: 46 }"
-        :filters="filters"        
-        :globalFilterFields="['divingEnvironment.label', 'date', 'maxDepth', 'totalTime']"
+        scrollHeight="300px"
+        :virtualScrollerOptions="{ lazy: true, onLazyLoad: loadMoreDives, itemSize: 30 }"
       >
-        <!-- TODO: corriger la recherche pour taper sur les données du backend -->
+        <!-- ── Filtres backend ──────────────────────────────────────────────── -->
         <template #header>
-          <div class="flex justify-content-end">
-            <PrimeInputText v-model="filters.global.value" placeholder="Global Search" />
+          <div :style="{ display: 'flex', gap: '1rem', flexWrap: 'nowrap', alignItems: 'center' }">
+            <PrimeInputText
+              v-model="filterEnvironment"
+              placeholder="Environment"
+              @update:modelValue="onFilterChange"
+            />
+            <PrimeInputText
+              v-model="filterDate"
+              placeholder="Date (YYYY-MM-DD)"
+              @update:modelValue="onFilterChange"
+            />
+            <PrimeInputNumber
+              v-model="filterDepth"
+              placeholder="Max depth (m)"    
+              :minFractionDigits="1"          
+              :min="0"              
+              @input="onDepthChange"
+            />
+            <PrimeInputNumber
+              v-model="filterDuration"
+              placeholder="Duration (min)"
+              :min="0"     
+              @input="onDurationChange"         
+            />
+            <PrimeButton
+              v-if="filterDate || filterDepth || filterDuration || filterEnvironment"
+              icon="pi pi-times"
+              label=""
+              :style="{ width: '8rem',}"
+              severity="secondary"
+              @click="() => {
+                filterDate = ''; filterDepth = null; filterDuration = null; filterEnvironment = '';
+                onFilterChange()                                
+              }"
+            />
           </div>
         </template>
-        <PrimeColumn field="divingEnvironment.label" header="Environment" :sortable="true"></PrimeColumn>
+
+        <PrimeColumn field="divingEnvironment.label" header="Environment" :sortable="true" />
         <PrimeColumn field="date" header="Date" :sortable="true">
           <template #body="{ data }">
             {{ data.date ? new Date(data.date).toLocaleDateString() : 'N/A' }}
@@ -101,23 +169,4 @@ const loadMoreDives = () => {
 </template>
 
 <style scoped lang="scss">
-.dives-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 1.5rem;
-  margin-top: 2rem;
-
-  @media (max-width: 1400px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-  }
-}
 </style>

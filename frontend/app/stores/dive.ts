@@ -53,18 +53,31 @@ export const useDiveStore = defineStore('dive', () => {
   const limit        = ref(10)
   const hasMore      = ref(true)
 
-  async function fetchList(): Promise<void> {
-    if (!hasMore.value || listLoading.value) return
+  // ── Filtres actifs ───────────────────────────────────────────────────────────
+  const activeFilters = ref<diveApi.ListFilters>({})
+  const filterKey     = ref(0)
 
+  async function fetchList(): Promise<void> {    
+        
+    if (!hasMore.value || listLoading.value) return
+    
     listLoading.value = true
     listError.value   = null
 
     try {
-      const newDives = await diveApi.fetchList(limit.value, offset.value)
+      const newDives = await diveApi.fetchList(limit.value, offset.value, activeFilters.value)
+      
       if (newDives.length < limit.value) {
         hasMore.value = false
       }
-      list.value.push(...newDives)
+      
+      
+      if(Object.values(activeFilters.value).length > 0 || offset.value === 0){
+        list.value = [...newDives, ...list.value]
+      }else{
+        list.value.push(...newDives)
+      }
+      
       offset.value++
       listFetched.value = true
     }
@@ -74,6 +87,16 @@ export const useDiveStore = defineStore('dive', () => {
     finally {
       listLoading.value = false
     }
+  }
+
+  /** Applique de nouveaux filtres : réinitialise la liste et laisse le DataTable déclencher le premier fetch via onLazyLoad */
+  function applyFilters(filters: diveApi.ListFilters): void {
+    activeFilters.value = filters
+    list.value          = []
+    offset.value        = 0
+    hasMore.value       = true
+    listFetched.value   = false
+    filterKey.value++   // force le remontage du DataTable → onLazyLoad → fetchList()
   }
 
   // ── Stats ────────────────────────────────────────────────────────────────────
@@ -126,7 +149,6 @@ export const useDiveStore = defineStore('dive', () => {
     listFetched.value   = false
     listError.value     = null
     offset.value        = 0
-    hasMore.value       = true
     stats.value         = null
     statsFetched.value  = false
     statsError.value    = null
@@ -135,9 +157,9 @@ export const useDiveStore = defineStore('dive', () => {
   return {
     heatmapCache, heatmapLoading, heatmapError,
     isYearCached, getHeatmapYear, fetchHeatmapYear,
-    list, listLoading, listFetched, listError, fetchList,
+    list, listLoading, listFetched, listError, activeFilters, filterKey, fetchList, applyFilters,
     stats, statsLoading, statsFetched, statsError, fetchStats,
     addDive, updateDive, deleteDive,
-    invalidate,
+    invalidate, limit, offset, hasMore
   }
 })
