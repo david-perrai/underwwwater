@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { useDivesControllerCreate } from '~/composables/api/generated/dives/dives';
+import { useDiveStore } from '~/stores/dive';
 import { useDivingTypesControllerFindAll } from '~/composables/api/generated/diving-types/diving-types';
 import { required, minValue } from '~/composables/useFormValidator';
 
 import GasTanks from '~/components/organisms/GasTanks.vue';
 import DivingTypes from '~/components/molecules/DivingTypes.vue';
+import { format } from 'date-fns';
 
 /** Datas */
 const date = ref<Date | null>(null);
@@ -15,7 +16,7 @@ const selectedTypeIds = ref<number[]>([]);
 /** Stores and Composables */
 const { t } = useI18n();
 const navigationStore = useNavigationStore();
-const createDive = useDivesControllerCreate();
+const diveStore = useDiveStore();
 const { data: divingTypesData } = useDivingTypesControllerFindAll();
 
 const divingTypes = computed(() => divingTypesData.value?.data || []);
@@ -58,19 +59,22 @@ const saveDive = async () => {
     };
   });
 
-  const response = await createDive.mutateAsync({
-    data: {
-      date: date.value!,
+  try {
+    const response = await diveStore.addDive({
+      date: date.value ? format(date.value, 'yyyy-MM-dd') : '',
       maxDepth: maxDepth.value!,
       totalTime: totalTime.value!,
       gasTanks: formattedTanks,
       divingTypeIds: selectedTypeIds.value,
       divingEnvironmentId: 1,
       diverRole: 'diver' as any,
-    },
-  });
+    });
 
-  return response.status === 201;
+    return !!response;
+  } catch (error) {
+    console.error('Failed to save dive:', error);
+    return false;
+  }
 };
 
 const handleSubmitAndClose = async () => {
@@ -104,9 +108,7 @@ const handleSubmitAndContinue = async () => {
         <PrimeFloatLabel>
           <PrimeDatePicker
             id="date"
-            v-model="date"
-            showTime
-            hour-format="24"
+            v-model="date"            
             :invalid="!!errors.date"
             :style="{ width: '306px' }"
             @update:model-value="clearError('date')"

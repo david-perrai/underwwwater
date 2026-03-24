@@ -36,6 +36,12 @@ export class FindAllDivesBaseDto {
   @Type(() => Number)
   @IsInt()
   offset?: number;
+
+  @ApiPropertyOptional({ description: 'Filter by year' })
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  year?: number;
 }
 
 export class FindAllDivesDto extends FindAllDivesBaseDto {

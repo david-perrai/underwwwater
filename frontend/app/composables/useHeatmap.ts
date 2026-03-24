@@ -28,8 +28,8 @@ export const HEATMAP = {
   DAY_LABEL_WIDTH:    28,
 } as const
 
-const MONTHS = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'] as const
-const DAYS   = ['', 'Lun', '', 'Mer', '', 'Ven', ''] as const
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] as const
+const DAYS   = ['', 'Mon', '', 'Wed', '', 'Fri', ''] as const
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function toKey(d: Date): string {
@@ -61,7 +61,6 @@ export function useHeatmap() {
     isTransitioning.value = true
 
     // Les deux fetches partent en parallèle.
-    // Le guard isYearCached() dans le store évite les requêtes inutiles.
     await Promise.all([
       diveStore.fetchHeatmapYear(year),
       diveStore.fetchHeatmapYear(year - 1),
@@ -190,8 +189,17 @@ export function useHeatmap() {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
     })
 
-    if (cell.count === 0) return `Aucune plongée — ${dateStr}`
-    return `${cell.count} plongée${cell.count > 1 ? 's' : ''} — ${dateStr}`
+    if (cell.count === 0) return `No dive — ${dateStr}`
+    return `${cell.count} dive${cell.count > 1 ? 's' : ''} — ${dateStr}`
+  }
+
+  // ── Interaction ───────────────────────────────────────────────────────────
+  function onDayClick(cell: Cell) {
+    if (cell.level <= 0) return
+    diveStore.applyFilters({
+      ...diveStore.activeFilters,
+      date: toKey(cell.date),
+    })
   }
 
   return {
@@ -221,6 +229,7 @@ export function useHeatmap() {
     cellX,
     cellY,
     formatTooltip,
+    onDayClick,
 
     // Constantes de taille (pour les positions inline et v-bind CSS)
     HEATMAP,

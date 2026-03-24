@@ -60,6 +60,7 @@ export class DivesService {
     const {
       userId,
       date,
+      year,
       maxDepth,
       totalTime,
       divingEnvironment,
@@ -74,7 +75,13 @@ export class DivesService {
       .where('dive."ownerId" = :userId', { userId: +userId });
 
     if (date) {
-      queryBuilder.andWhere('dive.date = :date', { date });
+      queryBuilder.andWhere('CAST(dive.date AS DATE) = CAST(:date AS DATE)', {
+        date,
+      });
+    }
+
+    if (year) {
+      queryBuilder.andWhere('EXTRACT(YEAR FROM dive.date) = :year', { year });
     }
 
     if (maxDepth) {

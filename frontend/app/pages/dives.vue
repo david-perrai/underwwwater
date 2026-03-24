@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { event } from '@primeuix/themes/aura/timeline'
 import { useDiveStore, CALL_ONCE_HEATMAP, CALL_ONCE_LIST } from '~/stores/dive'
 
 // ─── Meta ─────────────────────────────────────────────────────────────────────
@@ -11,56 +10,13 @@ const diveStore = useDiveStore()
 const year      = new Date().getFullYear()
 
 /**
- * Si l'utilisateur vient du dashboard, le heatmap de l'année courante
- * est déjà en cache → fetchHeatmapYear retourne immédiatement.
- * Idem pour callOnce : le callback ne se ré-exécute jamais.
+ * Les données de la heatmap sont récupérées à chaque chargement de la page
+ * pour garantir leur actualité.
  */
-await callOnce(CALL_ONCE_HEATMAP(year),      () => diveStore.fetchHeatmapYear(year))
-await callOnce(CALL_ONCE_HEATMAP(year - 1),  () => diveStore.fetchHeatmapYear(year - 1))
+await diveStore.fetchHeatmapYear(year)
+await diveStore.fetchHeatmapYear(year - 1)
 await callOnce(CALL_ONCE_LIST,               () => diveStore.fetchList())
 
-// ─── Filtres colonnes ─────────────────────────────────────────────────────────
-const filterDate        = ref('')
-const filterDepth       = ref<number | null>(null)
-const filterDuration    = ref<number | null>(null)
-const filterEnvironment = ref('')
-
-let debounceTimer: ReturnType<typeof setTimeout> | null = null
-
-function debounce(callback: () => void){
- if (debounceTimer) clearTimeout(debounceTimer)
-  debounceTimer = setTimeout(callback, 400);
-}
-
-function onFilterChange() {  
-  debounce(() => {
-    diveStore.applyFilters({
-      ...(filterDate.value        ? { date: filterDate.value }                         : {}),
-      ...(filterDepth.value       ? { maxDepth: filterDepth.value }                    : {}),
-      ...(filterDuration.value    ? { totalTime: filterDuration.value }                : {}),
-      ...(filterEnvironment.value ? { divingEnvironment: filterEnvironment.value }     : {}),
-    });
-  })
-}
-
-function onDepthChange(event: any) {
- debounce(()=>{
-  filterDepth.value = event.value
-  onFilterChange()
- })
-}
-
-function onDurationChange(event: any) {
-  debounce(()=>{
-    filterDuration.value = event.value
-    onFilterChange()
-  })
-}
-
-// ─── Scroll infini ────────────────────────────────────────────────────────────
-const loadMoreDives = () => {  
-  diveStore.fetchList()
-}
 
 /**
  * TODO: Roadmap des fonctionnalités de la page Plongées
@@ -84,10 +40,9 @@ const loadMoreDives = () => {
       <!-- TODO: Titre de page centré "Divelog" / "Liste des plongées" -->
 
       <!-- ── Heatmap ────────────────────────────────────────────────────────── -->
-      <PrimeFieldset :legend="'Heatmap'" :class="['form__fieldset--flex']">
+      <PrimeFieldset :legend="'Heatmap'">
         <Heatmap
           tooltip-unit="plongées"
-          @day-click="(v: any) => { filterDate = v.date.toISOString().slice(0, 10); onFilterChange() }"
         />
       </PrimeFieldset>
 
@@ -97,73 +52,8 @@ const loadMoreDives = () => {
       </div>
     </header>
 
-    <main class="page-dives__body">
-      <h2 class="page-dives__title text-center my-4 font-semibold text-2xl">My dives list</h2>
-
-      <PrimeDataTable
-        :key="diveStore.filterKey"
-        :value="diveStore.list"
-        :scrollable="true"
-        scrollHeight="300px"
-        :virtualScrollerOptions="{ lazy: true, onLazyLoad: loadMoreDives, itemSize: 30 }"
-      >
-        <!-- ── Filtres backend ──────────────────────────────────────────────── -->
-        <template #header>
-          <div :style="{ display: 'flex', gap: '1rem', flexWrap: 'nowrap', alignItems: 'center' }">
-            <PrimeInputText
-              v-model="filterEnvironment"
-              placeholder="Environment"
-              @update:modelValue="onFilterChange"
-            />
-            <PrimeInputText
-              v-model="filterDate"
-              placeholder="Date (YYYY-MM-DD)"
-              @update:modelValue="onFilterChange"
-            />
-            <PrimeInputNumber
-              v-model="filterDepth"
-              placeholder="Max depth (m)"    
-              :minFractionDigits="1"          
-              :min="0"              
-              @input="onDepthChange"
-            />
-            <PrimeInputNumber
-              v-model="filterDuration"
-              placeholder="Duration (min)"
-              :min="0"     
-              @input="onDurationChange"         
-            />
-            <PrimeButton
-              v-if="filterDate || filterDepth || filterDuration || filterEnvironment"
-              icon="pi pi-times"
-              label=""
-              :style="{ width: '8rem',}"
-              severity="secondary"
-              @click="() => {
-                filterDate = ''; filterDepth = null; filterDuration = null; filterEnvironment = '';
-                onFilterChange()                                
-              }"
-            />
-          </div>
-        </template>
-
-        <PrimeColumn field="divingEnvironment.label" header="Environment" :sortable="true" />
-        <PrimeColumn field="date" header="Date" :sortable="true">
-          <template #body="{ data }">
-            {{ data.date ? new Date(data.date).toLocaleDateString() : 'N/A' }}
-          </template>
-        </PrimeColumn>
-        <PrimeColumn field="maxDepth" header="Depth" :sortable="true">
-          <template #body="{ data }">
-            {{ data.maxDepth !== undefined ? `${data.maxDepth} meters` : 'N/A' }}
-          </template>
-        </PrimeColumn>
-        <PrimeColumn field="totalTime" header="Duration" :sortable="true">
-          <template #body="{ data }">
-            {{ data.totalTime !== undefined ? `${data.totalTime} minutes` : 'N/A' }}
-          </template>
-        </PrimeColumn>
-      </PrimeDataTable>
+    <main class="page-dives__body">     
+      <TableDive />
     </main>
   </div>
 </template>

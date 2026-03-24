@@ -13,7 +13,7 @@ export async function fetchHeatmapYear(year: number): Promise<HeatmapValue[]> {
   const userStore = useUserStore()
   const userId = userStore.user?.id?.toString()
   if(!userId) return [];
-  const response = await divesControllerFindAll({ userId })  
+  const response = await divesControllerFindAll({ userId, year, limit:999999 })  
   const dives = response?.data?.dives || []
   
   const map = new Map<string, number>()

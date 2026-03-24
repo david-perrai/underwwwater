@@ -49,8 +49,8 @@ export class Dive {
     example: '2024-01-15T10:30:00Z',
     description: 'The date when the dive occurred',
   })
-  @Column({ type: 'timestamp' })
-  date: Date;
+  @Column({ type: 'date' })
+  date: string;
 
   @ApiProperty({
     example: 45,

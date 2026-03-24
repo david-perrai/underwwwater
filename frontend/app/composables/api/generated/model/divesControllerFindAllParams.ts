@@ -32,6 +32,10 @@ limit?: number;
  */
 offset?: number;
 /**
+ * Filter by year
+ */
+year?: number;
+/**
  * Filter dives by user ID
  */
 userId: string;

@@ -25,7 +25,7 @@ export default class DiveSeeder {
       const diveCount = faker.number.int({ min: 3, max: 8 });
       for (let i = 0; i < diveCount; i++) {
         const dive = diveRepository.create({
-          date: faker.date.past(),
+          date: faker.date.past().toISOString(),
           totalTime: faker.number.int({ min: 20, max: 90 }),
           maxDepth: faker.number.float({ min: 2, max: 45, fractionDigits: 1 }),
           divingEnvironment: faker.helpers.arrayElement(environments),

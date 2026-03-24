@@ -7,6 +7,7 @@ const {
   yearTotal,
   weeks, monthLabels, svgWidth, svgHeight, DAYS,
   cellLevel, cellX, cellY, formatTooltip,
+  onDayClick,
   HEATMAP,
 } = useHeatmap()
 </script>
@@ -40,7 +41,7 @@ const {
 
       <span class="heatmap__total">
         <template v-if="!diveStore.heatmapLoading">
-          {{ yearTotal }} plongée{{ yearTotal > 1 ? 's' : '' }} en {{ currentYear }}
+          {{ yearTotal }} dive{{ yearTotal > 1 ? 's' : '' }} in {{ currentYear }}
         </template>
       </span>
     </div>

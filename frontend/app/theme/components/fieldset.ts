@@ -35,8 +35,7 @@ export default {
 		.p-fieldset-legend-label {
 			color: var(--p-teal-400, #00c4b4);
 		}
-		.p-fieldset-content {
-			padding-top: 1rem;
+		.p-fieldset-content {			
 			display: flex;
 			flex-direction: column;
 			gap: 1.25rem;

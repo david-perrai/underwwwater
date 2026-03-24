@@ -31,4 +31,8 @@ limit?: number;
  * Offset the number of dives returned
  */
 offset?: number;
+/**
+ * Filter by year
+ */
+year?: number;
 };

@@ -9,14 +9,13 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const accessToken = useCookie("accessToken");
   const userStore = useUserStore();
   const auth = useAuthToken();
-  const toRedirectPath = ['/login'];
-
+  const toRedirectPath = ["/login"];
 
   if (accessToken.value && !auth.isTokenExpired(accessToken.value)) {
     if (!userStore.isLoggedIn) {
       userStore.loadFromToken(accessToken.value);
-      if(toRedirectPath.includes(to.path)) {        
-        return navigateTo('/dashboard');
+      if (toRedirectPath.includes(to.path)) {
+        return navigateTo("/dashboard");
       }
     }
     return;
@@ -24,10 +23,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
   const isRefreshSuccess = await auth.refreshToken();
 
-  if(to.path === '/login' && isRefreshSuccess) return navigateTo('/dashboard'); 
-  
-   if (isRefreshSuccess) return;
- 
+  if (isRefreshSuccess && to.path === "/login") return navigateTo("/dashboard");
+
+  if (isRefreshSuccess) return;
 
   return navigateTo("/login");
 });

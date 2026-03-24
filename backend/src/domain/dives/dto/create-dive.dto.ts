@@ -9,19 +9,19 @@ import {
   Min,
   IsEnum,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+import {  Type } from 'class-transformer';
 import { GasTankDto } from './gas-tank.dto';
 import { DiverRole } from '../entities/dive.entity';
 
 export class CreateDiveDto {
   @ApiProperty({
-    example: '2024-01-15T10:30:00Z',
+    example: '2024-01-15',
     description: 'The date when the dive occurred',
   })
   @IsNotEmpty()
   @Type(() => Date)
   @IsDate()
-  date: Date;
+  date: string;
 
   @ApiProperty({
     example: 45,

@@ -1,10 +1,8 @@
 import type { Dive, CreateDiveDto, UpdateDiveDto } from '~/composables/api/generated/model'
 import type { HeatmapValue } from '~/types/components/HeatmapValue'
 
-// ─── 🔀 Swap mock → vraie API ici quand l'API sera prête ─────────────────────
 import * as diveApi from '~/composables/api/dive'
-// import * as diveApi from '~/mocks/diveApi'
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 // ─── Clés callOnce ────────────────────────────────────────────────────────────
 export const CALL_ONCE_HEATMAP = (year: number) => `dive:heatmap:${year}`
@@ -14,27 +12,21 @@ export const CALL_ONCE_STATS   = 'dive:stats'
 export const useDiveStore = defineStore('dive', () => {
 
   // ── Heatmap ─────────────────────────────────────────────────────────────────
-  const heatmapCache    = ref<Map<number, HeatmapValue[]>>(new Map())
+  const heatmapData     = ref<Map<number, HeatmapValue[]>>(new Map())
   const heatmapLoading  = ref(false)
   const heatmapError    = ref<string | null>(null)
 
-  function isYearCached(year: number): boolean {
-    return heatmapCache.value.has(year)
-  }
-
   function getHeatmapYear(year: number): HeatmapValue[] {
-    return heatmapCache.value.get(year) ?? []
+    return heatmapData.value.get(year) ?? []
   }
 
   async function fetchHeatmapYear(year: number): Promise<void> {
-    if (isYearCached(year)) return
-
     heatmapLoading.value = true
     heatmapError.value   = null
 
     try {
       const data = await diveApi.fetchHeatmapYear(year)
-      heatmapCache.value = new Map(heatmapCache.value).set(year, data)
+      heatmapData.value = new Map(heatmapData.value).set(year, data)
     }
     catch (err: any) {
       heatmapError.value = err?.data?.message ?? err?.message ?? 'Erreur inconnue'
@@ -90,13 +82,12 @@ export const useDiveStore = defineStore('dive', () => {
   }
 
   /** Applique de nouveaux filtres : réinitialise la liste et laisse le DataTable déclencher le premier fetch via onLazyLoad */
-  function applyFilters(filters: diveApi.ListFilters): void {
+  function applyFilters(filters: diveApi.ListFilters): void {    
     activeFilters.value = filters
     list.value          = []
     offset.value        = 0
     hasMore.value       = true
     listFetched.value   = false
-    filterKey.value++   // force le remontage du DataTable → onLazyLoad → fetchList()
   }
 
   // ── Stats ────────────────────────────────────────────────────────────────────
@@ -127,6 +118,15 @@ export const useDiveStore = defineStore('dive', () => {
   async function addDive(payload: CreateDiveDto): Promise<Dive> {
     const created = await diveApi.addDive(payload)
     invalidate()
+
+    // Repull data to keep UI fresh
+    const year = new Date().getFullYear()
+    await Promise.all([
+      fetchHeatmapYear(year),
+      fetchHeatmapYear(year - 1),
+      fetchList()
+    ])
+    
     return created
   }
 
@@ -143,7 +143,7 @@ export const useDiveStore = defineStore('dive', () => {
 
   // ── Invalidation ─────────────────────────────────────────────────────────────
   function invalidate(): void {
-    heatmapCache.value  = new Map()
+    heatmapData.value   = new Map()
     heatmapError.value  = null
     list.value          = []
     listFetched.value   = false
@@ -155,8 +155,8 @@ export const useDiveStore = defineStore('dive', () => {
   }
 
   return {
-    heatmapCache, heatmapLoading, heatmapError,
-    isYearCached, getHeatmapYear, fetchHeatmapYear,
+    heatmapData, heatmapLoading, heatmapError,
+    getHeatmapYear, fetchHeatmapYear,
     list, listLoading, listFetched, listError, activeFilters, filterKey, fetchList, applyFilters,
     stats, statsLoading, statsFetched, statsError, fetchStats,
     addDive, updateDive, deleteDive,

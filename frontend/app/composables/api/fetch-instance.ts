@@ -12,8 +12,8 @@ export const authFetch = async <T>(
   // Ne pas intercepter les appels d'auth pour éviter les boucles infinies
   const isAuthPath = url.includes('/auth/login') || url.includes('/auth/refresh');
   
-  if (!isAuthPath && accessToken.value) {
-    if (auth.isTokenExpired(accessToken.value)) {
+  if (!isAuthPath ) {
+    if ((accessToken.value && auth.isTokenExpired(accessToken.value)) || !accessToken.value) {
       // Tentative de refresh
       await auth.refreshToken();
     }

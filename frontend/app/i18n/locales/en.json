@@ -53,7 +53,7 @@
     "form": {
       "title": "Add a Dive",
       "subtitle": "Log your underwater adventure",
-      "date": "Date & time",
+      "date": "Date",
       "maxDepth": "Max depth (m)",
       "totalTime": "Duration (min)",
       "submit": "Add dive",

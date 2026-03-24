@@ -38,7 +38,7 @@ import { DivingTypesModule } from './domain/diving-types/diving-types.module';
         synchronize: false,
         migrations: [__dirname + '/migrations/*{.ts,.js}'],
         migrationsRun: true,
-        logging: configService.get('NODE_ENV') === 'development',
+        logging: configService.get('SQL_LOGGING') === 'true',
       }),
       inject: [ConfigService],
     }),
