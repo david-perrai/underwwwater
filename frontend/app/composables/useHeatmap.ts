@@ -158,7 +158,7 @@ export function useHeatmap() {
       if (!firstValid) return
       const m = firstValid.date.getMonth()
       if (m !== lastMonth) {
-        labels.push({ text: MONTHS[m], x: wi * HEATMAP.CELL })
+        labels.push({ text: MONTHS[m]!, x: wi * HEATMAP.CELL })
         lastMonth = m
       }
     })
@@ -185,7 +185,7 @@ export function useHeatmap() {
   function formatTooltip(cell: Cell): string {
     if (cell.level === -1) return ''
 
-    const dateStr = cell.date.toLocaleDateString('fr-FR', {
+    const dateStr = cell.date.toLocaleDateString('en-US', {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
     })
 

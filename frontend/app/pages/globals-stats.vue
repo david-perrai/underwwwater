@@ -14,7 +14,7 @@
 <template>
   <div class="page-globals-stats">
     <header class="page-globals-stats__header">
-      <!-- TODO: Titre de page centré "Statistiques Globales" -->
+      Statistiques Globales
     </header>
 
     <main class="page-globals-stats__body">

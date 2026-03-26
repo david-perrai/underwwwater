@@ -22,7 +22,7 @@ const {
           text
           rounded
           size="small"
-          aria-label="Année précédente"
+          aria-label="Previous year"
           :loading="diveStore.heatmapLoading"
           @click="goToPreviousYear"
         />
@@ -34,7 +34,7 @@ const {
           rounded
           size="small"
           :disabled="isCurrentYear"
-          aria-label="Année suivante"
+          aria-label="Next year"
           @click="goToNextYear"
         />
       </div>

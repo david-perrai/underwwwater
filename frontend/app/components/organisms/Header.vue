@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { useAuthControllerLogin } from '~/composables/api/generated/auth/auth';
-import { statsControllerGetGlobalStats } from '~/composables/api/generated/stats/stats';
-import { usersControllerFindMe } from '~/composables/api/generated/users/users';
-
 
 /** Props */
 
@@ -10,10 +6,7 @@ import { usersControllerFindMe } from '~/composables/api/generated/users/users';
 const { t } = useI18n();
 
 const menuItems = computed(() => [
-  {
-    label: t('common.menu.home'),
-    icon: "pi pi-home",
-  },
+
 ]);
 
 /** Stores and Composables */
@@ -29,7 +22,7 @@ const navigationStore = useNavigationStore();
 
 /** Functions */
 
-const handleAddDive = async () => {  
+const handleAddDive = async () => {
   navigationStore.toggleModalDive();
 };
 /** Lifecyle Hooks */
@@ -41,11 +34,11 @@ s
       <!-- Logo -->
       <template #start>
         <div class="flex items-center gap-4">
-          <PrimeButton 
-            icon="pi pi-bars" 
-            variant="text" 
+          <PrimeButton
+            icon="pi pi-bars"
+            variant="text"
             severity="secondary"
-            @click="navigationStore.toggleMenu()" 
+            @click="navigationStore.toggleMenu()"
           />
           <Logo :is-small="true" />
         </div>
@@ -76,11 +69,11 @@ s
       <!-- Auth -->
       <template #end>
         <div class="flex items-center gap-2">
-          <PrimeButton 
-            :label="t('dive.form.submit')" 
-            severity="success" 
-            @click="handleAddDive" 
-          />          
+          <PrimeButton
+            :label="t('dive.form.submit')"
+            severity="success"
+            @click="handleAddDive"
+          />
         </div>
       </template>
     </PrimeMenubar>

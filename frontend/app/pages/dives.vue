@@ -28,9 +28,9 @@ await callOnce(CALL_ONCE_LIST,               () => diveStore.fetchList())
  * - [ ] Liste des plongées (DataTable PrimeVue) https://primevue.org/datatable/
  *     - [x] Filtres backend (date, profondeur, durée, environnement)
  *     - [x] Tri client (PrimeVue natif)
- *     - [ ] Scroll infini ou pagination
+ *     - [x] Scroll infini ou pagination
  *     - [ ] Groupement par pays
- *     - [ ] Recherche globale
+ *     - [x] Recherche globale
  */
 </script>
 
