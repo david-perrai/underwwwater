@@ -6,4 +6,9 @@
  * OpenAPI spec version: 1.0
  */
 
-export type GlobalStatsTotalUsers = { [key: string]: unknown };
+export interface DiveStatItem {
+  id: number;
+  date: string;
+  totalTime?: number;
+  maxDepth?: number;
+}

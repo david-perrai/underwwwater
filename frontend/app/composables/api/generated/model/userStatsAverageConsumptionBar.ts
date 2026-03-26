@@ -6,4 +6,4 @@
  * OpenAPI spec version: 1.0
  */
 
-export type GlobalStatsTotalUsers = { [key: string]: unknown };
+export type UserStatsAverageConsumptionBar = { [key: string]: unknown };

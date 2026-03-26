@@ -6,11 +6,9 @@
  * OpenAPI spec version: 1.0
  */
 
-export interface DivingEnvironment {
-  /** The diving environment unique identifier */
-  id: number;
+export interface UpdateDivingEnvironnementDto {
   /** Label of the diving environment */
-  label: string;
+  label?: string;
   /** Token/slug of the diving environment */
-  token: string;
+  token?: string;
 }

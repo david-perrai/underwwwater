@@ -1,13 +1,10 @@
 <script setup lang="ts">
-
 /** Props */
 
 /** Datas */
 const { t } = useI18n();
 
-const menuItems = computed(() => [
-
-]);
+const menuItems = computed(() => []);
 
 /** Stores and Composables */
 const navigationStore = useNavigationStore();
@@ -27,21 +24,19 @@ const handleAddDive = async () => {
 };
 /** Lifecyle Hooks */
 </script>
-s
+
 <template>
-  <header :class="['header']" :data-id="'header'">
+  <header :class="['header', 'header-menu']" :data-id="'header'">
     <PrimeMenubar :model="menuItems">
       <!-- Logo -->
       <template #start>
-        <div class="flex items-center gap-4">
-          <PrimeButton
-            icon="pi pi-bars"
-            variant="text"
-            severity="secondary"
-            @click="navigationStore.toggleMenu()"
-          />
-          <Logo :is-small="true" />
-        </div>
+        <PrimeButton
+          icon="pi pi-bars"
+          variant="text"
+          severity="secondary"
+          @click="navigationStore.toggleMenu()"
+        />
+        <Logo :is-small="true" />
       </template>
       <!-- <template #item="{ item, props, hasSubmenu, root }">
         <a v-ripple class="flex items-center" v-bind="props.action">
@@ -79,3 +74,11 @@ s
     </PrimeMenubar>
   </header>
 </template>
+
+<style scoped>
+.header-menu {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+</style>

@@ -1,38 +1,35 @@
 <script setup lang="ts">
-import type { DivingEnvironment } from "~/composables/api/generated/model";
+import type { SelectChipItem } from "~/types/components/SelectChipItem";
 
 /** Datas */
 const props = defineProps<{
-  items: DivingEnvironment[];
+  items: SelectChipItem[];
 }>();
 
-const modelValue = defineModel<number | null>({ default: null });
+const modelValue = defineModel<number | string | null>({ default: null });
 
 /** Actions */
-const selectEnvironment = (id: number) => {
+const selectEnvironment = (id: number | string) => {
   modelValue.value = modelValue.value === id ? null : id;
 };
 
-const isSelected = (id: number) => modelValue.value === id;
+const isSelected = (id: number | string) => modelValue.value === id;
 </script>
 
 <template>
-  <div :class="['diving-environments']" :data-id="'diving-environments'">
+  <div :class="['select-chip']" :data-id="'select-chip'">
     <PrimeChip
       v-for="env in items"
-      :key="env.token"
+      :key="env.id"
       :label="env.label"
-      :class="[
-        'diving-environments__chip',
-        { 'is-selected': isSelected(env.id) },
-      ]"
+      :class="['select-chip__chip', { 'is-selected': isSelected(env.id) }]"
       @click="selectEnvironment(env.id)"
     />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.diving-environments {
+.select-chip {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;

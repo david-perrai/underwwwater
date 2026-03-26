@@ -6,11 +6,9 @@
  * OpenAPI spec version: 1.0
  */
 
-export interface DivingType {
-  /** The diving type unique identifier */
-  id: number;
-  /** Label of the diving type */
+export interface CreateDivingEnvironnementDto {
+  /** Label of the diving environment */
   label: string;
-  /** Token/slug of the diving type */
+  /** Token/slug of the diving environment */
   token: string;
 }

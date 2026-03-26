@@ -160,7 +160,7 @@ const typesChartData = computed(() => {
       </section>
 
       <section class="page-dashboard__consumption">
-        <h2>Consommation</h2>
+        <h2>{{ $t('pages.dashboard.consumption.title') }}</h2>
         <div class="page-dashboard__grid">
           <Card>
             <template #title><span>{{ $t('pages.dashboard.consumption.stats') }}</span></template>

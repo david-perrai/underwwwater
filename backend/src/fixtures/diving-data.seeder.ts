@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { DivingEnvironment } from '@/domain/dives/entities/diving-environment.entity';
+import { DivingEnvironment } from '@/domain/diving-environnements/entities/diving-environment.entity';
 import { DivingType } from '@/domain/diving-types/entities/diving-type.entity';
 
 export default class DivingDataSeeder {
