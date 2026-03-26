@@ -110,7 +110,7 @@ body {
 
 /* ── Typography applicative (hors PrimeVue) ─────────── */
 // h1, h2, h3, h4 {
-//     font-family: 'Playfair Display', serif;
+//     font-family: 'Inter Tight', serif;
 //     color: var(--ocean-text);
 //     margin: 0;
 //     line-height: 1.25;

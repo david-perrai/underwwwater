@@ -123,7 +123,7 @@ const severityBorderVar = computed(() => {
   }
 
   &__title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Inter Tight', serif;
     font-size: 42px;
     line-height: 1.15;
     margin: 0 0 0.5rem;

@@ -56,7 +56,7 @@ export default {
 			padding-bottom: 1.25rem !important;
 		}
 		.p-dialog-title {
-			font-family: 'Playfair Display', serif;
+			font-family: 'Inter Tight', serif;
 			font-size: 1.4rem;
 			letter-spacing: 0.02em;
 			text-align: center;

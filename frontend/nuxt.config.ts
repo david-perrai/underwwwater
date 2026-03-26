@@ -88,7 +88,7 @@ export default defineNuxtConfig({
   fonts: {
     families: [
       { name: "Barlow-Condensed", provider: "google" },
-      { name: "Playfair Display", provider: "google" },
+      { name: "Inter Tight", provider: "google" },
       { name: "Inter Tight", provider: "google" },
 
     ],

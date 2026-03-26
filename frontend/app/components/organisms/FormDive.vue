@@ -177,6 +177,11 @@ const handleSubmitAndContinue = async () => {
       <DivingTypes v-model="selectedTypeIds" :items="divingTypes" />
     </PrimeFieldset>
 
+    <!-- Dive Environnement Selection -->
+    <PrimeFieldset :legend="'Dive Environnements'" data-id="diving-types-fieldset">
+      <DivingTypes v-model="selectedTypeIds" :items="divingTypes" />
+    </PrimeFieldset>
+
     <!-- Tanks -->
     <GasTanks ref="gasTanksRef" />
 
