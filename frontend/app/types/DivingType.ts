@@ -1,32 +1,12 @@
-export interface DivingType {
-    label: string;
-    token: string;
+import type { CreateDiveDtoDiverRole } from "~/composables/api/generated/model";
+
+export interface DivingRoles {
+  id: CreateDiveDtoDiverRole;
+  label: string;
 }
 
-export interface DivingEnvironment {
-    label: string;
-    token: string;
-}
-
-export const DIVING_TYPES: DivingType[] = [
-    { label: 'Discovery', token: 'discovery' },
-    { label: 'Training', token: 'training' },
-    { label: 'Recreational', token: 'recreational' },
-    { label: 'Technical', token: 'technical' },
-    { label: 'Cave', token: 'cave' },
-    { label: 'Wreck', token: 'wreck' },
-    { label: 'Night', token: 'night' },
-    { label: 'Deep', token: 'deep' },
-    { label: 'Drift', token: 'drift' },
-    { label: 'Ice', token: 'ice' },
-    { label: 'Photography', token: 'photography' },
-];
-
-export const DIVING_ENVIRONMENTS: DivingEnvironment[] = [
-    { label: 'Sea', token: 'sea' },
-    { label: 'Lake', token: 'lake' },
-    { label: 'River', token: 'river' },
-    { label: 'Pool', token: 'pool' },
-    { label: 'Cenote', token: 'cenote' },
-    { label: 'Quarry', token: 'quarry' },
+export const DIVING_ROLES: DivingRoles[] = [
+  { id: "diver", label: "Diver" },
+  { id: "instructor", label: "Instructor" },
+  { id: "monitor", label: "Monitor" },
 ];

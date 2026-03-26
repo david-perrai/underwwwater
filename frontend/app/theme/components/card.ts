@@ -26,7 +26,7 @@ export default {
 			padding: 0;
 		}
 		.p-card .p-card-title {
-			font-family: 'Playfair Display', serif;
+			font-family: 'Inter Tight', serif;
 			font-size: 1.2rem;
 			color: #e8eeff;
 			letter-spacing: 0.01em;

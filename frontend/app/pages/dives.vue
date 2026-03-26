@@ -3,24 +3,20 @@ import { useDiveStore, CALL_ONCE_HEATMAP, CALL_ONCE_LIST } from '~/stores/dive'
 
 // ─── Meta ─────────────────────────────────────────────────────────────────────
 useHead({ title: 'Mes plongées — DiveLog' })
+definePageMeta({ middleware: 'auth' })
 
 // ─── Store ────────────────────────────────────────────────────────────────────
 const diveStore = useDiveStore()
 const year      = new Date().getFullYear()
 
 /**
- * Si l'utilisateur vient du dashboard, le heatmap de l'année courante
- * est déjà en cache → fetchHeatmapYear retourne immédiatement.
- * Idem pour callOnce : le callback ne se ré-exécute jamais.
+ * Les données de la heatmap sont récupérées à chaque chargement de la page
+ * pour garantir leur actualité.
  */
-await callOnce(CALL_ONCE_HEATMAP(year),      () => diveStore.fetchHeatmapYear(year))
-await callOnce(CALL_ONCE_HEATMAP(year - 1),  () => diveStore.fetchHeatmapYear(year - 1))
+await diveStore.fetchHeatmapYear(year)
+await diveStore.fetchHeatmapYear(year - 1)
 await callOnce(CALL_ONCE_LIST,               () => diveStore.fetchList())
 
-// ─── DataTable ────────────────────────────────────────────────────────────────
-const filters = ref({
-  global: { value: null, matchMode: 'contains' },
-})
 
 /**
  * TODO: Roadmap des fonctionnalités de la page Plongées
@@ -30,10 +26,11 @@ const filters = ref({
  * - [ ] Card: Année la plus active en nombre de plongées en top 3 (ex 2018: 20 plongées, 2016: 15 plongées, 2011: 10 plongées), Mois le plus actif en nombre de plongées (ex Mai 2018)
  * - [ ] Card: Top 5 des buddys avec lequel l'user a le plus plongé
  * - [ ] Liste des plongées (DataTable PrimeVue) https://primevue.org/datatable/
- *     - [ ] Tri
- *     - [ ] Scroll infini ou pagination
+ *     - [x] Filtres backend (date, profondeur, durée, environnement)
+ *     - [x] Tri client (PrimeVue natif)
+ *     - [x] Scroll infini ou pagination
  *     - [ ] Groupement par pays
- *     - [ ] Recherche globale
+ *     - [x] Recherche globale
  */
 </script>
 
@@ -43,10 +40,9 @@ const filters = ref({
       <!-- TODO: Titre de page centré "Divelog" / "Liste des plongées" -->
 
       <!-- ── Heatmap ────────────────────────────────────────────────────────── -->
-      <PrimeFieldset :legend="'Heatmap'" :class="['form__fieldset--flex']">
+      <PrimeFieldset :legend="'Heatmap'">
         <Heatmap
           tooltip-unit="plongées"
-          @day-click="(v) => filters.global.value = v.date.toISOString().slice(0, 10)"
         />
       </PrimeFieldset>
 
@@ -56,13 +52,11 @@ const filters = ref({
       </div>
     </header>
 
-    <main class="page-dives__body">
-      <!-- TODO: Liste des plongée (DataTable PrimeVue)
-           Features: tri, scroll infini / pagination, groupement par pays, recherche globale -->
+    <main class="page-dives__body">     
+      <TableDive />
     </main>
   </div>
 </template>
 
 <style scoped lang="scss">
-.page-dives {}
 </style>

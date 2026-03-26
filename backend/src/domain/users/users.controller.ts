@@ -17,17 +17,18 @@ import {
   ApiResponse,
   ApiTags,
   ApiBearerAuth,
-  ApiQuery,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
 import { Public } from '@/auth/decorators/public.decorator';
 import { Dive } from '@/domain/dives/entities/dive.entity';
 import { DivesService } from '@/domain/dives/dives.service';
+import { FindAllDivesBaseDto } from '@/domain/dives/dto/find-all-dives.dto';
 import { AuthenticatedUser } from '@/auth/decorators/authenticated-user.decorator';
 import type { IAuthenticatedUser } from '@/auth/types/authenticated-user';
 
 import { Role } from '@/auth/enums/role.enum';
 import { Roles } from '@/auth/decorators/roles.decorator';
+import { DiveCountDto } from '../dives/dto/dive-count.dto';
 
 @ApiTags('users')
 @ApiBearerAuth()
@@ -66,20 +67,18 @@ export class UsersController {
   }
 
   @Get('/me/dives')
-  @ApiOperation({ summary: 'Get all dive for connected user' })
-  @ApiQuery({ name: 'limit', required: false, type: Number, example: 10 })
-  @ApiQuery({ name: 'offset', required: false, type: Number, example: 0 })
+  @ApiOperation({ summary: 'Get all dives for connected user' })
   @ApiResponse({
     status: 200,
     description: 'Return the user dives.',
-    type: [Dive],
+    type: [DiveCountDto],
   })
   @ApiResponse({ status: 404, description: 'User not found.' })
   findDives(
     @AuthenticatedUser() user: IAuthenticatedUser,
-    @Query() query: { limit: number; offset: number },
+    @Query() query: FindAllDivesBaseDto,
   ) {
-    return this.divesService.findAll(+user.id, query.limit, query.offset);
+    return this.divesService.findAll({ ...query, userId: String(user.id) });
   }
 
   @Get(':id')

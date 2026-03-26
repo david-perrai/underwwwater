@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DivingType } from '~/composables/api/generated/model';
+import type { DivingType } from "~/composables/api/generated/model";
 
 /** Datas */
 const props = defineProps<{
@@ -11,7 +11,7 @@ const modelValue = defineModel<number[]>({ default: () => [] });
 /** Actions */
 const toggleType = (id: number) => {
   if (modelValue.value.includes(id)) {
-    modelValue.value = modelValue.value.filter(t => t !== id);
+    modelValue.value = modelValue.value.filter((t) => t !== id);
   } else {
     modelValue.value.push(id);
   }
@@ -55,7 +55,7 @@ const isSelected = (id: number) => modelValue.value.includes(id);
     &.is-selected {
       background: rgba(0, 255, 239, 0.15) !important;
       border-color: rgba(0, 255, 239, 0.3) !important;
-      color: #00FFEF !important;
+      color: #00ffef !important;
       font-weight: 500;
     }
   }

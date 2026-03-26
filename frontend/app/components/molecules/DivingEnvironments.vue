@@ -1,25 +1,32 @@
 <script setup lang="ts">
-import { DIVING_ENVIRONMENTS } from '~/types/DivingType';
+import type { DivingEnvironment } from "~/composables/api/generated/model";
 
 /** Datas */
-const modelValue = defineModel<string | null>({ default: null });
+const props = defineProps<{
+  items: DivingEnvironment[];
+}>();
+
+const modelValue = defineModel<number | null>({ default: null });
 
 /** Actions */
-const selectEnvironment = (token: string) => {
-  modelValue.value = modelValue.value === token ? null : token;
+const selectEnvironment = (id: number) => {
+  modelValue.value = modelValue.value === id ? null : id;
 };
 
-const isSelected = (token: string) => modelValue.value === token;
+const isSelected = (id: number) => modelValue.value === id;
 </script>
 
 <template>
   <div :class="['diving-environments']" :data-id="'diving-environments'">
     <PrimeChip
-      v-for="env in DIVING_ENVIRONMENTS"
+      v-for="env in items"
       :key="env.token"
       :label="env.label"
-      :class="['diving-environments__chip', { 'is-selected': isSelected(env.token) }]"
-      @click="selectEnvironment(env.token)"
+      :class="[
+        'diving-environments__chip',
+        { 'is-selected': isSelected(env.id) },
+      ]"
+      @click="selectEnvironment(env.id)"
     />
   </div>
 </template>

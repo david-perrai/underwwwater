@@ -14,18 +14,19 @@ import {
   ApiOperation,
   ApiResponse,
   ApiParam,
-  ApiQuery,
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { DivesService } from './dives.service';
 import { CreateDiveDto } from './dto/create-dive.dto';
 import { UpdateDiveDto } from './dto/update-dive.dto';
+import { FindAllDivesDto } from './dto/find-all-dives.dto';
 import { Dive } from './entities/dive.entity';
 import { AuthenticatedUser } from '@/auth/decorators/authenticated-user.decorator';
 import type { IAuthenticatedUser } from '@/auth/types/authenticated-user';
 
 import { Role } from '@/auth/enums/role.enum';
 import { Roles } from '@/auth/decorators/roles.decorator';
+import { DiveCountDto } from './dto/dive-count.dto';
 
 @ApiTags('dives')
 @ApiBearerAuth()
@@ -51,18 +52,13 @@ export class DivesController {
   @Get()
   @Roles(Role.USER)
   @ApiOperation({ summary: 'Get all dives' })
-  @ApiQuery({
-    name: 'userId',
-    required: false,
-    description: 'Filter dives by user ID',
-  })
   @ApiResponse({
     status: 200,
     description: 'Return all dives.',
-    type: [Dive],
+    type: DiveCountDto,
   })
-  findAll(@Query('userId') userId: string) {
-    return this.divesService.findAll(+userId);
+  findAll(@Query() query: FindAllDivesDto) {
+    return this.divesService.findAll(query);
   }
 
   @Get(':id')

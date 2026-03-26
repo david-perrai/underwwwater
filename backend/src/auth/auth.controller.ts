@@ -9,13 +9,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { type FastifyReply } from 'fastify';
-import {
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-  ApiBody,
-  ApiBearerAuth,
-} from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags, ApiBody } from '@nestjs/swagger';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt.guard';
@@ -118,7 +112,7 @@ export class AuthController {
 
     // Mettre à jour l'access token cookie
     response.cookie('accessToken', tokens.accessToken, {
-      httpOnly: true,
+      httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
@@ -134,7 +128,7 @@ export class AuthController {
   @ApiResponse({
     status: 200,
     description: 'Successfully logged out',
-  })  
+  })
   @UseGuards(JwtAuthGuard)
   @Post('logout')
   @HttpCode(HttpStatus.OK)

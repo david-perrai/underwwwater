@@ -12,8 +12,13 @@ import helmet from '@fastify/helmet';
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter(),
+    new FastifyAdapter({
+      logger: {
+        level: 'info',
+      },
+    }),
   );
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

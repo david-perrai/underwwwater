@@ -3,8 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
 import { CreateDiveDto } from './dto/create-dive.dto';
 import { UpdateDiveDto } from './dto/update-dive.dto';
+import { FindAllDivesDto } from './dto/find-all-dives.dto';
 import { Dive } from './entities/dive.entity';
-import { DivingEnvironment } from './entities/diving-environment.entity';
+import { DivingEnvironment } from '@/domain/diving-environnements/entities/diving-environment.entity';
 import { DivingType } from '@/domain/diving-types/entities/diving-type.entity';
 
 @Injectable()
@@ -54,17 +55,53 @@ export class DivesService {
   }
 
   async findAll(
-    userId: number,
-    limit: number = 10,
-    offset: number = 0,
+    findAllDivesDto: FindAllDivesDto,
   ): Promise<{ dives: Dive[]; count: number }> {
+    const {
+      userId,
+      date,
+      year,
+      maxDepth,
+      totalTime,
+      divingEnvironment,
+      limit = 10,
+      offset = 0,
+    } = findAllDivesDto;
+
     const queryBuilder = this.divesRepository
       .createQueryBuilder('dive')
       .leftJoinAndSelect('dive.divingTypes', 'divingTypes')
       .leftJoinAndSelect('dive.divingEnvironment', 'divingEnvironment')
-      .where('dive.owner.id = :userId', { userId })
-      .take(limit)
-      .skip(offset);
+      .where('dive."ownerId" = :userId', { userId: +userId });
+
+    if (date) {
+      queryBuilder.andWhere('CAST(dive.date AS DATE) = CAST(:date AS DATE)', {
+        date,
+      });
+    }
+
+    if (year) {
+      queryBuilder.andWhere('EXTRACT(YEAR FROM dive.date) = :year', { year });
+    }
+
+    if (maxDepth) {
+      queryBuilder.andWhere('dive.maxDepth = :maxDepth', { maxDepth });
+    }
+
+    if (totalTime) {
+      queryBuilder.andWhere('dive.totalTime = :totalTime', { totalTime });
+    }
+
+    if (divingEnvironment) {
+      queryBuilder.andWhere(
+        'divingEnvironment.label ilike :divingEnvironment',
+        {
+          divingEnvironment: `${divingEnvironment}%`,
+        },
+      );
+    }
+
+    queryBuilder.take(limit).skip(offset * limit);
 
     const [dives, count] = await queryBuilder.getManyAndCount();
     return { count, dives };

@@ -7,6 +7,7 @@ const {
   yearTotal,
   weeks, monthLabels, svgWidth, svgHeight, DAYS,
   cellLevel, cellX, cellY, formatTooltip,
+  onDayClick,
   HEATMAP,
 } = useHeatmap()
 </script>
@@ -21,7 +22,7 @@ const {
           text
           rounded
           size="small"
-          aria-label="Année précédente"
+          aria-label="Previous year"
           :loading="diveStore.heatmapLoading"
           @click="goToPreviousYear"
         />
@@ -33,14 +34,14 @@ const {
           rounded
           size="small"
           :disabled="isCurrentYear"
-          aria-label="Année suivante"
+          aria-label="Next year"
           @click="goToNextYear"
         />
       </div>
 
       <span class="heatmap__total">
         <template v-if="!diveStore.heatmapLoading">
-          {{ yearTotal }} plongée{{ yearTotal > 1 ? 's' : '' }} en {{ currentYear }}
+          {{ yearTotal }} dive{{ yearTotal > 1 ? 's' : '' }} in {{ currentYear }}
         </template>
       </span>
     </div>

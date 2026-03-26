@@ -53,7 +53,7 @@
     "form": {
       "title": "Add a Dive",
       "subtitle": "Log your underwater adventure",
-      "date": "Date & time",
+      "date": "Date",
       "maxDepth": "Max depth (m)",
       "totalTime": "Duration (min)",
       "submit": "Add dive",
@@ -109,9 +109,40 @@
     "home": {
       "title": "Underwater - Dive Log & Statistics",
       "description": "Track your dives, analyze your stats, and explore the underwater world with Underwater."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Overview of your dives",
+      "numberOfDives": "Number of dives",
+      "durations": {
+        "title": "Durations",
+        "totalTime": "Total time underwater",
+        "averageTime": "Average time per dive",
+        "shortestDive": "Shortest dive",
+        "top5Longest": "Top 5 longest dives"
+      },
+      "depths": {
+        "title": "Depths",
+        "top5Deepest": "Top 5 deepest dives"
+      },
+      "consumption": {
+        "title": "Consumption",
+        "stats": "Air statistics",
+        "multiTanks": "Multi-tanks dives",
+        "averageConsumption": "Average consumption",
+        "totalConsumption": "Total consumption",
+        "top5MostConsuming": "Top 5 most consuming dives"
+      },
+      "themes": {
+        "title": "Themes & Environments",
+        "roles": "Roles",
+        "environments": "Environments",
+        "types": "Dive types"
+      }
     }
   },
   "common": {
+    "noData": "No data",
     "menu": {
       "home": "Home"
     },

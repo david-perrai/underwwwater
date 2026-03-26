@@ -81,6 +81,28 @@ export class AverageDepthPerMonth {
   averageDepth: number;
 }
 
+export class DiveStatItem {
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  date: string;
+
+  @ApiProperty({ required: false })
+  totalTime?: number;
+
+  @ApiProperty({ required: false })
+  maxDepth?: number;
+}
+
+export class CountStatItem {
+  @ApiProperty()
+  name: string;
+
+  @ApiProperty()
+  count: number;
+}
+
 export class UserStats {
   @ApiProperty()
   numberOfDives: number;
@@ -90,4 +112,28 @@ export class UserStats {
 
   @ApiProperty({ type: [AverageDepthPerMonth] })
   averageDepthPerMonth: AverageDepthPerMonth[];
+
+  @ApiProperty({ required: false })
+  shortestDiveTime: number | null;
+
+  @ApiProperty({ type: [DiveStatItem] })
+  top5LongestDives: DiveStatItem[];
+
+  @ApiProperty({ type: [DiveStatItem] })
+  top5DeepestDives: DiveStatItem[];
+
+  @ApiProperty({ type: [CountStatItem] })
+  divesOverRoles: CountStatItem[];
+
+  @ApiProperty({ type: [CountStatItem] })
+  divesOverEnvironments: CountStatItem[];
+
+  @ApiProperty({ type: [CountStatItem] })
+  divesOverTypes: CountStatItem[];
+
+  @ApiProperty()
+  multiTanksDivesCount: number;
+
+  @ApiProperty({ required: false })
+  averageConsumptionBar: number | null;
 }

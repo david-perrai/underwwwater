@@ -25,7 +25,7 @@ const props = defineProps<{
 
 <style lang="scss" scoped>
 .logo {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Inter Tight', serif;
   font-size: 4rem;
   color: #ffffff;
   line-height: 1.2;

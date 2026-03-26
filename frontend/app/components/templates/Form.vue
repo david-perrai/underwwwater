@@ -19,17 +19,17 @@ const emit = defineEmits<{
 
 /** Functions */
 const onSubmit = () => {
-  emit('submit');
+  emit("submit");
 };
 
 /** Computed */
 const severityBorderVar = computed(() => {
   const map: Record<string, string> = {
-    primary:   'var(--p-primary-500)',
-    secondary: 'var(--p-secondary-500)',
+    primary: "var(--p-primary-500)",
+    secondary: "var(--p-secondary-500)",
   };
   // Only primary and secondary get a colored tint — others use a neutral gray
-  return map[props.severity ?? 'primary'] ?? 'rgba(255, 255, 255, 0.25)';
+  return map[props.severity ?? "primary"] ?? "rgba(255, 255, 255, 0.25)";
 });
 </script>
 
@@ -71,7 +71,7 @@ const severityBorderVar = computed(() => {
   </PrimeCard>
 
   <!-- ── Mode Modal (sans Card wrapper) ────────────────────── -->
-   <PrimeDialog
+  <PrimeDialog
     v-else
     v-model:visible="navigationStore.isModalDiveVisible"
     :header="$t('dive.form.title')"
@@ -110,10 +110,18 @@ const severityBorderVar = computed(() => {
   margin: 0 auto;
 
   /* Severity border tint */
-  border-color: color-mix(in srgb, var(--form-severity-color) 25%, transparent) !important;
+  border-color: color-mix(
+    in srgb,
+    var(--form-severity-color) 25%,
+    transparent
+  ) !important;
 
   &:hover {
-    border-color: color-mix(in srgb, var(--form-severity-color) 50%, transparent) !important;
+    border-color: color-mix(
+      in srgb,
+      var(--form-severity-color) 50%,
+      transparent
+    ) !important;
   }
 
   /* Header */
@@ -123,7 +131,7 @@ const severityBorderVar = computed(() => {
   }
 
   &__title {
-    font-family: 'Playfair Display', serif;
+    font-family: "Inter Tight", serif;
     font-size: 42px;
     line-height: 1.15;
     margin: 0 0 0.5rem;
@@ -131,7 +139,7 @@ const severityBorderVar = computed(() => {
   }
 
   &__subtitle {
-    font-family: 'Inter Tight', sans-serif;
+    font-family: "Inter Tight", sans-serif;
     font-size: 16px;
     line-height: 1.5;
     margin: 0;
@@ -173,17 +181,29 @@ const severityBorderVar = computed(() => {
   /* Override PrimeVue input border colors to match severity */
   &:deep(.p-inputtext),
   &:deep(.p-password-input) {
-    --p-inputtext-hover-border-color: color-mix(in srgb, var(--form-severity-color) 60%, transparent);
+    --p-inputtext-hover-border-color: color-mix(
+      in srgb,
+      var(--form-severity-color) 60%,
+      transparent
+    );
     --p-inputtext-focus-border-color: var(--form-severity-color);
   }
 
   &:deep(.p-datepicker-input) {
-    --p-inputtext-hover-border-color: color-mix(in srgb, var(--form-severity-color) 60%, transparent);
+    --p-inputtext-hover-border-color: color-mix(
+      in srgb,
+      var(--form-severity-color) 60%,
+      transparent
+    );
     --p-inputtext-focus-border-color: var(--form-severity-color);
   }
 
   &:deep(.p-inputnumber-input) {
-    --p-inputtext-hover-border-color: color-mix(in srgb, var(--form-severity-color) 60%, transparent);
+    --p-inputtext-hover-border-color: color-mix(
+      in srgb,
+      var(--form-severity-color) 60%,
+      transparent
+    );
     --p-inputtext-focus-border-color: var(--form-severity-color);
   }
 

@@ -11,11 +11,19 @@ import {
   GlobalStats,
   UserStats,
   AverageDepthPerMonth,
+  CountStatItem,
 } from './entities/stats';
 
 @Injectable()
 export class StatsService {
   constructor(private dataSource: DataSource) {}
+
+  private mapCountStatItem(res: CountStatItem[]): CountStatItem[] {
+    return res.map((item) => ({
+      name: item.name,
+      count: Number(item.count),
+    }));
+  }
 
   private async getLongestDive(): Promise<LongestDive[]> {
     return this.dataSource.query(
@@ -56,23 +64,25 @@ export class StatsService {
   }
 
   private async countDivesByOwnerId(ownerId: number): Promise<number> {
-    return this.dataSource.query(
-      'SELECT COUNT(*) FROM dives WHERE "ownerId" = $1',
+    const res = await this.dataSource.query<{ count: number }[]>(
+      'SELECT COUNT(*) as count FROM dives WHERE "ownerId" = $1',
       [ownerId],
     );
+    return res?.[0]?.count ? Number(res[0].count) : 0;
   }
 
   private async totalImmersedTimeInMinutes(ownerId: number): Promise<number> {
-    return this.dataSource.query(
-      'SELECT SUM("totalTime") FROM dives WHERE "ownerId" = $1',
+    const res = await this.dataSource.query<{ sum: number }[]>(
+      'SELECT SUM("totalTime") as sum FROM dives WHERE "ownerId" = $1',
       [ownerId],
     );
+    return res?.[0]?.sum ? Number(res[0].sum) : 0;
   }
 
   private async getAverageDepthPerMonth(
     userId: number,
   ): Promise<AverageDepthPerMonth[]> {
-    return this.dataSource.query(
+    return this.dataSource.query<AverageDepthPerMonth[]>(
       `SELECT 
         TO_CHAR(date, 'YYYY-MM-01') as month, 
         AVG("maxDepth") as "averageDepth"
@@ -114,18 +124,110 @@ export class StatsService {
     };
   }
 
+  private async getShortestDiveTime(ownerId: number): Promise<number | null> {
+    const res = await this.dataSource.query(
+      'SELECT MIN("totalTime") as min FROM dives WHERE "ownerId" = $1',
+      [ownerId],
+    );
+    return res?.[0]?.min ? Number(res[0].min) : null;
+  }
+
+  private async getTop5LongestDives(ownerId: number): Promise<any[]> {
+    return this.dataSource.query(
+      'SELECT id, date, "totalTime" FROM dives WHERE "ownerId" = $1 ORDER BY "totalTime" DESC LIMIT 5',
+      [ownerId],
+    );
+  }
+
+  private async getTop5DeepestDives(ownerId: number): Promise<any[]> {
+    return this.dataSource.query(
+      'SELECT id, date, "maxDepth" FROM dives WHERE "ownerId" = $1 ORDER BY "maxDepth" DESC LIMIT 5',
+      [ownerId],
+    );
+  }
+
+  private async getDivesOverRoles(ownerId: number): Promise<CountStatItem[]> {
+    const res = await this.dataSource.query<CountStatItem[]>(
+      'SELECT "diverRole" as name, COUNT(*) as count FROM dives WHERE "ownerId" = $1 GROUP BY "diverRole"',
+      [ownerId],
+    );
+    return this.mapCountStatItem(res);
+  }
+
+  private async getDivesOverEnvironments(
+    ownerId: number,
+  ): Promise<CountStatItem[]> {
+    const res = await this.dataSource.query<CountStatItem[]>(
+      'SELECT e.label as name, COUNT(*) as count FROM dives d INNER JOIN diving_environments e ON e.id = d."divingEnvironmentId" WHERE d."ownerId" = $1 GROUP BY e.label',
+      [ownerId],
+    );
+    return this.mapCountStatItem(res);
+  }
+
+  private async getDivesOverTypes(ownerId: number): Promise<CountStatItem[]> {
+    const res = await this.dataSource.query<CountStatItem[]>(
+      'SELECT t.label as name, COUNT(*) as count FROM dives d INNER JOIN diving_types_dives dtd ON dtd."divesId" = d.id INNER JOIN diving_types t ON t.id = dtd."divingTypesId" WHERE d."ownerId" = $1 GROUP BY t.label',
+      [ownerId],
+    );
+
+    return this.mapCountStatItem(res);
+  }
+
+  private async getMultiTanksDivesCount(ownerId: number): Promise<number> {
+    const res = await this.dataSource.query<{ count: number }[]>(
+      'SELECT COUNT(*) as count FROM (SELECT "diveId" FROM gas_tanks gt INNER JOIN dives d ON d.id = gt."diveId" WHERE d."ownerId" = $1 GROUP BY "diveId" HAVING COUNT(gt.id) > 1) mt',
+      [ownerId],
+    );
+    return res?.[0]?.count ? Number(res[0].count) : 0;
+  }
+
+  private async getAverageConsumptionBar(ownerId: number): Promise<number> {
+    const res = await this.dataSource.query(
+      'SELECT AVG("pressureStart" - "pressureEnd") as avg FROM gas_tanks gt INNER JOIN dives d ON d.id = gt."diveId" WHERE d."ownerId" = $1 AND "pressureStart" IS NOT NULL AND "pressureEnd" IS NOT NULL',
+      [ownerId],
+    );
+    return res?.[0]?.avg ? Number(res[0].avg) : 0;
+  }
+
   async getMyStats(userId: number): Promise<UserStats> {
-    const [numberOfDives, totalImmersedTimeInMinutes, averageDepthPerMonth] =
-      await Promise.all([
-        this.countDivesByOwnerId(userId),
-        this.totalImmersedTimeInMinutes(userId),
-        this.getAverageDepthPerMonth(userId),
-      ]);
+    const [
+      numberOfDives,
+      totalImmersedTimeInMinutes,
+      averageDepthPerMonth,
+      shortestDiveTime,
+      top5LongestDives,
+      top5DeepestDives,
+      divesOverRoles,
+      divesOverEnvironments,
+      divesOverTypes,
+      multiTanksDivesCount,
+      averageConsumptionBar,
+    ] = await Promise.all([
+      this.countDivesByOwnerId(userId),
+      this.totalImmersedTimeInMinutes(userId),
+      this.getAverageDepthPerMonth(userId),
+      this.getShortestDiveTime(userId),
+      this.getTop5LongestDives(userId),
+      this.getTop5DeepestDives(userId),
+      this.getDivesOverRoles(userId),
+      this.getDivesOverEnvironments(userId),
+      this.getDivesOverTypes(userId),
+      this.getMultiTanksDivesCount(userId),
+      this.getAverageConsumptionBar(userId),
+    ]);
 
     return {
-      numberOfDives: numberOfDives?.[0]?.count || 0,
-      totalImmersedTimeInMinutes: totalImmersedTimeInMinutes?.[0]?.sum || 0,
+      numberOfDives,
+      totalImmersedTimeInMinutes,
       averageDepthPerMonth,
+      shortestDiveTime,
+      top5LongestDives,
+      top5DeepestDives,
+      divesOverRoles,
+      divesOverEnvironments,
+      divesOverTypes,
+      multiTanksDivesCount,
+      averageConsumptionBar,
     };
   }
 }

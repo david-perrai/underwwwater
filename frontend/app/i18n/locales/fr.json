@@ -49,7 +49,7 @@
     "form": {
       "title": "Ajouter une plongée",
       "subtitle": "Enregistrez votre aventure sous-marine",
-      "date": "Date et heure",
+      "date": "Date",
       "maxDepth": "Profondeur max (m)",
       "totalTime": "Durée (min)",
       "submit": "Ajouter",

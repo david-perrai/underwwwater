@@ -1,9 +1,8 @@
-import type { Dive, DiveCreate, DiveUpdate, DashboardStats, HeatmapValue } from '~/types/dive'
+import type { Dive, CreateDiveDto, UpdateDiveDto } from '~/composables/api/generated/model'
+import type { HeatmapValue } from '~/types/components/HeatmapValue'
 
-// ─── 🔀 Swap mock → vraie API ici quand l'API sera prête ─────────────────────
-// import * as diveApi from '~/api/dive'
-import * as diveApi from '~/mocks/diveApi'
-// ─────────────────────────────────────────────────────────────────────────────
+import * as diveApi from '~/composables/api/dive'
+
 
 // ─── Clés callOnce ────────────────────────────────────────────────────────────
 export const CALL_ONCE_HEATMAP = (year: number) => `dive:heatmap:${year}`
@@ -13,27 +12,21 @@ export const CALL_ONCE_STATS   = 'dive:stats'
 export const useDiveStore = defineStore('dive', () => {
 
   // ── Heatmap ─────────────────────────────────────────────────────────────────
-  const heatmapCache    = ref<Map<number, HeatmapValue[]>>(new Map())
+  const heatmapData     = ref<Map<number, HeatmapValue[]>>(new Map())
   const heatmapLoading  = ref(false)
   const heatmapError    = ref<string | null>(null)
 
-  function isYearCached(year: number): boolean {
-    return heatmapCache.value.has(year)
-  }
-
   function getHeatmapYear(year: number): HeatmapValue[] {
-    return heatmapCache.value.get(year) ?? []
+    return heatmapData.value.get(year) ?? []
   }
 
   async function fetchHeatmapYear(year: number): Promise<void> {
-    if (isYearCached(year)) return
-
     heatmapLoading.value = true
     heatmapError.value   = null
 
     try {
       const data = await diveApi.fetchHeatmapYear(year)
-      heatmapCache.value = new Map(heatmapCache.value).set(year, data)
+      heatmapData.value = new Map(heatmapData.value).set(year, data)
     }
     catch (err: any) {
       heatmapError.value = err?.data?.message ?? err?.message ?? 'Erreur inconnue'
@@ -48,15 +41,36 @@ export const useDiveStore = defineStore('dive', () => {
   const listFetched  = ref(false)
   const listLoading  = ref(false)
   const listError    = ref<string | null>(null)
+  const offset       = ref(0)
+  const limit        = ref(10)
+  const hasMore      = ref(true)
 
-  async function fetchList(): Promise<void> {
-    if (listFetched.value) return
+  // ── Filtres actifs ───────────────────────────────────────────────────────────
+  const activeFilters = ref<diveApi.ListFilters>({})
+  const filterKey     = ref(0)
 
+  async function fetchList(): Promise<void> {    
+        
+    if (!hasMore.value || listLoading.value) return
+    
     listLoading.value = true
     listError.value   = null
 
     try {
-      list.value        = await diveApi.fetchList()
+      const newDives = await diveApi.fetchList(limit.value, offset.value, activeFilters.value)
+      
+      if (newDives.length < limit.value) {
+        hasMore.value = false
+      }
+      
+      
+      if(Object.values(activeFilters.value).length > 0 || offset.value === 0){
+        list.value = [...newDives, ...list.value]
+      }else{
+        list.value.push(...newDives)
+      }
+      
+      offset.value++
       listFetched.value = true
     }
     catch (err: any) {
@@ -67,8 +81,17 @@ export const useDiveStore = defineStore('dive', () => {
     }
   }
 
+  /** Applique de nouveaux filtres : réinitialise la liste et laisse le DataTable déclencher le premier fetch via onLazyLoad */
+  function applyFilters(filters: diveApi.ListFilters): void {    
+    activeFilters.value = filters
+    list.value          = []
+    offset.value        = 0
+    hasMore.value       = true
+    listFetched.value   = false
+  }
+
   // ── Stats ────────────────────────────────────────────────────────────────────
-  const stats         = ref<DashboardStats | null>(null)
+  const stats         = ref<any | null>(null)
   const statsFetched  = ref(false)
   const statsLoading  = ref(false)
   const statsError    = ref<string | null>(null)
@@ -92,13 +115,22 @@ export const useDiveStore = defineStore('dive', () => {
   }
 
   // ── Mutations ────────────────────────────────────────────────────────────────
-  async function addDive(payload: DiveCreate): Promise<Dive> {
+  async function addDive(payload: CreateDiveDto): Promise<Dive> {
     const created = await diveApi.addDive(payload)
     invalidate()
+
+    // Repull data to keep UI fresh
+    const year = new Date().getFullYear()
+    await Promise.all([
+      fetchHeatmapYear(year),
+      fetchHeatmapYear(year - 1),
+      fetchList()
+    ])
+    
     return created
   }
 
-  async function updateDive(id: string, payload: DiveUpdate): Promise<Dive> {
+  async function updateDive(id: string, payload: UpdateDiveDto): Promise<Dive> {
     const updated = await diveApi.updateDive(id, payload)
     invalidate()
     return updated
@@ -111,22 +143,23 @@ export const useDiveStore = defineStore('dive', () => {
 
   // ── Invalidation ─────────────────────────────────────────────────────────────
   function invalidate(): void {
-    heatmapCache.value  = new Map()
+    heatmapData.value   = new Map()
     heatmapError.value  = null
     list.value          = []
     listFetched.value   = false
     listError.value     = null
+    offset.value        = 0
     stats.value         = null
     statsFetched.value  = false
     statsError.value    = null
   }
 
   return {
-    heatmapCache, heatmapLoading, heatmapError,
-    isYearCached, getHeatmapYear, fetchHeatmapYear,
-    list, listLoading, listFetched, listError, fetchList,
+    heatmapData, heatmapLoading, heatmapError,
+    getHeatmapYear, fetchHeatmapYear,
+    list, listLoading, listFetched, listError, activeFilters, filterKey, fetchList, applyFilters,
     stats, statsLoading, statsFetched, statsError, fetchStats,
     addDive, updateDive, deleteDive,
-    invalidate,
+    invalidate, limit, offset, hasMore
   }
 })
