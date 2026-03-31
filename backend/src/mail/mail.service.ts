@@ -14,7 +14,7 @@ export class MailService {
       'APP_URL',
       'http://localhost:3000',
     );
-    const url = `${appUrl}/auth/reset-password?token=${token}`;
+    const url = `${appUrl}/reset-password?token=${token}`;
 
     await this.mailerService.sendMail({
       to: email,

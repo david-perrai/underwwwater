@@ -24,6 +24,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const isRefreshSuccess = await auth.refreshToken();
 
   if (isRefreshSuccess && to.path === "/login") return navigateTo("/dashboard");
+  if (!isRefreshSuccess && to.path === "/login") return;
 
   if (isRefreshSuccess) return;
 

@@ -19,7 +19,6 @@ export default {
 	},
 	css: `
 		.p-inputtext {
-			font-family: 'Inter Tight', sans-serif !important;
 			font-size: 0.9375rem !important;
 			backdrop-filter: blur(10px);
 			transition: border-color 0.2s ease, box-shadow 0.2s ease;

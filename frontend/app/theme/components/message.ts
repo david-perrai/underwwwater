@@ -28,7 +28,6 @@ export default {
 	},
 	css: `
 		.p-message {
-			font-family: 'Inter Tight', sans-serif;
 			font-size: 0.82rem;
 			border-left: 3px solid;
 			padding: 0.35rem 0.6rem;

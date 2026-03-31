@@ -65,7 +65,6 @@
 /* ── Body — deep ocean background ──────────────────── */
 body {
     margin: 0;
-    font-family: 'Inter Tight', sans-serif;
     color: var(--ocean-text);
     background-color: var(--ocean-bg-base);
 

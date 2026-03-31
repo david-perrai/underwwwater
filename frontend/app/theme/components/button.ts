@@ -149,7 +149,6 @@ export default {
 	},
 	css: `
 		.p-button, .p-button-label {
-				font-family: 'Inter Tight', sans-serif !important;
 				font-size: 16px !important;
 		}
 

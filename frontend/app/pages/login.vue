@@ -1,48 +1,38 @@
 <script setup lang="ts">
 definePageMeta({
   layout: "landing",
-  middleware: 'auth'
+  middleware: "auth",
 });
 
 const { t } = useI18n();
 
 useHead({
-  title: t('pages.login.title'),
-  meta: [
-    { name: 'description', content: t('pages.login.description') }
-  ]
+  title: t("pages.login.title"),
+  meta: [{ name: "description", content: t("pages.login.description") }],
 });
 </script>
 
 <template>
   <div class="auth-page">
     <div class="auth-page__overlay"></div>
-    
-    <div class="auth-page__container">
 
+    <div class="auth-page__container">
       <!-- Login Section -->
       <section class="auth-page__section auth-page__section--login">
         <FormLogin />
       </section>
       <!-- Divider -->
       <div class="auth-page__divider">
-        <span class="auth-page__divider-text">{{ $t('pages.login.divider') }}</span>
+        <span class="auth-page__divider-text">{{
+          $t("pages.login.divider")
+        }}</span>
       </div>
 
       <!-- Signup Section -->
       <section class="auth-page__section auth-page__section--signup">
         <FormSignup />
       </section>
-     
     </div>
-
-    <!-- Back to home link -->
-    <!-- <div class="auth-page__back">
-      <NuxtLink to="/" class="auth-page__back-link">
-        <i class="pi pi-arrow-left"></i>
-        {{ $t('pages.login.backToHome') }}
-      </NuxtLink>
-    </div> -->
   </div>
 </template>
 
@@ -51,7 +41,7 @@ useHead({
   position: relative;
   min-height: 100vh;
   width: 100%;
-  background-image: url('/bg2.webp');
+  background-image: url("/bg2.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -94,7 +84,7 @@ useHead({
     margin: 3rem 0;
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 50%;
       left: 0;
@@ -152,8 +142,8 @@ useHead({
     border-radius: 4px;
 
     &:hover {
-      color: #00FFEF;
-      border-color: rgba(#00FFEF, 0.3);
+      color: #00ffef;
+      border-color: rgba(#00ffef, 0.3);
       transform: translateX(-4px);
     }
 

@@ -2,6 +2,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MailService } from './mail.service';
+import { MailListener } from './mail.listener';
 
 @Global()
 @Module({
@@ -24,7 +25,7 @@ import { MailService } from './mail.service';
       inject: [ConfigService],
     }),
   ],
-  providers: [MailService],
+  providers: [MailService, MailListener],
   exports: [MailService],
 })
 export class MailModule {}

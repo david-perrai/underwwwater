@@ -33,6 +33,30 @@
         "passwordMismatch": "Passwords do not match"
       }
     },
+    "resetPassword": {
+      "title": "New Password",
+      "subtitle": "Choose a new secure password",
+      "password": "New password",
+      "confirmPassword": "Confirm password",
+      "submit": "Reset password",
+      "backToLogin": "Back to login",
+      "successTitle": "Password reset!",
+      "successMessage": "Your password has been updated. You can now sign in with your new password.",
+      "invalidToken": "The reset link is invalid or has expired.",
+      "missingToken": "No reset token found in the URL. Please check the link received by email.",
+      "genericError": "An error occurred. Please try again or request a new link."
+    },
+    "forgotPassword": {
+      "trigger": "Lost your password in the abyss? Click here",
+      "modalTitle": "Reset your password",
+      "description": "Enter your email address. If an account is associated, you will receive a link to set a new password.",
+      "email": "Email address",
+      "submit": "Send reset link",
+      "successTitle": "Email sent!",
+      "successMessage": "If your address is on record, you will receive an email shortly. Don't forget to check your spam folder.",
+      "close": "Close",
+      "genericError": "An error occurred. Please try again."
+    },
     "passwordStrength": {
       "title": "Password Strength",
       "requirements": "Requirements:",
@@ -139,6 +163,10 @@
         "environments": "Environments",
         "types": "Dive types"
       }
+    },
+    "resetPassword": {
+      "title": "Reset Password - Underwater",
+      "description": "Create a new password to access your Underwater account."
     }
   },
   "common": {

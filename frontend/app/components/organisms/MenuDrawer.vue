@@ -102,7 +102,6 @@ const authStore = useAuth();
   &__highlight {
     color: #00FFEF;
     font-style: normal;
-    font-family: 'Inter Tight', sans-serif;
   }
 
   &--small {

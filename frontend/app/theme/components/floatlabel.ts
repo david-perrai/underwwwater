@@ -11,7 +11,6 @@ export default {
 	},
 	css: `
 		.p-floatlabel label {
-			font-family: 'Inter Tight', sans-serif;
 			font-size: 0.875rem;
 			font-weight: 400;
 			letter-spacing: 0.01em;

@@ -13,6 +13,9 @@ import * as bcrypt from 'bcrypt';
 import { UsersService } from '@/domain/users/users.service';
 import { User } from '@/domain/users/entities/user.entity';
 import { MailService } from '@/mail/mail.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { ResetPasswordEvent } from './events/reset-password.event';
+import { Events } from '@/configuration/events';
 
 export interface Tokens {
   accessToken: string;
@@ -34,7 +37,7 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private configService: ConfigService,
-    private mailService: MailService,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   async validateUser(email: string, password: string): Promise<UserPayload> {
@@ -155,7 +158,10 @@ export class AuthService {
       resetPasswordExpires: resetTokenExpires,
     });
 
-    await this.mailService.sendPasswordResetEmail(user.email, resetToken);
+    this.eventEmitter.emit(
+      Events.AUTH_RESET_PASSWORD,
+      new ResetPasswordEvent(user.email, resetToken),
+    );
   }
 
   async resetPassword(token: string, newPassword: string): Promise<void> {

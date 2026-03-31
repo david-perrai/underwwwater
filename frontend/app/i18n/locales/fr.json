@@ -35,6 +35,30 @@
         "passwordMismatch": "Les mots de passe ne correspondent pas"
       }
     },
+    "resetPassword": {
+      "title": "Nouveau mot de passe",
+      "subtitle": "Choisissez un nouveau mot de passe sécurisé",
+      "password": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "submit": "Réinitialiser",
+      "backToLogin": "Retour à la connexion",
+      "successTitle": "Mot de passe réinitialisé !",
+      "successMessage": "Votre mot de passe a bien été modifié. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
+      "invalidToken": "Le lien de réinitialisation est invalide ou a expiré.",
+      "missingToken": "Aucun token de réinitialisation trouvé dans l'URL. Vérifiez le lien reçu par email.",
+      "genericError": "Une erreur est survenue. Veuillez réessayer ou demander un nouveau lien."
+    },
+    "forgotPassword": {
+      "trigger": "Mot de passe perdu dans les abysses ? Cliquez ici",
+      "modalTitle": "Réinitialisation du mot de passe",
+      "description": "Saisissez votre adresse email. Si un compte est associé, vous recevrez un lien pour créer un nouveau mot de passe.",
+      "email": "Adresse email",
+      "submit": "Envoyer le lien",
+      "successTitle": "Email envoyé !",
+      "successMessage": "Si votre adresse est connue, vous recevrez un email dans quelques instants. Vérifiez aussi vos spams.",
+      "close": "Fermer",
+      "genericError": "Une erreur est survenue. Veuillez réessayer."
+    },
     "passwordStrength": {
       "weak": "Faible",
       "medium": "Moyen",
@@ -105,6 +129,10 @@
     "home": {
       "title": "Underwater - Journal de plongée et statistiques",
       "description": "Suivez vos plongées, analysez vos statistiques et explorez le monde sous-marin avec Underwater."
+    },
+    "resetPassword": {
+      "title": "Réinitialisation du mot de passe - Underwater",
+      "description": "Créez un nouveau mot de passe pour accéder à votre espace Underwater."
     }
   },
   "common": {

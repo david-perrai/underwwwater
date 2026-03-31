@@ -26,7 +26,6 @@ export default {
 			border-color: rgba(0, 196, 180, 0.3);
 		}
 		.p-fieldset-legend {
-			font-family: 'Inter Tight', sans-serif;
 			font-size: 0.78rem;
 			font-weight: 600;
 			letter-spacing: 0.08em;
