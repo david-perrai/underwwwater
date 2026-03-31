@@ -64,11 +64,15 @@ const handleAddDive = async () => {
       <!-- Auth -->
       <template #end>
         <div class="flex items-center gap-2">
-          <PrimeButton
-            :label="t('dive.form.submit')"
-            severity="success"
-            @click="handleAddDive"
-          />
+          <PrimeButton severity="success" @click="handleAddDive">
+            <img
+              src="/assets/images/scuba-diving-icon.png"
+              alt=""
+              width="20"
+              height="20"
+            />
+            <span>{{ t("dive.form.submit") }}</span>
+          </PrimeButton>
         </div>
       </template>
     </PrimeMenubar>
