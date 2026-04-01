@@ -45,7 +45,6 @@ function onDurationChange(event: any) {
   });
 }
 
-
 watch(
   () => diveStore.activeFilters.date,
   (newDate) => {
@@ -54,7 +53,7 @@ watch(
     } else {
       filterDate.value = null;
     }
-  }
+  },
 );
 
 // ─── Scroll infini ────────────────────────────────────────────────────────────
@@ -68,7 +67,7 @@ const loadMoreDives = () => {
   <PrimeDataTable
     :value="diveStore.list"
     :scrollable="true"
-    scrollHeight="300px"
+    scrollHeight="400px"
     :virtualScrollerOptions="{
       lazy: true,
       onLazyLoad: loadMoreDives,

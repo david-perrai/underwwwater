@@ -113,20 +113,19 @@ const typesChartData = computed(() => {
 
 <template>
   <div class="page-dashboard">
-    <header class="page-dashboard__header">
-      <div class="page-dashboard__header-top">
+    <header>
+      <div>
         <h1>{{ $t("pages.dashboard.title") }}</h1>
       </div>
-      <Card class="page-dashboard__profile">
+      <Card>
         <template #content>
           <div class="page-dashboard__profile-content">
             <Avatar
               :label="user?.username?.charAt(0).toUpperCase()"
               size="xlarge"
               shape="circle"
-              class="page-dashboard__profile-avatar"
             />
-            <div class="page-dashboard__profile-info">
+            <div>
               <h2>{{ user?.username }}</h2>
               <p>
                 {{ $t("pages.dashboard.numberOfDives") }} :
@@ -138,7 +137,7 @@ const typesChartData = computed(() => {
       </Card>
     </header>
 
-    <section class="page-dashboard__durations">
+    <section>
       <h2>{{ $t("pages.dashboard.durations.title") }}</h2>
       <div class="page-dashboard__grid">
         <Card>
@@ -204,7 +203,7 @@ const typesChartData = computed(() => {
     </section>
 
     <div class="page-dashboard__split">
-      <section class="page-dashboard__depths">
+      <section>
         <h2>{{ $t("pages.dashboard.depths.title") }}</h2>
         <div class="page-dashboard__grid">
           <Card>
@@ -234,7 +233,7 @@ const typesChartData = computed(() => {
         </div>
       </section>
 
-      <section class="page-dashboard__consumption">
+      <section>
         <h2>{{ $t("pages.dashboard.consumption.title") }}</h2>
         <div class="page-dashboard__grid">
           <Card>
@@ -270,7 +269,7 @@ const typesChartData = computed(() => {
       </section>
     </div>
 
-    <section class="page-dashboard__themes">
+    <section>
       <h2>{{ $t("pages.dashboard.themes.title") }}</h2>
       <div class="page-dashboard__themes-grid">
         <Card>
@@ -331,7 +330,7 @@ const typesChartData = computed(() => {
 <style scoped lang="scss">
 .page-dashboard {
   max-width: 1400px;
-  padding: 1.5rem;
+  padding: 0 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 2.5rem;

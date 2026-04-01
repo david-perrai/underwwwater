@@ -101,7 +101,7 @@ Devenir la plateforme de référence mondiale pour le suivi des activités de pl
   - Notes personnelles
 - ✅ Dashboard utilisateur avec graphiques :
   - [x] Profondeur moyenne par mois
-  - [] Répartition par type de gaz
+  - [x] Répartition par type de gaz
   - [x] Total plongées / heures immergé
   - [x] Timeline des plongées
 - ✅ Profil public/privé personnalisable

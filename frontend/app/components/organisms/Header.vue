@@ -1,22 +1,19 @@
 <script setup lang="ts">
+import { Avatar } from "primevue";
 /** Props */
 
 /** Datas */
 const { t } = useI18n();
 
-const menuItems = computed(() => []);
-
 /** Stores and Composables */
 const navigationStore = useNavigationStore();
+const userStore = useUserStore();
+const user = computed(() => userStore.user);
 
 /** Computeds */
 
 /** Functions */
 /** Emits */
-// const emit = defineEmits<{
-//   click: [event: Event];
-// }>();
-
 /** Functions */
 
 const handleAddDive = async () => {
@@ -26,61 +23,35 @@ const handleAddDive = async () => {
 </script>
 
 <template>
-  <header :class="['header', 'header-menu']" :data-id="'header'">
-    <PrimeMenubar :model="menuItems">
-      <!-- Logo -->
-      <template #start>
-        <PrimeButton
-          icon="pi pi-bars"
-          variant="text"
-          severity="secondary"
-          @click="navigationStore.toggleMenu()"
-        />
-        <Logo :is-small="true" />
-      </template>
-      <!-- <template #item="{ item, props, hasSubmenu, root }">
-        <a v-ripple class="flex items-center" v-bind="props.action">
-          <span>{{ item.label }}</span>
-          <Badge
-            v-if="item.badge"
-            :class="{ 'ml-auto': !root, 'ml-2': root }"
-            :value="item.badge"
-          />
-          <span
-            v-if="item.shortcut"
-            class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1"
-            >{{ item.shortcut }}</span
-          >
-          <i
-            v-if="hasSubmenu"
-            :class="[
-              'pi pi-angle-down ml-auto',
-              { 'pi-angle-down': root, 'pi-angle-right': !root },
-            ]"
-          ></i>
-        </a>
-      </template> -->
+  <div class="header-menu">
+    <PrimeButton severity="success" @click="handleAddDive" size="small">
+      <img
+        src="/assets/images/scuba-diving-icon.png"
+        alt=""
+        width="20"
+        height="20"
+      />
+      <span>{{ t("dive.form.submit") }}</span>
+    </PrimeButton>
 
-      <!-- Auth -->
-      <template #end>
-        <div class="flex items-center gap-2">
-          <PrimeButton severity="success" @click="handleAddDive">
-            <img
-              src="/assets/images/scuba-diving-icon.png"
-              alt=""
-              width="20"
-              height="20"
-            />
-            <span>{{ t("dive.form.submit") }}</span>
-          </PrimeButton>
-        </div>
-      </template>
-    </PrimeMenubar>
-  </header>
+    <Avatar
+      :label="user?.username?.charAt(0).toUpperCase()"
+      shape="circle"
+      size="normal"
+      style="cursor: pointer"
+      @click="navigateTo('/account')"
+    />
+  </div>
 </template>
 
 <style scoped>
 .header-menu {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  align-items: center;
+  gap: 1em;
+  padding-right: 1.5rem;
   position: sticky;
   top: 0;
   z-index: 50;

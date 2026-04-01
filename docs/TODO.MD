@@ -82,6 +82,14 @@ Auth:
 - [ ] dashboard (la page dashboard des graphs geeks, c'est la version un peu plus fournie et perso de la page anon /profile qui permet de voir un profil d'un plongeur). Cette page est la page principale de l'app une fois qu'on est loggué. En anon, on tombe sur la home (un peu comme fait Github en gros)
 - [ ] settings (la page des paramètres, pour modifier le profil, niveau de plongée ? avatar?, nationalité?, le mot de passe, etc...)
 
+Auth/Profil:
+
+- [ ] proposer un formulaire de saisie d'information complémentaire (pays d'origine ?)
+
+Dive/AddDive :
+
+- [] proposer le pays et la géolocalisation du spot
+
 ## stores
 
 - [ ] userStore, qui stocke les variables globales de l'utilisateur (token, user, etc)
@@ -97,3 +105,9 @@ Auth:
 ## i18n
 
 - [ ] traduction FR / EN des chaînes. Est ce qu'on met en commun avec le backend comme on fait pour les types/interfaces ? de manière à avoir les mêmes messages dans le frontend et le backendn et éviter le travail en double ? Plus rapide à maintenir?
+
+## model de données
+
+- [] Ajouter les relations entre utilisateurs (connexions)
+- [] Ajouter les spots d'une plongée
+- [] ajouter les photos des plongées (?)
