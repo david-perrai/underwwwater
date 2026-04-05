@@ -110,4 +110,8 @@ Dive/AddDive :
 
 - [] Ajouter les relations entre utilisateurs (connexions)
 - [] Ajouter les spots d'une plongée
-- [] ajouter les photos des plongées (?)
+- [] ajouter les photos des plongées ?
+
+## Corrections
+
+- [ ] La création d'un compte avec une adresse existante retourne une erreur 500
