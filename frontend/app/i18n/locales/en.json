@@ -130,6 +130,14 @@
       "divider": "or",
       "backToHome": "Back to home"
     },
+    "account": {
+      "personalInformation": "Personal Informations",
+      "username": "Username",
+      "email": "Email",
+      "nationality": "Nationality",
+      "password": "Password",
+      "save": "save"
+    },
     "home": {
       "title": "Underwater - Dive Log & Statistics",
       "description": "Track your dives, analyze your stats, and explore the underwater world with Underwater."

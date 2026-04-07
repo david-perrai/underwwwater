@@ -1,10 +1,10 @@
-import { defineStore } from 'pinia';
-import type { User } from '~/composables/api/generated/model';
+import { defineStore } from "pinia";
+import type { User } from "~/composables/api/generated/model";
 
 /**
  * User Store
  */
-export const useUserStore = defineStore('user', () => {
+export const useUserStore = defineStore("user", () => {
   const user = ref<User | null>(null);
   const loading = ref(false);
 
@@ -12,7 +12,7 @@ export const useUserStore = defineStore('user', () => {
 
   const loadFromToken = async (token: string) => {
     try {
-      const payload = JSON.parse(atob(token.split('.')[1] || ''));
+      const payload = JSON.parse(atob(token.split(".")[1] || ""));
       user.value = payload;
     } catch {
       user.value = null;
@@ -23,13 +23,16 @@ export const useUserStore = defineStore('user', () => {
     user.value = null;
   };
 
+  const update = (userData: User) => {
+    user.value = userData;
+  };
+
   return {
     user,
+    update,
     loading,
     isLoggedIn,
     loadFromToken,
     clear,
   };
 });
-
-

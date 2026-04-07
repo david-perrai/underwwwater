@@ -20,7 +20,6 @@ import {
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
 import { Public } from '@/auth/decorators/public.decorator';
-import { Dive } from '@/domain/dives/entities/dive.entity';
 import { DivesService } from '@/domain/dives/dives.service';
 import { FindAllDivesBaseDto } from '@/domain/dives/dto/find-all-dives.dto';
 import { AuthenticatedUser } from '@/auth/decorators/authenticated-user.decorator';

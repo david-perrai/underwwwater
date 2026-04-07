@@ -43,7 +43,6 @@ export * from './updateDivingEnvironnementDto';
 export * from './updateDivingTypeDto';
 export * from './updateUserDto';
 export * from './user';
-export * from './userAvatar';
 export * from './usersControllerFindDivesParams';
 export * from './userStats';
 export * from './userStatsAverageConsumptionBar';

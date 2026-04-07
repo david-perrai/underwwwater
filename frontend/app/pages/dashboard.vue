@@ -121,7 +121,12 @@ const typesChartData = computed(() => {
         <template #content>
           <div class="page-dashboard__profile-content">
             <Avatar
-              :label="user?.username?.charAt(0).toUpperCase()"
+              :image="user?.avatar || undefined"
+              :label="
+                !user?.avatar
+                  ? user?.username?.charAt(0).toUpperCase()
+                  : undefined
+              "
               size="xlarge"
               shape="circle"
             />

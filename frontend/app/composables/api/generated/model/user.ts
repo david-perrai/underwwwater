@@ -5,7 +5,6 @@
  * The underwwwater API description
  * OpenAPI spec version: 1.0
  */
-import type { UserAvatar } from './userAvatar';
 
 export interface User {
   /** The user unique identifier */
@@ -17,11 +16,13 @@ export interface User {
   /** The user roles */
   roles: string[];
   /** The user avatar URL */
-  avatar?: UserAvatar;
+  avatar?: string;
   /** The date the user subscribed */
   subscribedAt: string;
   /** The date the user was last updated */
   updatedAt: string;
   /** The date the user account was activated */
   activatedAt: string;
+  /** The nationality of the user */
+  nationality: string;
 }
