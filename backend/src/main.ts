@@ -8,6 +8,11 @@ import {
 } from '@nestjs/platform-fastify';
 import fastifyCookie from '@fastify/cookie';
 import helmet from '@fastify/helmet';
+import fastifyMultipart from '@fastify/multipart';
+import fastifyStatic from '@fastify/static';
+import { join } from 'path';
+
+const MAX_AVATAR_SIZE_BYTES = 5 * 1024 * 1024; // 5 Mo
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -47,6 +52,32 @@ async function bootstrap() {
     ],
   });
 
+  app.enableCors({
+    origin: 'http://localhost:3000',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
+
+  await app.register(fastifyMultipart, {
+    limits: {
+      fileSize: MAX_AVATAR_SIZE_BYTES,
+    },
+  });
+
+  await app.register(fastifyStatic, {
+    root: join(process.cwd(), 'uploads'),
+    prefix: '/uploads/',
+    decorateReply: false,
+  });
+
+  const fastifyInstance = app.getHttpAdapter().getInstance();
+  fastifyInstance.addHook('onSend', async (request, reply, payload) => {
+    if (request.url.startsWith('/uploads/')) {
+      reply.header('Cross-Origin-Resource-Policy', 'cross-origin');
+    }
+    return payload;
+  });
+
   await app.register(fastifyCookie);
   await app.register(helmet, {
     contentSecurityPolicy: {
@@ -58,11 +89,6 @@ async function bootstrap() {
         frameSrc: [`'self'`, 'https://vercel.live'],
       },
     },
-  });
-  app.enableCors({
-    origin: 'http://localhost:3000',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
   });
 
   //ajoute des headers de sécurité

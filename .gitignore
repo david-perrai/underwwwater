@@ -45,3 +45,7 @@ coverage/
 
 # NestJS specific
 *.tsbuildinfo
+
+# User uploads (keep folder structure, not content)
+backend/uploads/*
+!backend/uploads/**/.gitkeep

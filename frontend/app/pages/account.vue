@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { Form } from "@primevue/forms";
 import type { UpdateUserDto } from "~/composables/api/generated/model";
-import { useUsersControllerUpdate } from "~/composables/api/generated/users/users";
+import {
+  useUsersControllerUpdate,
+  useUsersControllerUploadAvatar,
+} from "~/composables/api/generated/users/users";
 import { useUserStore } from "~/stores/user";
 
 definePageMeta({ middleware: "auth" });
@@ -12,6 +15,7 @@ const userStore = useUserStore();
 const user = computed(() => userStore.user);
 const nationalities = useNationalities();
 const { mutateAsync: updateUser } = useUsersControllerUpdate();
+const { mutateAsync: uploadAvatar } = useUsersControllerUploadAvatar();
 
 const username = ref(user.value?.username);
 const email = ref(user.value?.email);
@@ -26,29 +30,36 @@ const { errors, validateForm, clearError } = useFormValidator(
 );
 
 const handleUpdateUser = async (userData: UpdateUserDto) => {
-  if (user.value?.id) {
-    const updateResult = await updateUser({
-      id: user.value.id,
-      data: {
-        ...userData,
-      },
-    });
+  if (!user.value?.id) return;
 
-    if (updateResult.status === 200) {
-      userStore.update(updateResult.data);
-      alert("User updated successfully");
-    } else {
-      alert("User updated failed" + updateResult.data.message);
-    }
+  const updateResult = await updateUser({
+    id: user.value.id,
+    data: {
+      ...userData,
+    },
+  });
+
+  if (updateResult.status === 200) {
+    userStore.update(updateResult.data);
+    alert("User updated successfully");
+  } else {
+    alert("User updated failed" + updateResult.data.message);
   }
 };
 
-const handleAvatarChange = async (avatar: string) => {
+const handleAvatarChange = async (avatar: File) => {
   if (!user.value?.id) return;
-  userStore.update({ ...user.value, avatar });
-  alert(
-    "TODO: Implement storing avatar in backend with real storage and URL bdd storage",
-  );
+  const uploadAvatarResult = await uploadAvatar({
+    id: user.value.id,
+    data: { file: avatar },
+  });
+
+  if (uploadAvatarResult.status === 200) {
+    userStore.update(uploadAvatarResult.data);
+    alert("Avatar updated successfully");
+  } else {
+    alert("Avatar updated failed" + uploadAvatarResult.data.message);
+  }
 };
 
 const handleSubmitAndClose = async () => {
@@ -80,7 +91,7 @@ const handleSubmitAndClose = async () => {
         <Card style="width: 25%; text-align: center">
           <template #content>
             <UploadableAvatar
-              :image-url="user?.avatar"
+              :image-url="getAvatarUrl(user?.avatar)"
               :label="user?.username?.charAt(0).toUpperCase()"
               @on-avatar-change="handleAvatarChange"
             />

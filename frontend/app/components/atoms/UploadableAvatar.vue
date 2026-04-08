@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { Avatar } from "primevue";
 import { ref } from "vue";
 
@@ -15,28 +15,23 @@ const props = defineProps({
 
 const emit = defineEmits(["onAvatarChange"]);
 
-const fileInput = ref(null);
+const fileInput = ref<HTMLInputElement | null>(null);
 
 function triggerUpload() {
-  fileInput.value.click();
+  fileInput.value?.click();
 }
 
-function onFileChange(event) {
-  const file = event.target.files[0];
+function onFileChange(event: Event) {
+  const file = (event.target as HTMLInputElement).files?.[0];
   if (!file) return;
-
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = () => {
-    emit("onAvatarChange", reader.result);
-  };
+  emit("onAvatarChange", file);
 }
 </script>
 
 <template>
   <div class="avatar-upload" @click="triggerUpload">
     <Avatar
-      :image="props.imageUrl || undefined"
+      :image="props.imageUrl"
       :label="!props.imageUrl ? props.label : undefined"
       size="xlarge"
       shape="circle"

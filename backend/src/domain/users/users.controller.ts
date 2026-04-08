@@ -1,18 +1,25 @@
 import {
+  BadRequestException,
   Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Query,
   ForbiddenException,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Delete,
+  Body,
+  Query,
+  Req,
 } from '@nestjs/common';
+import type { FastifyRequest } from 'fastify';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import {
+  ApiBody,
+  ApiConsumes,
   ApiOperation,
   ApiResponse,
   ApiTags,
@@ -120,5 +127,62 @@ export class UsersController {
       throw new ForbiddenException('You can delete only your profile.');
     }
     return this.usersService.remove(id);
+  }
+
+  @Post(':id/avatar')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Upload an avatar for a user' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+          description: 'Image file (jpeg, png, webp, gif) — max 5 Mo',
+        },
+      },
+      required: ['file'],
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Avatar uploaded successfully.',
+    type: User,
+  })
+  @ApiResponse({ status: 400, description: 'Invalid file (type or size).' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  async uploadAvatar(
+    @AuthenticatedUser() currentUser: IAuthenticatedUser,
+    @Param('id') id: number,
+    @Req() req: FastifyRequest,
+  ) {
+    if (currentUser?.id !== +id) {
+      throw new ForbiddenException('You can only update your own avatar.');
+    }
+
+    const ALLOWED_MIME_TYPES = [
+      'image/jpeg',
+      'image/png',
+      'image/webp',
+      'image/gif',
+    ];
+
+    const data = await req.file();
+
+    if (!data) {
+      throw new BadRequestException('No file uploaded.');
+    }
+
+    if (!ALLOWED_MIME_TYPES.includes(data.mimetype)) {
+      throw new BadRequestException(
+        `Unsupported file type: ${data.mimetype}. Allowed: jpeg, png, webp, gif.`,
+      );
+    }
+
+    const fileBuffer = await data.toBuffer();
+
+    return this.usersService.uploadAvatar(+id, fileBuffer, data.mimetype);
   }
 }

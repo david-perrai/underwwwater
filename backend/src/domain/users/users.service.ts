@@ -4,6 +4,19 @@ import { FindOptionsWhere, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { writeFile, unlink } from 'fs/promises';
+import { existsSync, mkdirSync } from 'fs';
+import { join } from 'path';
+import { v4 as uuidv4 } from 'uuid';
+
+const AVATARS_DIR = join(process.cwd(), 'uploads', 'avatars');
+
+const ALLOWED_MIME_TYPES: Record<string, string> = {
+  'image/jpeg': '.jpg',
+  'image/png': '.png',
+  'image/webp': '.webp',
+  'image/gif': '.gif',
+};
 
 @Injectable()
 export class UsersService {
@@ -46,5 +59,46 @@ export class UsersService {
 
   remove(id: number) {
     return this.usersRepository.delete(id);
+  }
+
+  async uploadAvatar(
+    userId: number,
+    fileBuffer: Buffer,
+    mimeType: string,
+  ): Promise<User> {
+    const user = await this.usersRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const ext = ALLOWED_MIME_TYPES[mimeType];
+    if (!ext) {
+      throw new Error(`Unsupported MIME type: ${mimeType}`);
+    }
+
+    // Crée le dossier si nécessaire
+    if (!existsSync(AVATARS_DIR)) {
+      mkdirSync(AVATARS_DIR, { recursive: true });
+    }
+
+    // Supprime l'ancien avatar s'il existe et est local
+    if (user.avatar) {
+      const oldFilename = user.avatar.split('/').pop();
+      if (oldFilename) {
+        const oldPath = join(AVATARS_DIR, oldFilename);
+        if (existsSync(oldPath)) {
+          await unlink(oldPath).catch(() => null);
+        }
+      }
+    }
+
+    // Sauvegarde le nouveau fichier avec un UUID
+    const filename = `${uuidv4()}${ext}`;
+    const filePath = join(AVATARS_DIR, filename);
+    await writeFile(filePath, fileBuffer);
+
+    // Met à jour l'utilisateur
+    user.avatar = `/uploads/avatars/${filename}`;
+    return this.usersRepository.save(user);
   }
 }

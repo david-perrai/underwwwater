@@ -34,7 +34,8 @@ import type {
   DiveCountDto,
   UpdateUserDto,
   User,
-  UsersControllerFindDivesParams
+  UsersControllerFindDivesParams,
+  UsersControllerUploadAvatarBody
 } from '../model';
 
 import { authFetch } from '../../fetch-instance';
@@ -662,4 +663,101 @@ export const useUsersControllerRemove = <TError = unknown,
         TContext
       > => {
       return useMutation(getUsersControllerRemoveMutationOptions(options), queryClient);
+    }
+    /**
+ * @summary Upload an avatar for a user
+ */
+export type usersControllerUploadAvatarResponse200 = {
+  data: User
+  status: 200
+}
+
+export type usersControllerUploadAvatarResponse400 = {
+  data: void
+  status: 400
+}
+
+export type usersControllerUploadAvatarResponse403 = {
+  data: void
+  status: 403
+}
+
+export type usersControllerUploadAvatarResponseSuccess = (usersControllerUploadAvatarResponse200) & {
+  headers: Headers;
+};
+export type usersControllerUploadAvatarResponseError = (usersControllerUploadAvatarResponse400 | usersControllerUploadAvatarResponse403) & {
+  headers: Headers;
+};
+
+export type usersControllerUploadAvatarResponse = (usersControllerUploadAvatarResponseSuccess | usersControllerUploadAvatarResponseError)
+
+export const getUsersControllerUploadAvatarUrl = (id: number,) => {
+
+
+
+
+  return `/users/${id}/avatar`
+}
+
+export const usersControllerUploadAvatar = async (id: number,
+    usersControllerUploadAvatarBody: UsersControllerUploadAvatarBody, options?: RequestInit): Promise<usersControllerUploadAvatarResponse> => {
+    const formData = new FormData();
+formData.append(`file`, usersControllerUploadAvatarBody.file);
+
+  return authFetch<usersControllerUploadAvatarResponse>(getUsersControllerUploadAvatarUrl(id),
+  {
+    ...options,
+    method: 'POST'
+    ,
+    body:
+      formData,
+  }
+);}
+
+
+
+
+export const getUsersControllerUploadAvatarMutationOptions = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof usersControllerUploadAvatar>>, TError,{id: number;data: UsersControllerUploadAvatarBody}, TContext>, request?: SecondParameter<typeof authFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof usersControllerUploadAvatar>>, TError,{id: number;data: UsersControllerUploadAvatarBody}, TContext> => {
+
+const mutationKey = ['usersControllerUploadAvatar'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof usersControllerUploadAvatar>>, {id: number;data: UsersControllerUploadAvatarBody}> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  usersControllerUploadAvatar(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UsersControllerUploadAvatarMutationResult = NonNullable<Awaited<ReturnType<typeof usersControllerUploadAvatar>>>
+    export type UsersControllerUploadAvatarMutationBody = UsersControllerUploadAvatarBody
+    export type UsersControllerUploadAvatarMutationError = void
+
+    /**
+ * @summary Upload an avatar for a user
+ */
+export const useUsersControllerUploadAvatar = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof usersControllerUploadAvatar>>, TError,{id: number;data: UsersControllerUploadAvatarBody}, TContext>, request?: SecondParameter<typeof authFetch>}
+ , queryClient?: QueryClient): UseMutationReturnType<
+        Awaited<ReturnType<typeof usersControllerUploadAvatar>>,
+        TError,
+        {id: number;data: UsersControllerUploadAvatarBody},
+        TContext
+      > => {
+      return useMutation(getUsersControllerUploadAvatarMutationOptions(options), queryClient);
     }

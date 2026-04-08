@@ -35,7 +35,7 @@ const handleAddDive = async () => {
     </PrimeButton>
 
     <Avatar
-      :image="user?.avatar || undefined"
+      :image="getAvatarUrl(user?.avatar)"
       :label="
         !user?.avatar ? user?.username?.charAt(0).toUpperCase() : undefined
       "

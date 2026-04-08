@@ -44,6 +44,7 @@ export * from './updateDivingTypeDto';
 export * from './updateUserDto';
 export * from './user';
 export * from './usersControllerFindDivesParams';
+export * from './usersControllerUploadAvatarBody';
 export * from './userStats';
 export * from './userStatsAverageConsumptionBar';
 export * from './userStatsShortestDiveTime';
