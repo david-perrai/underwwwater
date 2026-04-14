@@ -12,6 +12,11 @@ import { writeFile, unlink } from 'fs/promises';
 import { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import * as crypto from 'crypto';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { Events } from '@/configuration/events';
+import { ConfirmAccountEvent } from '@/auth/events/confirm-account.event';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 const AVATARS_DIR = join(process.cwd(), 'uploads', 'avatars');
 
@@ -27,6 +32,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -40,7 +46,33 @@ export class UsersService {
       throw new BadRequestException('A user already exists with this email');
     }
 
-    return this.usersRepository.save(user);
+    const confirmationToken = crypto.randomBytes(32).toString('hex');
+    const confirmationExpires = new Date();
+    confirmationExpires.setHours(confirmationExpires.getHours() + 24);
+
+    user.confirmationToken = confirmationToken;
+    user.confirmationExpires = confirmationExpires;
+    user.activatedAt = null;
+
+    const savedUser = await this.usersRepository.save(user);
+
+    this.eventEmitter.emit(
+      Events.AUTH_CONFIRM_ACCOUNT,
+      new ConfirmAccountEvent(savedUser.email, confirmationToken),
+    );
+
+    return savedUser;
+  }
+
+  @Cron(CronExpression.EVERY_HOUR)
+  async deleteUnconfirmedAccounts() {
+    const now = new Date();
+    const qb = this.usersRepository.createQueryBuilder('user');
+    await qb
+      .delete()
+      .where('activatedAt IS NULL')
+      .andWhere('confirmationExpires < :now', { now })
+      .execute();
   }
 
   findAll() {

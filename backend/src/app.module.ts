@@ -13,9 +13,11 @@ import { MailModule } from './mail/mail.module';
 import { DivingTypesModule } from './domain/diving-types/diving-types.module';
 import { DivingEnvironnementsModule } from './domain/diving-environnements/diving-environnements.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     EventEmitterModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,

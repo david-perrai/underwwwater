@@ -47,6 +47,10 @@ export class AuthService {
       throw new UnauthorizedException('Incorrect email or password');
     }
 
+    if (!user.activatedAt) {
+      throw new UnauthorizedException('Please confirm your account first');
+    }
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
@@ -181,6 +185,26 @@ export class AuthService {
       password: newPassword,
       resetPasswordToken: undefined,
       resetPasswordExpires: undefined,
+    });
+  }
+
+  async confirmAccount(token: string): Promise<void> {
+    const user = await this.usersService.findOneBy({
+      confirmationToken: token,
+    });
+
+    if (
+      !user ||
+      !user.confirmationExpires ||
+      user.confirmationExpires < new Date()
+    ) {
+      throw new BadRequestException('Confirmation token is invalid or expired');
+    }
+
+    await this.usersService.update(user.id, {
+      activatedAt: new Date(),
+      confirmationToken: null,
+      confirmationExpires: null,
     });
   }
 }

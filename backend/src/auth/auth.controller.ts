@@ -23,6 +23,7 @@ import {
 import { AuthenticatedUser } from './decorators/authenticated-user.decorator';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { ConfirmAccountDto } from './dto/confirm-account.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -172,5 +173,16 @@ export class AuthController {
       resetPasswordDto.password,
     );
     return { message: 'Your password has been reset successfully.' };
+  }
+
+  @ApiOperation({ summary: 'Confirm account' })
+  @ApiResponse({ status: 200, description: 'Account confirmed successfully' })
+  @ApiResponse({ status: 400, description: 'Invalid or expired token' })
+  @Public()
+  @Post('confirm-account')
+  @HttpCode(HttpStatus.OK)
+  async confirmAccount(@Body() confirmAccountDto: ConfirmAccountDto) {
+    await this.authService.confirmAccount(confirmAccountDto.token);
+    return { message: 'Your account has been successfully confirmed.' };
   }
 }

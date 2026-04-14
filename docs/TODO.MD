@@ -81,6 +81,8 @@ Auth:
 
 - [X] Ajouter une modale de validation de souscription.
 
+- [] Ajouter une validation de compte par email sous 24h avec suppression du compte sinon.
+
 - [ ] dashboard (la page dashboard des graphs geeks, c'est la version un peu plus fournie et perso de la page anon /profile qui permet de voir un profil d'un plongeur). Cette page est la page principale de l'app une fois qu'on est loggué. En anon, on tombe sur la home (un peu comme fait Github en gros)
 - [ ] settings (la page des paramètres, pour modifier le profil, niveau de plongée ? avatar?, nationalité?, le mot de passe, etc...)
 

@@ -57,6 +57,14 @@ export class User {
   @Column({ type: 'timestamp', nullable: true })
   resetPasswordExpires: Date;
 
+  @Exclude()
+  @Column({ nullable: true })
+  confirmationToken?: string;
+
+  @Exclude()
+  @Column({ type: 'timestamp', nullable: true })
+  confirmationExpires?: Date;
+
   @ApiProperty({
     example: 'https://example.com/avatar.jpg',
     description: 'The user avatar URL',
@@ -74,8 +82,8 @@ export class User {
   updatedAt: Date;
 
   @ApiProperty({ description: 'The date the user account was activated' })
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  activatedAt: Date;
+  @Column({ type: 'timestamp', nullable: true })
+  activatedAt: Date | null;
 
   @ApiProperty({ description: 'The nationality of the user' })
   @Column({ type: 'varchar', nullable: true, length: 2 })
