@@ -22,6 +22,9 @@
       "password": "Mot de passe",
       "confirmPassword": "Confirmer le mot de passe",
       "submit": "S'inscrire",
+      "successTitle": "Compte créé ! 🎉",
+      "successMessage": "Votre compte a bien été créé. Vous pouvez maintenant vous authentifier pour y accéder.",
+      "goToLogin": "S'authentifier",
       "errors": {
         "emailRequired": "L'email est requis",
         "emailInvalid": "Email invalide",

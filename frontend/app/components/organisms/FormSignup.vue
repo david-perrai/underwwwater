@@ -16,6 +16,7 @@ const password = ref("");
 const passwordConfirm = ref("");
 const turnstileToken = ref("");
 const signupError = ref("");
+const signupSuccessVisible = ref(false);
 
 /** Composables */
 const { t } = useI18n();
@@ -55,11 +56,26 @@ const handleSubmit = async () => {
     });
 
     if (response.status === 201) {
-      navigateTo("/dashboard");
+      signupSuccessVisible.value = true;
+      return;
     }
 
-    signupError.value = response.data.message;
+    signupError.value = response.data?.message || "";
   }
+};
+
+const resetForm = () => {
+  emailField.value = "";
+  username.value = "";
+  password.value = "";
+  passwordConfirm.value = "";
+  turnstileToken.value = "";
+};
+
+const goToLogin = () => {
+  signupSuccessVisible.value = false;
+  resetForm();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 };
 </script>
 
@@ -178,4 +194,57 @@ const handleSubmit = async () => {
       <NuxtTurnstile v-model="turnstileToken" />
     </div>
   </Form>
+
+  <!-- Signup success modal -->
+  <PrimeDialog
+    v-model:visible="signupSuccessVisible"
+    :header="$t('auth.signup.successTitle')"
+    :modal="true"
+    :draggable="false"
+    :close-button-props="{ severity: 'contrast', variant: 'text' }"
+    class="signup-success-dialog"
+    style="width: min(480px, 95vw)"
+    @hide="goToLogin"
+  >
+    <div class="signup-success-dialog__content">
+      <i class="pi pi-check-circle signup-success-dialog__icon" />
+      <p class="signup-success-dialog__message">
+        {{ $t("auth.signup.successMessage") }}
+      </p>
+      <PrimeButton
+        :label="$t('auth.signup.goToLogin')"
+        severity="primary"
+        size="large"
+        variant="plain"
+        @click="goToLogin"
+      />
+    </div>
+  </PrimeDialog>
 </template>
+
+<style lang="scss">
+.signup-success-dialog {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1rem 0 0.5rem;
+    gap: 1.5rem;
+  }
+
+  &__icon {
+    font-size: 3.5rem;
+    color: #00ffef;
+  }
+
+  &__message {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 380px;
+    font-family: "Inter Tight", sans-serif;
+  }
+}
+</style>

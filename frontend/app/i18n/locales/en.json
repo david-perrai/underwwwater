@@ -20,6 +20,9 @@
       "password": "Password",
       "confirmPassword": "Confirm password",
       "submit": "Sign Up",
+      "successTitle": "Account created! 🎉",
+      "successMessage": "Your account has been successfully created. You can now sign in to access your dashboard.",
+      "goToLogin": "Sign In",
       "errors": {
         "emailRequired": "Email is required",
         "emailInvalid": "Invalid email",
