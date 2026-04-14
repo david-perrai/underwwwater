@@ -14,6 +14,8 @@ const emailField = ref("");
 const username = ref("");
 const password = ref("");
 const passwordConfirm = ref("");
+const turnstileToken = ref("");
+const signupError = ref("");
 
 /** Composables */
 const { t } = useI18n();
@@ -48,12 +50,15 @@ const handleSubmit = async () => {
         email: emailField.value,
         username: username.value,
         password: password.value,
+        turnstileToken: turnstileToken.value,
       },
     });
 
     if (response.status === 201) {
       navigateTo("/dashboard");
     }
+
+    signupError.value = response.data.message;
   }
 };
 </script>
@@ -67,6 +72,13 @@ const handleSubmit = async () => {
     name="signup"
     @submit="handleSubmit"
   >
+    <PrimeMessage
+      v-if="signupError"
+      severity="error"
+      style="margin-bottom: 1em"
+    >
+      {{ signupError }}
+    </PrimeMessage>
     <!-- 1. Email -->
     <div class="form__field">
       <PrimeFloatLabel>
@@ -159,6 +171,11 @@ const handleSubmit = async () => {
       >
         {{ errors.passwordConfirm }}
       </PrimeMessage>
+    </div>
+
+    <!-- 5. Captcha -->
+    <div style="display: flex; justify-content: center">
+      <NuxtTurnstile v-model="turnstileToken" />
     </div>
   </Form>
 </template>

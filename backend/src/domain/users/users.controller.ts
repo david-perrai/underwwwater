@@ -12,6 +12,7 @@ import {
   Body,
   Query,
   Req,
+  Ip,
 } from '@nestjs/common';
 import type { FastifyRequest } from 'fastify';
 import { UsersService } from './users.service';
@@ -35,6 +36,7 @@ import type { IAuthenticatedUser } from '@/auth/types/authenticated-user';
 import { Role } from '@/auth/enums/role.enum';
 import { Roles } from '@/auth/decorators/roles.decorator';
 import { DiveCountDto } from '../dives/dto/dive-count.dto';
+import { CaptchaService } from '@/auth/captcha.service';
 
 @ApiTags('users')
 @ApiBearerAuth()
@@ -43,6 +45,7 @@ export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly divesService: DivesService,
+    private readonly captchaService: CaptchaService,
   ) {}
 
   @Post()
@@ -53,8 +56,15 @@ export class UsersController {
     type: User,
   })
   @Public()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto, @Ip() ip: string) {
+    const isHuman = await this.captchaService.verifyTurnstile(
+      createUserDto.turnstileToken,
+      ip,
+    );
+    if (isHuman) {
+      return this.usersService.create(createUserDto);
+    }
+    throw new BadRequestException('Invalid captcha');
   }
 
   @Get()

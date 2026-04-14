@@ -9,6 +9,8 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@primevue/nuxt-module",
     "@nuxt/fonts",
+    "@nuxtjs/turnstile",
+    "@nuxt/scripts",
   ],
 
   /*********** Config ***********/
@@ -63,7 +65,6 @@ export default defineNuxtConfig({
   /*********** CSS ***********/
   css: ["~/theme/styles.scss"], // Import global du fichier SCSS principal
 
-
   /*********** Vite ***********/
   vite: {
     clearScreen: false, // Pour voir les logs de rebuild
@@ -76,6 +77,14 @@ export default defineNuxtConfig({
         usePolling: true,
         interval: 1000,
       },
+    },
+    optimizeDeps: {
+      include: [
+        "@vue/devtools-core",
+        "@vue/devtools-kit",
+        "@tanstack/vue-query",
+        "date-fns",
+      ],
     },
   },
 
@@ -90,7 +99,12 @@ export default defineNuxtConfig({
       { name: "Barlow-Condensed", provider: "google" },
       { name: "Inter Tight", provider: "google" },
       { name: "Inter Tight", provider: "google" },
-
     ],
+  },
+
+  /*********** Turnstile ***********/
+  turnstile: {
+    siteKey:
+      process.env.NUXT_PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAAC9l2r-Gi6btX8-B",
   },
 });

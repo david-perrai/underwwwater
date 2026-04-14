@@ -17,4 +17,6 @@ export interface CreateUserDto {
   nationality?: string;
   /** The avatar of the user */
   avatar?: string;
+  /** Turnstile token */
+  turnstileToken: string;
 }

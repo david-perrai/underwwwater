@@ -1,5 +1,13 @@
 # Architecture Decision Records
 
+## 14 Avril 2026
+
+### Gestion des robots pour la souscription
+
+Le choix ce porte sur l'utilisation de turnstile de cloudflare.
+L'implémentation se fait avec l'usage de @nuxt/turnstile et une validation côté nestjs du jeton généré par turnstile.
+D'après un comparatif il est non intrusif et gratuit pour les petits projets.
+
 ## 05 Février 2026
 
 ### Roles

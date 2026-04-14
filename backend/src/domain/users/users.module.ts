@@ -4,11 +4,12 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { User } from './entities/user.entity';
 import { DivesModule } from '@/domain/dives/dives.module';
+import { CaptchaService } from '@/auth/captcha.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User]), DivesModule],
   controllers: [UsersController],
-  providers: [UsersService],
+  providers: [UsersService, CaptchaService],
   exports: [UsersService],
 })
 export class UsersModule {}

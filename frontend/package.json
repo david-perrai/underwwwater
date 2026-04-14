@@ -15,7 +15,9 @@
   },
   "dependencies": {
     "@nuxt/fonts": "^0.13.0",
+    "@nuxt/scripts": "1.0.0-beta.32",
     "@nuxtjs/i18n": "10.2.1",
+    "@nuxtjs/turnstile": "1.1.2",
     "@pinia/nuxt": "0.11.3",
     "@primeuix/themes": "^2.0.3",
     "@primevue/forms": "^4.5.4",
@@ -33,6 +35,7 @@
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
   "devDependencies": {
     "@primevue/nuxt-module": "^4.5.4",
+    "@types/cloudflare-turnstile": "^0.2.2",
     "@types/node": "^25.2.1",
     "orval": "^8.6.2",
     "sass": "^1.97.3",

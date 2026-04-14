@@ -36,4 +36,11 @@ export class CreateUserDto {
   @IsString()
   @IsOptional()
   avatar?: string;
+
+  @ApiProperty({
+    description: 'Turnstile token',
+    example: '0x4AAAAAACAA8_l3Zc_1234567890',
+  })
+  @IsString()
+  turnstileToken: string;
 }
