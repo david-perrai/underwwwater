@@ -38,12 +38,19 @@ export class UsersService {
   async create(createUserDto: CreateUserDto) {
     const user = this.usersRepository.create(createUserDto);
 
-    const alreadyExist = await this.usersRepository.findOneBy({
-      email: createUserDto.email,
-    });
+    const alreadyExist = await this.usersRepository.findOneBy([
+      {
+        email: createUserDto.email,
+      },
+      {
+        username: createUserDto.username,
+      },
+    ]);
 
     if (alreadyExist) {
-      throw new BadRequestException('A user already exists with this email');
+      throw new BadRequestException(
+        'A user already exists with this email or username',
+      );
     }
 
     const confirmationToken = crypto.randomBytes(32).toString('hex');

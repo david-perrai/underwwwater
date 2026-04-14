@@ -82,6 +82,10 @@ Auth:
 - [X] Ajouter une modale de validation de souscription.
 
 - [] Ajouter une validation de compte par email sous 24h avec suppression du compte sinon.
+- [x] Envoi d'un lien avec jeton dans un email
+- [] Suppression du compte si pas validé sous 24h
+- [] ajout d'un écran de confirmation de validation de compte
+- [] ajout d'un écran d'erreur si le compte n'a pas été validé dans les 24h
 
 - [ ] dashboard (la page dashboard des graphs geeks, c'est la version un peu plus fournie et perso de la page anon /profile qui permet de voir un profil d'un plongeur). Cette page est la page principale de l'app une fois qu'on est loggué. En anon, on tombe sur la home (un peu comme fait Github en gros)
 - [ ] settings (la page des paramètres, pour modifier le profil, niveau de plongée ? avatar?, nationalité?, le mot de passe, etc...)
@@ -116,6 +120,11 @@ Dive/AddDive :
 - [] Ajouter les spots d'une plongée
 - [] ajouter les photos des plongées ?
 
+## Emails
+
+- [] styliser les emails
+
 ## Corrections
 
-- [ ] La création d'un compte avec une adresse existante retourne une erreur 500
+- [x] La création d'un compte avec une adresse existante retourne une erreur 500
+- [] Si on a une erreur suite à la création le captcha n'est pas reset provoquant un blocage de l'utilisateur.
